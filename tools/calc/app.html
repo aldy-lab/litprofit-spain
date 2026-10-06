@@ -895,6 +895,13 @@ svg text{font-family:var(--mono)}
      so it stays whole. nowrap was tried and is wrong -- with fixed columns it
      let the headings overflow into each other and print "EMPLOYEEROLE". */
   .rp-landscape td.num{overflow-wrap:normal}
+  /* The headings are spaced capitals, and at 14 columns "РАБОТОДАТЕЛЯ" no
+     longer fit a column whole -- it printed as "РАБОТОДА / ТЕЛЯ". Tighter
+     tracking on the landscape headings only, so a word breaks at a space
+     and the split is the last resort it was meant to be. Scoped under
+     #print-area because that id rule sets the heading type and outranks any
+     class on its own -- written as a class first, it changed nothing. */
+  #print-area .rp-landscape thead th{letter-spacing:.02em;font-size:6pt;padding:1.6mm 1.2mm}
   .rp-kpi{border:.3mm solid #d3d5e0;padding:4mm}
   .rp-kpi span{
     display:block;font-family:var(--mono);font-size:6.8pt;letter-spacing:.15em;
@@ -1997,7 +2004,7 @@ en: {
     company:'Company / Person',scope:'Scope',rate:'Rate / h',travel:'Travel',accom:'Accommodation',materials:'Materials',other:'Other',
     type:'Type',qty:'Qty',unitCost:'Unit Cost',supplier:'Supplier / Note',
     item:'Item / Description',rebill:'Rebill to Client?',rebillAmt:'Rebill Amount',
-    planCost:'Plan Cost',actCost:'Actual Cost',recoverable:'Recoverable?',clientRebill:'Client Rebill',notes:'Notes'},
+    planCost:'Plan Cost',actCost:'Actual Cost',recoverable:'Recoverable?',clientRebill:'Client Rebill',notes:'Notes',country:'Country'},
   dash:{title:'Project Profitability Dashboard',kpi:'KPI',plan:'Plan',actual:'Actual',diff:'Diff',
     totalRevenue:'Total Revenue',laborCost:'Labor Cost',directCost:'Direct Project Cost',adminOh:'Admin Overhead',contingency:'Contingency',totalCost:'Total Project Cost',grossProfit:'Gross Profit',margin:'Profit Margin',
     control:'Margin control',target:'Target margin',actualMargin:'Actual margin',deviation:'Deviation',
@@ -2043,7 +2050,7 @@ en: {
       revenue:{l:'What the job sells. Plan against actual, per line.',
         b:['Mark Paid only when the money has arrived — the dashboard reads it.']},
       labor:{l:'Hours on the job and what they cost. Hours are the ones paid at the rate.',
-        b:['Employer tax and the daily allowance come from Settings, not from this sheet.',
+        b:['Employer tax comes from Settings. The daily allowance is per person: leave it empty and the Settings figure (shown grey) is used.',
            'Actual is what really happened. Leave it empty until it has.']},
       subs:{l:'Work bought in. Everything after the hourly line is a sum, not a quantity.',
         b:['Plan is hours times rate plus travel, accommodation, materials and other.']},
@@ -2376,7 +2383,7 @@ lt: {
     company:'Įmonė / asmuo',scope:'Darbų apimtis',rate:'Įkainis / val.',travel:'Kelionė',accom:'Apgyvendinimas',materials:'Medžiagos',other:'Kita',
     type:'Tipas',qty:'Kiekis',unitCost:'Vieneto kaina',supplier:'Tiekėjas / pastaba',
     item:'Prekė / aprašymas',rebill:'Perkelti klientui?',rebillAmt:'Perkeliama suma',
-    planCost:'Planuojama kaina',actCost:'Faktinė kaina',recoverable:'Susigrąžinama?',clientRebill:'Klientui perkeliama',notes:'Pastabos'},
+    planCost:'Planuojama kaina',actCost:'Faktinė kaina',recoverable:'Susigrąžinama?',clientRebill:'Klientui perkeliama',notes:'Pastabos',country:'Šalis'},
   dash:{title:'Projekto pelningumo suvestinė',kpi:'Rodiklis',plan:'Planas',actual:'Faktas',diff:'Skirt.',
     totalRevenue:'Iš viso pajamų',laborCost:'Darbo sąnaudos',directCost:'Tiesioginės projekto sąnaudos',adminOh:'Administracinės išlaidos',contingency:'Nenumatytos išlaidos',totalCost:'Iš viso projekto sąnaudų',grossProfit:'Bendrasis pelnas',margin:'Pelno marža',
     control:'Maržos kontrolė',target:'Tikslinė marža',actualMargin:'Faktinė marža',deviation:'Nuokrypis',
@@ -2422,7 +2429,7 @@ lt: {
       revenue:{l:'Ką darbas parduoda. Planas prieš faktą, kiekvienoje eilutėje.',
         b:['„Apmokėta“ žymėkite tik tada, kai pinigai atėjo — suvestinė tai skaito.']},
       labor:{l:'Valandos darbe ir kiek jos kainuoja. Valandos — tos, kurios apmokamos pagal įkainį.',
-        b:['Darbdavio mokesčiai ir dienpinigiai imami iš „Nustatymų“, ne iš šio lapo.',
+        b:['Darbdavio mokesčiai imami iš „Nustatymų“. Dienpinigiai — kiekvienam atskirai: palikus tuščią, naudojama „Nustatymų“ suma (rodoma pilkai).',
            'Faktas — kas iš tikrųjų įvyko. Kol neįvyko, palikite tuščią.']},
       subs:{l:'Nupirkti darbai. Viskas po valandine eilute yra sumos, ne kiekiai.',
         b:['Planas — valandos kart įkainis plius kelionės, apgyvendinimas, medžiagos ir kita.']},
@@ -2755,7 +2762,7 @@ ru: {
     company:'Компания / лицо',scope:'Объём работ',rate:'Ставка / ч',travel:'Проезд',accom:'Проживание',materials:'Материалы',other:'Прочее',
     type:'Тип',qty:'Кол-во',unitCost:'Цена за ед.',supplier:'Поставщик / примечание',
     item:'Позиция / описание',rebill:'Перевыставить клиенту?',rebillAmt:'Сумма перевыставления',
-    planCost:'План. затраты',actCost:'Факт. затраты',recoverable:'Возмещаемо?',clientRebill:'Перевыставление клиенту',notes:'Примечания'},
+    planCost:'План. затраты',actCost:'Факт. затраты',recoverable:'Возмещаемо?',clientRebill:'Перевыставление клиенту',notes:'Примечания',country:'Страна'},
   dash:{title:'Сводка рентабельности проекта',kpi:'Показатель',plan:'План',actual:'Факт',diff:'Разн.',
     totalRevenue:'Выручка итого',laborCost:'Затраты на труд',directCost:'Прямые затраты проекта',adminOh:'Административные накладные',contingency:'Резерв',totalCost:'Затраты проекта итого',grossProfit:'Валовая прибыль',margin:'Маржа прибыли',
     control:'Контроль маржи',target:'Целевая маржа',actualMargin:'Фактическая маржа',deviation:'Отклонение',
@@ -2801,7 +2808,7 @@ ru: {
       revenue:{l:'Что работа продаёт. План против факта, по каждой строке.',
         b:['«Оплачено» отмечайте, только когда деньги пришли — сводка это читает.']},
       labor:{l:'Часы на работе и во что они обходятся. Часы — те, что оплачиваются по ставке.',
-        b:['Налоги работодателя и суточные берутся из «Настроек», а не из этого листа.',
+        b:['Налоги работодателя берутся из «Настроек». Суточные — на каждого отдельно: если поле пустое, берётся сумма из «Настроек» (видна серым).',
            'Факт — это то, что действительно случилось. Пока не случилось, оставляйте пустым.']},
       subs:{l:'Купленные работы. Всё после часовой строки — суммы, а не количества.',
         b:['План — часы × ставка плюс проезд, проживание, материалы и прочее.']},
@@ -3852,10 +3859,10 @@ function newProject(lang, seq){
     settings: defaultSettings(),
     card: { projectId:'PRJ-'+num, client:'', site:'', pm:'', start:'', end:'', contract:null, advance:null, terms:45 },
     revenue: DEF_ORDER.revenue.map(k=>({k,cat:null,desc:null,plan:null,actual:null,status:D.revenue[k][2],invoice:'',paid:false})),
-    labor: [1,2,3].map(()=>({name:'',role:'',days:null,hours:null,rate:null,travelDays:null,actual:null})),
+    labor: [1,2,3].map(()=>({name:'',role:'',days:null,hours:null,rate:null,travelDays:null,country:'',allowance:null,actual:null})),
     subs: [1,2,3].map(()=>({name:'',scope:'',hours:null,rate:null,travel:null,accom:null,materials:null,other:null,actual:null})),
     travel: DEF_ORDER.travel.map(k=>({k,type:null,desc:null,qty:null,unit:null,actual:null,supplier:''})),
-    materials: DEF_ORDER.materials.map(k=>({k,cat:null,desc:null,qty:null,unit:null,actual:null,rebill:false,rebillAmt:null})),
+    materials: DEF_ORDER.materials.map(k=>({k,cat:null,desc:null,qty:null,unit:null,actual:null,rebill:false,rebillAmt:null,notes:''})),
     logistics: DEF_ORDER.logistics.map(k=>({k,cat:null,desc:null,plan:null,actual:null,recoverable:false,rebill:null,notes:''}))
   };
 }
@@ -3875,7 +3882,11 @@ const F = {
   // Labor: F=D*E, H=F*(1+G), K=H+I*J, M=L-K
   laborGross: r => N(r.hours)*N(r.rate),
   laborEmpCost: (r,s) => F.laborGross(r)*(1+N(s.burden)),
-  laborPlan: (r,s) => F.laborEmpCost(r,s) + N(r.travelDays)*N(s.allowance),
+  /* The allowance is per person now: a fitter in Spain and one in Norway
+     are not paid the same per diem. A row left blank takes the project's
+     Settings figure, as every row did before, so no stored plan moves. */
+  laborAllow: (r,s) => (r.allowance===null||r.allowance===undefined||r.allowance==='') ? N(s.allowance) : N(r.allowance),
+  laborPlan: (r,s) => F.laborEmpCost(r,s) + N(r.travelDays)*F.laborAllow(r,s),
   laborDiff: (r,s) => N(r.actual) - F.laborPlan(r,s),
   // Subcontractors: I=C*D+E+F+G+H, K=J-I
   subPlan: r => N(r.hours)*N(r.rate)+N(r.travel)+N(r.accom)+N(r.materials)+N(r.other),
@@ -4213,7 +4224,8 @@ function sheetConfigsAll(){
       {k:'_burden',t:'calc',l:c.burdenPct,f:()=>N(s.burden),fmt:v=>pct(v)},
       {k:'_emp',t:'calc',l:c.empCost,f:r=>F.laborEmpCost(r,s),sum:true},
       {k:'travelDays',t:'num',l:c.travelDays,dec:1},
-      {k:'_allow',t:'calc',l:c.allowance,f:()=>N(s.allowance)},
+      {k:'country',t:'text',l:c.country,w:'8%',ac:1},
+      {k:'allowance',t:'num',l:c.allowance,ph:()=>N(s.allowance),eff:r=>F.laborAllow(r,s)},
       {k:'_plan',t:'calc',l:c.planTotal,f:r=>F.laborPlan(r,s),sum:true},
       {k:'actual',t:'num',l:c.actTotal,sum:true},
       {k:'_diff',t:'calc',l:c.diff,f:r=>F.laborDiff(r,s),sum:true,cls:v=>diffCls(-v)}
@@ -4250,7 +4262,8 @@ function sheetConfigsAll(){
       {k:'actual',t:'num',l:c.actTotal,sum:true},
       {k:'_diff',t:'calc',l:c.diff,f:F.qtyDiff,sum:true,cls:v=>diffCls(-v)},
       {k:'rebill',t:'sel',l:c.rebill,opts:'bool',money:1},
-      {k:'rebillAmt',t:'num',l:c.rebillAmt,sum:true,money:1}
+      {k:'rebillAmt',t:'num',l:c.rebillAmt,sum:true,money:1},
+      {k:'notes',t:'text',l:c.notes,w:'13%'}
     ]},
     logistics: { key:'logistics', cols:[
       {k:'cat',t:'text',l:c.category,w:'12%',ac:1},
@@ -4267,10 +4280,10 @@ function sheetConfigsAll(){
 function emptyRow(key){
   return {
     revenue:{cat:'',desc:'',plan:null,actual:null,status:'pending',invoice:'',paid:false},
-    labor:{name:'',role:'',days:null,hours:null,rate:null,travelDays:null,actual:null},
+    labor:{name:'',role:'',days:null,hours:null,rate:null,travelDays:null,country:'',allowance:null,actual:null},
     subs:{name:'',scope:'',hours:null,rate:null,travel:null,accom:null,materials:null,other:null,actual:null},
     travel:{type:'',desc:'',qty:null,unit:null,actual:null,supplier:''},
-    materials:{cat:'',desc:'',qty:null,unit:null,actual:null,rebill:false,rebillAmt:null},
+    materials:{cat:'',desc:'',qty:null,unit:null,actual:null,rebill:false,rebillAmt:null,notes:''},
     logistics:{cat:'',desc:'',plan:null,actual:null,recoverable:false,rebill:null,notes:''}
   }[key];
 }
@@ -4577,7 +4590,12 @@ function renderChrome(){
   bm.title = t.menuLabel; bm.setAttribute('aria-label', t.menuLabel);
   $('#projMenu').innerHTML = menuItems(t, lk);
   const sel = $('#projectSel');
-  sel.innerHTML = state.projects.map(p=>`<option value="${p.id}"${p.id===state.currentId?' selected':''}>${esc(p.card.projectId)}${p.card.client?' — '+esc(p.card.client):''}</option>`).join('');
+  /* Number and VESSEL, not the client: one shipowner sends job after job, so
+     "26-033 — Atlantic Maritime" and "26-041 — Atlantic Maritime" were two
+     identical-looking lines. The vessel is what tells them apart. A job with
+     no vessel typed in yet still shows its client rather than nothing. */
+  const pickName = c => String(c.site || '').trim() || String(c.client || '').trim();
+  sel.innerHTML = state.projects.map(p=>`<option value="${p.id}"${p.id===state.currentId?' selected':''}>${esc(p.card.projectId)}${pickName(p.card)?' — '+esc(pickName(p.card)):''}</option>`).join('');
   /* A tab that is gone cannot stay selected -- a staff member whose last
      session ended on the dashboard would open to a blank main. */
   const tabs = tabList();
@@ -5038,7 +5056,7 @@ function viewSheet(key){
     let tds = cfg.cols.map(col=>{
       const L = ` data-label="${esc(col.l)}"`;
       if(col.t==='text') return `<td${L}><input type="text"${ro}${col.ac?` list="dl-${key}-${col.k}"`:''} data-r="${i}" data-k="${col.k}" value="${esc(cellVal(key, r, col.k))}"></td>`;
-      if(col.t==='num') return `<td class="num"${L}><input type="number"${ro} step="any" data-r="${i}" data-k="${col.k}" value="${r[col.k]??''}"></td>`;
+      if(col.t==='num') return `<td class="num"${L}><input type="number"${ro} step="any" data-r="${i}" data-k="${col.k}" value="${r[col.k]??''}"${col.ph?` placeholder="${esc(String(col.ph()))}"`:''}></td>`;
       if(col.t==='sel'){
         const cur = col.opts==='bool' ? (r[col.k]?'1':'0') : r[col.k];
         return `<td${L}><select${ro} data-r="${i}" data-k="${col.k}" data-opts="${col.opts}">${opts[col.opts].map(o=>`<option value="${o.v}"${o.v===cur?' selected':''}>${esc(o.l)}</option>`).join('')}</select></td>`;
@@ -10460,7 +10478,7 @@ function exportCsv(){
       L.push(cfg.cols.map(col=>{
         if(col.t==='calc'){ const v = col.f(r,p.settings); return col.fmt ? q(col.fmt(v)) : num(v); }
         if(col.t==='sel') return q(col.opts==='bool' ? (r[col.k]?t.yes:t.no) : (t.statuses[r[col.k]]||r[col.k]));
-        if(col.t==='num') return num(r[col.k]);
+        if(col.t==='num') return num(col.eff ? col.eff(r) : r[col.k]);
         return q(cellVal(key, r, col.k));
       }).join(';'));
     });
@@ -10657,7 +10675,8 @@ function printProjectReport(){
       detail += '<tr>'+cfg.cols.map(col=>{
         if(col.t==='calc'){ const v=col.f(r,p.settings); return `<td class="num">${col.fmt?col.fmt(v):m(v)}</td>`; }
         if(col.t==='sel') return `<td>${esc(col.opts==='bool'?(r[col.k]?t.yes:t.no):(t.statuses[r[col.k]]||''))}</td>`;
-        if(col.t==='num') return `<td class="num">${r[col.k]===null||r[col.k]===undefined?'':m(r[col.k])}</td>`;
+        if(col.t==='num'){ const v = col.eff ? col.eff(r) : r[col.k];
+          return `<td class="num">${v===null||v===undefined?'':m(v)}</td>`; }
         return `<td>${esc(cellVal(key, r, col.k))}</td>`;
       }).join('')+'</tr>';
     });
