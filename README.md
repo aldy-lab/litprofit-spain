@@ -8,12 +8,28 @@ company payroll and fixed costs, reports, AI advice), with three differences:
    Lithuanian calculator's Supabase project (`uiuzbhekmroosmemwhdr`). Nothing
    here reads or writes a Lithuanian figure. Only `public.profiles` is shared,
    because the people signing in are the same people.
-2. **Admins only, for now.** Enforced in the database: every `auth.uid()` in
-   the Lithuanian schema reads `iberia.admin_uid()` here, which returns nobody
-   unless the profile's role is `admin`. A manager or staff member who signs in
-   is told so and signed out — and if they went round the page, every view
-   answers with no rows and every write is refused (`db/test-access.sql`).
-   To open it to managers later, change the role test in `admin_uid()`.
+2. **Its own user list, admins only for now.** `iberia.members` holds who may
+   open Iberia and their Iberian role — independent of the Lithuanian role, so
+   being an admin there grants nothing here. Enforced in the database: every
+   `auth.uid()` in the Lithuanian schema reads `iberia.admin_uid()` here, which
+   returns nobody who is not a member with role `admin`. Anyone else is told
+   why and signed out — and if they went round the page, every view answers
+   with no rows and every write is refused (`db/test-access.sql`). To open it
+   to managers later, change the role test in `admin_uid()`.
+
+   Managing the list (SQL editor):
+
+   ```sql
+   -- add
+   insert into iberia.members (user_id, role)
+   select id, 'admin' from auth.users where email = 'name@litprofit.com'
+   on conflict (user_id) do update set role = excluded.role;
+   -- remove
+   delete from iberia.members
+    where user_id = (select id from auth.users where email = 'name@litprofit.com');
+   -- see who is on it
+   select * from iberia.members_v;
+   ```
 3. **Spanish and Portuguese payroll** instead of Sodra/GPM/NPD.
 
 Languages are the same as the Lithuanian copy: EN, LT, RU.
@@ -27,10 +43,14 @@ Languages are the same as the Lithuanian copy: EN, LT, RU.
    schemas the API serves (`public, graphql_public, iberia`); if the dashboard
    still shows only `public` under *Project Settings → Data API → Exposed
    schemas*, add `iberia` there.
-2. Deploy the advice function: `supabase/functions/advice-iberia` (same code as
-   `advice`, pointed at the `iberia` schema). It uses the project's existing
-   `ANTHROPIC_API_KEY` secret. Until it is deployed the Advice panel says it
-   could not answer; nothing else depends on it.
+2. The advice function `supabase/functions/advice-iberia` (the Lithuanian
+   `advice`, pointed at the `iberia` schema) is deployed — 8 Oct 2026. It uses
+   the project's existing `ANTHROPIC_API_KEY` secret. The file is kept byte for
+   byte what is deployed.
+
+   ⚠️ The litprofit repo's `supabase/functions/advice/index.ts` does NOT match
+   the live Lithuanian function: it lacks the `\`` escapes inside the prompt,
+   so as committed it does not even compile. Live is the newer copy.
 3. Sign in with an admin account from the Lithuanian calculator.
 
 ## Build

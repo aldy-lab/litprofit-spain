@@ -2166,6 +2166,7 @@ en: {
     noProjects:'No projects yet. A manager needs to create one.',
     roleUnknown:'Could not confirm your access level — some tools may be missing. Refresh from server.',
     adminOnly:'The Iberia calculator is open to administrators only for now.',
+    notMember:'This account does not have access to the Iberia calculator. Ask an administrator to add you.',
     needsSchema:'The database needs updating — run db/schema.sql in the Supabase SQL editor.',
     refresh:'Refresh from server',
     offline:'Not saved to server',
@@ -2545,6 +2546,7 @@ lt: {
     noProjects:'Projektų dar nėra. Juos sukuria vadovas.',
     roleUnknown:'Nepavyko patvirtinti jūsų teisių — kai kurių įrankių gali trūkti. Atnaujinkite iš serverio.',
     adminOnly:'Iberijos skaičiuoklė kol kas prieinama tik administratoriams.',
+    notMember:'Ši paskyra neturi prieigos prie Iberijos skaičiuoklės. Paprašykite administratoriaus jus pridėti.',
     needsSchema:'Reikia atnaujinti duomenų bazę — paleiskite db/schema.sql Supabase SQL redaktoriuje.',
     refresh:'Atnaujinti iš serverio',
     offline:'Neišsaugota serveryje',
@@ -2924,6 +2926,7 @@ ru: {
     noProjects:'Проектов пока нет. Их создаёт руководитель.',
     roleUnknown:'Не удалось подтвердить уровень доступа — часть инструментов может отсутствовать. Обновите с сервера.',
     adminOnly:'Калькулятор Iberia пока доступен только администраторам.',
+    notMember:'У этой учётной записи нет доступа к калькулятору Iberia. Попросите администратора добавить вас.',
     needsSchema:'Нужно обновить базу данных — выполните db/schema.sql в SQL-редакторе Supabase.',
     refresh:'Обновить с сервера',
     offline:'Не сохранено на сервере',
@@ -3280,6 +3283,15 @@ const CLOUD = (function(){
     /* The role is a property of the person, not of a project row. Reading it
        from the row that happened to arrive means it is unknown until one does
        -- and unknowable if none ever do. */
+    /* The Iberian role, from iberia.members -- not the Lithuanian one in
+       profiles. null means "not on the Iberian list at all", which the
+       sign-in says in so many words rather than as a role. */
+    async access(){
+      if(!session || !session.user) return null;
+      const r = await rest('rpc/my_access', { method: 'POST', body: '{}' });
+      return (typeof r === 'string' && r) ? r : null;
+    },
+
     async role(){
       if(!session || !session.user) return 'staff';
       const rows = await rest('profiles?select=role&id=eq.' +
@@ -11305,14 +11317,15 @@ async function bootCloud(){
      back to 'staff' on any error, so every path that is not an affirmative
      'admin' or 'manager' lands in the same place. */
   try {
-    const role = await CLOUD.role();
-    /* ADMINS ONLY, FOR NOW. The database is what enforces it -- every
-       iberia function and view answers nobody whose profile is not admin --
-       so a manager who got past this line would see an empty calculator,
-       not the figures. This is here so they are told why instead. */
+    const role = await CLOUD.access();
+    /* ADMINS ONLY, FOR NOW, and only those on the Iberian list. The database
+       is what enforces it -- every iberia function and view answers nobody
+       who is not an admin member -- so somebody who got past this line would
+       see an empty calculator, not the figures. This is here so they are
+       told why instead, and told the right reason. */
     if(role !== 'admin'){
       await CLOUD.signOut();
-      showSignIn(tr().cloud.adminOnly);
+      showSignIn(role ? tr().cloud.adminOnly : tr().cloud.notMember);
       return;
     }
     rememberRole(role); ROLE_UNKNOWN = false;

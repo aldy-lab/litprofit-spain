@@ -9,10 +9,43 @@ insert into auth.users (id, email) values
   ('11111111-1111-1111-1111-111111111111', 'admin@test'),
   ('22222222-2222-2222-2222-222222222222', 'manager@test'),
   ('33333333-3333-3333-3333-333333333333', 'staff@test');
+insert into auth.users (id, email) values
+  ('44444444-4444-4444-4444-444444444444', 'lt-admin@test'),
+  ('55555555-5555-5555-5555-555555555555', 'ib-manager@test');
 insert into public.profiles (id, email, role) values
   ('11111111-1111-1111-1111-111111111111', 'admin@test',   'admin'),
   ('22222222-2222-2222-2222-222222222222', 'manager@test', 'manager'),
-  ('33333333-3333-3333-3333-333333333333', 'staff@test',   'staff');
+  ('33333333-3333-3333-3333-333333333333', 'staff@test',   'staff'),
+  -- an admin in LITHUANIA who is not on the Iberian list
+  ('44444444-4444-4444-4444-444444444444', 'lt-admin@test', 'admin'),
+  -- on the Iberian list, but as a manager -- and an admin in Lithuania
+  ('55555555-5555-5555-5555-555555555555', 'ib-manager@test', 'admin');
+
+-- The Iberian list is the door now, not the Lithuanian role.
+delete from iberia.members;
+insert into iberia.members (user_id, role) values
+  ('11111111-1111-1111-1111-111111111111', 'admin'),
+  ('55555555-5555-5555-5555-555555555555', 'manager');
+
+-- what the sign-in screen is told, per person
+create or replace function pg_temp.access_as(who uuid) returns text language plpgsql as $$
+declare r text;
+begin
+  perform set_config('request.jwt.claim.sub', who::text, true);
+  execute 'set local role authenticated';
+  r := iberia.my_access();
+  execute 'reset role';
+  return r;
+end $$;
+do $$ begin
+  if pg_temp.access_as('11111111-1111-1111-1111-111111111111') is distinct from 'admin' then
+    raise exception 'member admin not reported as admin'; end if;
+  if pg_temp.access_as('55555555-5555-5555-5555-555555555555') is distinct from 'manager' then
+    raise exception 'member manager not reported as manager'; end if;
+  if pg_temp.access_as('44444444-4444-4444-4444-444444444444') is not null then
+    raise exception 'a Lithuanian admin off the list was reported as having access'; end if;
+  raise notice 'my_access: admin / manager / not on the list -- told apart';
+end $$;
 
 -- ---- the admin can do everything ----
 begin;
@@ -114,6 +147,32 @@ do $$ begin
   exception when insufficient_privilege then null; end;
 end $$;
 select pg_temp.shut_out('staff');
+rollback;
+
+-- a Lithuanian admin who is not on the Iberian list
+begin;
+set local role authenticated;
+set local request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
+select pg_temp.shut_out('admin in Lithuania, not on the Iberian list');
+rollback;
+
+-- on the list as a manager: admins only, still
+begin;
+set local role authenticated;
+set local request.jwt.claim.sub = '55555555-5555-5555-5555-555555555555';
+select pg_temp.shut_out('Iberian manager (admins only for now)');
+rollback;
+
+-- and nobody reads the list over the API
+begin;
+set local role authenticated;
+set local request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+do $$ begin
+  begin
+    perform 1 from iberia.members;
+    raise exception 'the member list is readable over the API';
+  exception when insufficient_privilege then null; end;
+end $$;
 rollback;
 
 -- and the row is still there

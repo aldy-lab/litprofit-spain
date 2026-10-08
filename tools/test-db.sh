@@ -26,7 +26,8 @@ create role anon nologin; create role authenticated nologin;
 create role service_role nologin bypassrls; create role authenticator noinherit login;
 create schema auth; create schema storage; create schema extensions;
 create extension pgcrypto with schema extensions;
-create table auth.users (id uuid primary key default gen_random_uuid(), email text);
+create table auth.users (id uuid primary key default gen_random_uuid(), email text,
+  last_sign_in_at timestamptz);
 create function auth.uid() returns uuid language sql stable as
   $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
 create table storage.buckets (id text primary key, name text, public boolean,
@@ -38,9 +39,12 @@ create table public.profiles (id uuid primary key references auth.users(id),
   name text, email text, role text not null default 'staff');
 grant usage on schema public, auth, storage to anon, authenticated, service_role;
 grant select on public.profiles to authenticated;
+-- live has admins before iberia-members.sql runs; so does this
+insert into auth.users (id, email) values ('00000000-0000-0000-0000-000000000001', 'existing-admin@test');
+insert into public.profiles (id, email, role) values ('00000000-0000-0000-0000-000000000001', 'existing-admin@test', 'admin');
 SQL
 
-for f in iberia iberia-access iberia-payroll; do
+for f in iberia iberia-access iberia-payroll iberia-members; do
   echo "== db/$f.sql"
   q -d postgres -1 -f "db/$f.sql" 2>&1 | { grep -v 'skipping' || true; }
   [ "${PIPESTATUS[0]}" -eq 0 ] || { echo "FAILED in db/$f.sql"; exit 1; }
