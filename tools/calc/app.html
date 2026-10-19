@@ -3288,7 +3288,21 @@ const CLOUD = (function(){
        sign-in says in so many words rather than as a role. */
     async access(){
       if(!session || !session.user) return null;
-      const r = await rest('rpc/my_access', { method: 'POST', body: '{}' });
+      let r;
+      try { r = await rest('rpc/my_access', { method: 'POST', body: '{}' }); }
+      catch(e){
+        /* The member list is a separate migration (db/iberia-members.sql).
+           Where it has not been run, my_access does not exist and PostgREST
+           answers 404 -- and treating that as "role unknown" put the app in
+           its restricted mode, where nothing is offered and nothing is
+           saved: "Not saved to server" on every visit, 19 Oct 2026. Until
+           the list exists, the door is still the profile role, so ask that.
+           A network failure is not this and still throws. */
+        if(e && !e.offline && /my_access|404|Could not find the function/i.test(e.message)){
+          return await this.role();
+        }
+        throw e;
+      }
       return (typeof r === 'string' && r) ? r : null;
     },
 
