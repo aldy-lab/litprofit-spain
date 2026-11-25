@@ -52,7 +52,7 @@ begin;
 set local role authenticated;
 set local request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
 do $$
-declare n int; pid uuid; r record;
+declare n int; pid uuid; r record; eid uuid;
 begin
   select id into pid from iberia.create_project(
     '{"card":{"projectId":"IB-001","client":"Vigo yard","currency":"EUR","contract":5000},
@@ -76,7 +76,16 @@ begin
 
   select count(*) into n from iberia.create_signature('Admin', 'data:image/png;base64,' || repeat('A', 200));
   if n <> 1 then raise exception 'admin could not keep a signature'; end if;
-  raise notice 'admin: creates, reads money, payroll and signatures';
+  -- payments in parts (update 2026-11): half is not paid, both halves are
+  select id into eid from iberia.create_enquiry('{"number":"IB-E1","client":"Vigo","price_ex_vat":1000}');
+  insert into iberia.enquiry_payments (enquiry_id, pct, amount) values (eid, 50, 500);
+  if (select paid from iberia.enquiries_v where id = eid) then raise exception 'half a payment read as paid'; end if;
+  insert into iberia.enquiry_payments (enquiry_id, pct, amount) values (eid, 50, 500);
+  if not (select paid from iberia.enquiries_v where id = eid) then raise exception 'two halves did not read as paid'; end if;
+  if (select paid_ex_vat from iberia.enquiries_v where id = eid) <> 1000 then raise exception 'paid amount not rolled up'; end if;
+  if iberia.import_enquiry_records(jsonb_build_array(jsonb_build_object('enquiry_id', eid, 'sha256', 'x', 'kind', 'invoice'))) <> 1 then
+    raise exception 'admin could not record a document'; end if;
+  raise notice 'admin: creates, reads money, payroll, signatures, part payments';
 end $$;
 commit;
 
@@ -86,7 +95,8 @@ declare n int; v text;
 begin
   foreach v in array array['projects_v','project_history_v','people_v','overheads_v',
                            'acts_v','act_fields_v','documents_v','enquiries_v',
-                           'enquiry_history_v','company_history_v','signatures_v'] loop
+                           'enquiry_history_v','company_history_v','signatures_v',
+                           'enquiry_payments','enquiry_records'] loop
     execute format('select count(*) from iberia.%I', v) into n;
     if n <> 0 then raise exception '% sees % row(s) in %', who, n, v; end if;
   end loop;
@@ -112,6 +122,17 @@ begin
   begin
     perform iberia.create_signature('X', 'data:image/png;base64,' || repeat('A', 200));
     raise exception '% kept a signature', who;
+  exception when insufficient_privilege then null; end;
+
+  begin
+    insert into iberia.enquiry_payments (enquiry_id, amount)
+      values ((select id from iberia.enquiries limit 1), 1);
+    raise exception '% added a payment', who;
+  exception when insufficient_privilege then null; end;
+
+  begin
+    perform iberia.import_enquiry_records('[{"enquiry_id":"00000000-0000-0000-0000-000000000000","sha256":"y"}]');
+    raise exception '% recorded a document', who;
   exception when insufficient_privilege then null; end;
 
   begin

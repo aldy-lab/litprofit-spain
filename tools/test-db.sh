@@ -44,7 +44,7 @@ insert into auth.users (id, email) values ('00000000-0000-0000-0000-000000000001
 insert into public.profiles (id, email, role) values ('00000000-0000-0000-0000-000000000001', 'existing-admin@test', 'admin');
 SQL
 
-for f in iberia iberia-access iberia-payroll iberia-members; do
+for f in iberia iberia-access iberia-payroll iberia-members iberia-update-2026-11; do
   echo "== db/$f.sql"
   q -d postgres -1 -f "db/$f.sql" 2>&1 | { grep -v 'skipping' || true; }
   [ "${PIPESTATUS[0]}" -eq 0 ] || { echo "FAILED in db/$f.sql"; exit 1; }

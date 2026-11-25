@@ -436,6 +436,8 @@ button.icon.ai-x:focus-visible{outline:2px solid var(--accent);outline-offset:2p
   position:fixed;inset:0;z-index:200;display:grid;place-items:center;
   background:var(--navy-900);padding:24px
 }
+.signin-card[hidden]{display:none}
+.signin-hello{margin:-6px 0 6px;font-size:14px;line-height:1.5;color:#d6d9ee}
 .signin-card{
   width:min(380px,100%);display:grid;gap:9px;
   background:#0c0e30;border:1px solid rgba(255,255,255,.10);padding:34px 30px
@@ -499,7 +501,7 @@ button.icon.ai-x:focus-visible{outline:2px solid var(--accent);outline-offset:2p
 .notice-bar button{margin-left:auto;flex:none;padding:5px 10px;font-size:10px}
 
 /* ---------- narrow screens ---------- */
-@media (max-width:860px){
+@media (max-width:1024px){
   /* ---------- a sheet is a stack of cards, not a table ----------
      Labor is thirteen columns: on a 390px screen the grid hid 1188px of
      itself, so three columns were visible and every figure was somewhere off
@@ -1057,6 +1059,17 @@ button:active{transform:scale(.97);transition:transform .14s var(--ease)}
 .an-table td.ok b{color:var(--good-text)}
 .an-table td.bad b{color:var(--critical)}
 .an-table tbody tr:nth-child(even){background:var(--row-alt,transparent)}
+/* "Who converts" only appears once owners are filled in, and the import filled
+   them: five columns of full names put the card at 513px on a 390px phone and
+   the whole page scrolled sideways. The grid item may shrink, the cells are
+   tighter on a phone, and anything still too wide scrolls inside its card. */
+.enq-charts > *{min-width:0}
+.enq-charts figure.chart{min-width:0;overflow-x:auto}
+@media (max-width:600px){
+  .an-table td,.an-table th{padding:6px 4px}
+  .an-table th{font-size:9.5px;letter-spacing:.03em}
+  .an-table td{font-size:12px}
+}
 /* An author display always beats the hidden attribute, and this app styles
    .nice with one. Without this the picker's twin ignores hidden entirely. */
 [hidden]{display:none!important}
@@ -1458,7 +1471,113 @@ input.enq-cell{width:100%;box-sizing:border-box;border:1px solid var(--accent);
 .enq-rate{margin:0 0 14px;font-size:13px;color:var(--ink-2)}
 .enq-rate b{font-size:17px;color:var(--ink-1);font-variant-numeric:tabular-nums}
 /* the enquiry number is an identifier; wrapping it makes two of one */
+.imp-entry{margin:6px 0 14px;font-size:13px}
+.enq-pays{margin:16px 0 4px;padding-top:14px;border-top:1px solid var(--border)}
+.pay-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pay-h h3{margin:0;font-size:13px}
+.pay-tot{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.pay-tot b.pos{color:var(--good-text)} .pay-tot b.wip{color:var(--warning)}
+.pay-bar{height:6px;border-radius:3px;background:color-mix(in srgb, var(--ink-3) 18%, transparent);overflow:hidden;margin:8px 0 10px}
+.pay-bar i{display:block;height:100%;background:var(--good)}
+.pay-list{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:8px}
+.pay-list td{padding:6px 6px;border-bottom:1px solid var(--grid);vertical-align:middle}
+.pay-list td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pay-list .pay-note{color:var(--ink-3);overflow-wrap:anywhere}
+.pay-del{min-height:28px;padding:2px 8px}
+.pay-none{margin:4px 0 8px}
+.pay-add{display:grid;grid-template-columns:150px 90px 130px minmax(0,1fr);gap:8px 10px;align-items:end}
+.pay-add label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--ink-3);min-width:0}
+.pay-add input{width:100%;font-size:16px}
+.pay-quick{grid-column:1 / -1;display:flex;gap:6px;flex-wrap:wrap}
+.pay-quick button{min-height:30px;padding:4px 10px;font-size:11px}
+#payAdd{grid-column:1 / -1;justify-self:start}
+.pay-base{margin:8px 0 0}
+.enq-derived{opacity:.75}
+@media (max-width:620px){
+  .pay-add{grid-template-columns:1fr 1fr}
+  .pay-add .pay-wide{grid-column:1 / -1}
+}
+.enq-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:4px 0 14px}
+.enq-head-t{min-width:0}
+.enq-head .sheet{margin-bottom:4px}
+.enq-head .hint{margin:0}
+.enq-seg{display:inline-flex;border:1px solid var(--border);border-radius:6px;padding:3px;gap:3px;background:var(--surface-1)}
+.enq-seg button{border:0;background:none;padding:8px 16px;border-radius:4px;font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);cursor:pointer;min-height:36px}
+.enq-seg button.on{background:var(--accent-soft);color:var(--ink-1);font-weight:600}
+.enq-seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.enq-filtered{font-size:12.5px;color:var(--ink-3);margin:-4px 0 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.enq-summary .enq-kpis--money .enq-kpi.lead{box-shadow:inset 0 2px 0 var(--accent)}
+.enq-summary .enq-rate{margin-bottom:0}
+.brand .ver{margin-left:8px;padding:1px 6px;border:1px solid var(--border);border-radius:3px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-3);opacity:.85}
+.sl-chart .sl-a{font-size:10px;fill:var(--ink-3);font-variant-numeric:tabular-nums}
+.sl-share{display:block;height:4px;margin:8px 0 2px;background:color-mix(in srgb, var(--ink-3) 16%, transparent);border-radius:2px;overflow:hidden;text-decoration:none}
+.sl-share s{display:block;height:100%;background:var(--series-1);text-decoration:none}
+.sl{margin:4px 0 26px}
+.sl{--sl-cost:color-mix(in srgb, var(--ink-3) 38%, var(--surface-1))}
+.sl-top{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 14px}
+.sl-big{border:1px solid var(--line,var(--baseline));border-radius:4px;padding:14px 16px;min-width:0}
+.sl-big span{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.sl-big b{display:block;font-size:clamp(20px,2.4vw,28px);font-weight:700;margin:6px 0 2px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sl-big i{font-style:normal;font-size:12px;color:var(--ink-3)}
+.sl-big.ok b{color:var(--good-text,var(--good))}
+.sl-funnel{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.sl-step{flex:1 1 180px;min-width:0;padding:6px 4px}
+.sl-step b{display:block;font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.sl-step span{display:block;font-size:12px;color:var(--ink-2);margin-top:2px}
+.sl-step em{display:block;font-style:normal;font-size:13px;font-variant-numeric:tabular-nums;margin-top:4px}
+.sl-step i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.sl-arrow{align-self:center;color:var(--ink-3);font-size:20px}
+.sl-chart svg{width:100%;height:auto;display:block;max-width:1200px}
+.sl-chart .sl-v{font-size:10.5px;fill:var(--ink-2);font-variant-numeric:tabular-nums}
+.sl-chart .sl-l{font-size:10.5px;fill:var(--ink-2)}
+.sl-chart .sl-p{font-size:10px;fill:var(--good-text,var(--good));font-weight:600}
+.sl-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin-top:6px}
+.sl-legend i,.sl-qk i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.sl-hb{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.sl-hr{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto 3.2em;align-items:center;gap:10px;font-size:12.5px}
+.sl-hn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sl-ht{height:9px;background:color-mix(in srgb, var(--ink-3) 14%, transparent);border-radius:2px;overflow:hidden}
+.sl-ht i{display:block;height:100%;background:var(--series-1);border-radius:2px}
+.sl-hr b{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.sl-hr em{font-style:normal;color:var(--good-text,var(--good));text-align:right;font-variant-numeric:tabular-nums}
+.sl-more{font-size:12px;margin:4px 0 0}
+.sl-q{display:flex;height:14px;border-radius:3px;overflow:hidden;margin:10px 0 8px;background:color-mix(in srgb, var(--ink-3) 14%, transparent)}
+.sl-q i,.sl-qk i{display:block}
+.sl-q .doc,.sl-qk .doc{background:var(--series-1)}
+.sl-q .est,.sl-qk .est{background:color-mix(in srgb, var(--series-1) 40%, transparent)}
+.sl-q .none,.sl-qk .none{background:var(--critical)}
+.sl-qk{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px}
+.sl-qk i{display:inline-block}
+@media (max-width:760px){
+  .sl-top{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sl-arrow{display:none}
+  /* the months stay legible: the chart scrolls inside its card, the page does not */
+  .sl-chart{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sl-chart svg{min-width:640px}
+  /* name, amount, margin on one line; the bar under them, full width */
+  .sl-hr{grid-template-columns:minmax(0,1fr) auto 2.8em;row-gap:4px;column-gap:8px;font-size:12.5px}
+  .sl-ht{grid-column:1 / -1;grid-row:2}
+}
+.enq-rec{margin:14px 0 4px}
+.enq-rec summary{cursor:pointer;font-weight:600;font-size:13px;margin-bottom:8px}
+.enq-rec .tablewrap{max-height:320px;overflow:auto}
+.enq-rec-table td{font-size:12px;vertical-align:top}
+.enq-rec-detail{font-size:11px;color:var(--ink-3);margin-top:2px;overflow-wrap:anywhere}
+.imp-overlay{position:fixed;inset:0;z-index:200;background:rgba(5,6,20,.55);display:grid;place-items:center;padding:16px}
+.imp-overlay[hidden]{display:none}
+.imp-panel{width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;margin:0}
+.imp-step{display:flex;flex-direction:column;gap:6px;margin:12px 0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.imp-step input{font-size:16px;text-transform:none;letter-spacing:0}
+.imp-sum{font-size:13px;margin:10px 0}
+.imp-bar{height:6px;background:var(--accent-soft);border-radius:3px;overflow:hidden;margin:12px 0 6px}
+.imp-bar span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.imp-prog{font-size:13px;font-variant-numeric:tabular-nums;min-height:1.4em}
+.imp-log{font-size:12px;max-height:220px;overflow:auto}
+.imp-log ul{margin:4px 0 10px 18px;padding:0}
+.imp-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 #enqTable td.pf-id{white-space:nowrap}
+#enqTable .enq-folder{display:inline-block;margin-left:4px;padding:0 4px;color:var(--accent);text-decoration:none;font-weight:600;border-radius:3px}
+#enqTable .enq-folder:hover,#enqTable .enq-folder:focus-visible{background:var(--accent-soft)}
 
 /* ---------- two levels of navigation ----------
    The top row is the subject; the row under it belongs to it. Same weight of
@@ -1532,8 +1651,8 @@ button.nice{
   border:1px solid var(--border);border-radius:2px;
   padding:7px 9px;font:inherit;font-size:13px;line-height:1.2;text-align:left;
   /* The filter labels are uppercase mono and the trigger sits inside that
-     label, so it inherited both. "OCHEAN WHALE COMPANY" in a list of sixty-
-     three clients is a wall; the label names the field, the value is a name. */
+     label, so it inherited both. A long company name in capitals, in a list of
+     sixty-three clients, is a wall; the label names the field, the value is a name. */
   text-transform:none;letter-spacing:normal;
   transition:border-color .16s var(--ease),background .16s var(--ease)
 }
@@ -1647,6 +1766,494 @@ table.grid td button.nice{padding:4px 6px;font-size:12.5px}
 .enq-hist b{font-weight:600;color:var(--ink-1)}
 .enq-hist i{font-style:normal;font-family:var(--mono);font-size:11.5px}
 .enq-hist u{text-decoration:none;color:var(--ink-3);font-size:11px;margin-left:auto}
+
+/* ---------- in-between widths: a Galaxy Z Fold opened, a tablet upright ----------
+   The sheets turned into cards only below 860px, and an opened Fold is about
+   884px wide: Labor came up as the desktop table, eight of its fifteen columns
+   on screen and Plan Total, Actual Total and Difference somewhere off to the
+   right. The card breakpoint above is 1024px now. A card one field wide at that
+   width is a ribbon three screens long, so from 640px the fields go two across.
+   Last in the stylesheet on purpose: it overrides rules above it at the same
+   specificity, and has to win on source order. */
+@media (min-width:640px) and (max-width:1024px){
+  table[data-sheet] tbody tr,table[data-sheet] tfoot tr,
+  #pfTable tbody tr,#pfTable tfoot tr,#enqTable tbody tr,#enqTable tfoot tr{
+    display:grid;grid-template-columns:1fr 1fr;column-gap:28px;padding:6px 16px 12px
+  }
+  table[data-sheet] td.rowacts,#pfTable td.pf-id{grid-column:1 / -1}
+  /* in two columns the last two fields both sit on the card's bottom edge */
+  table[data-sheet] tr > td:nth-last-child(2):nth-child(odd){border-bottom:0}
+}
+@media (max-width:1024px){
+  /* Text columns had their names on the left and number columns on the right,
+     because the label inherits the cell's alignment. In a card that read as two
+     different forms stitched together. Every name starts at the same edge now. */
+  table[data-sheet] td::before,#pfTable td::before,#enqTable td::before,
+  #pfTable tfoot td::before{text-align:left}
+  /* The card rule's padding:5px 0 lost to the plain "table.grid td{padding:4px
+     6px}" further down -- same specificity, later in the file -- so every cell
+     holding an input was 6px in from the computed cells under it, and the
+     column of names had a step in it. */
+  table[data-sheet] td,#pfTable td,#enqTable td{padding-left:0;padding-right:0}
+}
+/* At 884px the headline figures went four across: the portfolio's six left two
+   under them beside an empty hole, the dashboard's two rows of five left one
+   tile alone on a row. Six go three across; five go three and two, each row
+   filling the width, on a six-column track. */
+@media (min-width:761px) and (max-width:1100px){
+  .co-kpis{grid-template-columns:repeat(3,1fr)}
+  main .tiles:has(> .tile:nth-child(5):last-child){grid-template-columns:repeat(6,1fr)}
+  main .tiles:has(> .tile:nth-child(5):last-child) > .tile{grid-column:span 2}
+  main .tiles:has(> .tile:nth-child(5):last-child) > .tile:nth-child(n+4){grid-column:span 3}
+}
+/* A Fold's cover screen is 412px. Logo, save state, three icons and three
+   languages came to 489px, so the language switch fell onto a row of its own
+   and the header cost 100px of a narrow screen. The save state keeps its
+   coloured dot and drops the words -- they are still read out, font-size
+   leaves them in the accessibility tree -- and the languages tighten. */
+@media (max-width:520px){
+  header.app{flex-wrap:nowrap;gap:6px}
+  .brand img{height:18px}
+  .savetag{font-size:0;letter-spacing:0}
+  .savetag::before{margin-right:0;width:7px;height:7px}
+  .langs button{min-width:30px;padding:6px 4px;font-size:11px}
+  header.app .menu-wrap,header.app #btnHelp,header.app #btnTheme{flex:none}
+}
+
+/* =====================================================================
+   v1.2 -- the same drawing-sheet look, with more air and one set of shapes.
+   Kept as one layer at the end of the sheet on purpose: it wins on source
+   order over every rule above it, and taking it out returns v1.1 exactly.
+   Nothing here changes a colour's meaning, a figure or a layout breakpoint.
+   ===================================================================== */
+:root{
+  --r:8px; --r-sm:6px;
+  --page:#080a27; --surface-1:#0d1034; --surface-2:#12164a;
+  --border:rgba(255,255,255,.09); --grid:rgba(255,255,255,.08);
+  --lift:0 1px 0 rgba(255,255,255,.035) inset, 0 10px 28px -18px rgba(0,0,0,.55);
+}
+:root[data-theme="light"]{
+  --page:#f3f5fa; --surface-1:#ffffff; --surface-2:#eef1f8;
+  --border:rgba(11,13,42,.10); --grid:rgba(11,13,42,.09);
+  --lift:0 1px 2px rgba(11,13,42,.04), 0 10px 26px -18px rgba(11,13,42,.22);
+}
+
+/* chrome: header, sections, sub-tabs, live strip, rivets */
+header.app{padding:12px 24px;gap:12px}
+nav.tabs{padding:0 16px}
+nav.tabs button{padding:14px 14px 12px;letter-spacing:.1em;border-bottom-width:2px;
+  transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+nav.tabs button:hover{background:none;color:var(--ink-1)}
+.pulse{padding:8px 24px;gap:22px}
+.pulse i{font-size:10px;letter-spacing:.13em}
+.seam{height:20px;background-size:20px 20px;opacity:.16}
+
+/* page */
+main{padding:24px 24px 48px}
+.card{border-radius:var(--r);padding:20px 22px;margin-bottom:18px;box-shadow:var(--lift)}
+h2.sheet{font-size:16px;font-weight:600;margin:0 0 14px}
+h2.sheet .muted{font-size:11.5px;letter-spacing:.08em}
+.hint{font-size:12.5px;line-height:1.55}
+.notice-bar{border-radius:var(--r)}
+
+/* controls */
+button{border-radius:var(--r-sm);min-height:34px;letter-spacing:.1em}
+button.icon{border-radius:var(--r-sm)}
+select,input[type=text],input[type=number],input[type=date],input[type=search],input[type=email],input[type=password]{
+  border-radius:var(--r-sm);padding:7px 10px;border-color:var(--border);
+  transition:border-color .2s var(--ease),background .2s var(--ease)}
+select:hover,input[type=text]:hover,input[type=number]:hover,input[type=date]:hover,input[type=search]:hover{border-color:var(--baseline)}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+
+/* sheets: a cell to type in reads as a soft field, not an empty box */
+table.grid th{letter-spacing:.12em;padding:10px 8px}
+table.grid input,table.grid select{background:color-mix(in srgb, var(--ink-1) 3.5%, transparent);border-color:transparent}
+table.grid input:hover,table.grid select:hover{border-color:var(--border)}
+@media (hover:hover){ table.grid tbody tr:hover td{background:color-mix(in srgb, var(--accent) 6%, transparent)} }
+table.grid tr.totals td{background:var(--surface-2)}
+.tablewrap{border-radius:var(--r-sm)}
+
+/* one tile, everywhere: dashboard, company, register, analysis */
+.tiles{gap:12px;background:none;border:0}
+.tile,.enq-kpi,.co-kpi,.an-stat{border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--lift)}
+.tile{background:var(--surface-1)}
+.co-kpi{background:var(--surface-1)}
+.tile .lbl,.enq-kpi span,.co-kpi span{letter-spacing:.12em}
+.enq-kpis{gap:12px}
+.pf-chip,.enq-chip{border-radius:999px}
+
+/* the project's tabs: tighter, and what does not fit goes under More */
+nav.tabs button{padding:14px 11px 12px;letter-spacing:.08em}
+nav.tabs.fit{overflow:visible;position:relative;z-index:30;
+  /* the trailing fade is for a strip that scrolls; this one does not, and a
+     mask clips everything outside the strip -- the More menu included */
+  -webkit-mask-image:none;mask-image:none}
+nav.tabs > button[hidden]{display:none}
+.tab-more{position:relative;display:flex;flex:none}
+.tab-more-btn{display:inline-flex;align-items:center;gap:6px}
+.tab-more-btn svg{width:10px;height:6px}
+.tab-more-n{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:var(--accent-soft);color:var(--ink-1);font-size:10px;letter-spacing:0;font-weight:600}
+.tab-menu{position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:230px;display:flex;flex-direction:column;
+  padding:6px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--lift),0 18px 40px -20px rgba(0,0,0,.6)}
+.tab-menu[hidden]{display:none}
+nav.tabs .tab-menu button{text-align:left;border:0;border-radius:var(--r-sm);padding:10px 12px;white-space:nowrap;color:var(--ink-2)}
+nav.tabs .tab-menu button:hover,nav.tabs .tab-menu button:focus-visible{background:var(--accent-soft);color:var(--ink-1)}
+
+/* revenue: paid as a percent, tinted by how far it has got */
+.pct-in{display:inline-flex;align-items:center;gap:6px;width:100%}
+.pct-in input{text-align:right;min-width:64px}
+.pct-in i{font-style:normal;color:var(--ink-3);font-size:12px}
+.pct-in.full input{color:var(--good-text);font-weight:600}
+.pct-in.part input{color:var(--warning);font-weight:600}
+
+/* the three sections read as a switch, the project's own tabs stay a strip */
+.sections{padding:10px 24px;gap:6px;align-items:center}
+.sections button{border-bottom:0;margin:0;padding:8px 16px;border-radius:var(--r-sm);font-size:12px;letter-spacing:.1em}
+.sections button:hover{background:color-mix(in srgb, var(--ink-1) 5%, transparent);color:var(--ink-1)}
+.sections button.active{background:var(--accent-soft);color:var(--ink-1);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent)}
+.tabrow{padding-left:24px}
+.tabrow > #projectSel{border-radius:var(--r-sm)}
+
+/* charts sit on the same rhythm as the cards around them */
+figure.chart figcaption{font-size:13px;font-weight:600;letter-spacing:0;margin-bottom:10px}
+
+@media (max-width:760px){
+  .sections{padding:8px 12px}
+  .sections button{padding:8px 12px}
+  .tabrow{padding-left:12px}
+  main{padding:16px 14px 40px}
+  .card{padding:16px;border-radius:var(--r-sm)}
+  header.app{padding:10px 14px;gap:8px}
+}
+@media (max-width:520px){ header.app{gap:6px} }
+/* Phones unclip .tablewrap because the sheets become cards there. A table
+   that stays a table -- People, Fixed costs, Documents -- then pushed the
+   page to 860px. Those scroll inside their own box instead. */
+@media (max-width:1024px){
+  .tablewrap:not(:has(table[data-sheet], #pfTable, #enqTable)){overflow-x:auto}
+}
+/* 320px: the language switch takes the second line rather than the page width */
+@media (max-width:360px){
+  header.app{flex-wrap:wrap;row-gap:6px}
+  .sections{gap:4px;padding:8px 10px}
+  .sections button{padding:8px 10px;letter-spacing:.06em}
+}
+/* the dashboard's KPI table: the 66px heading floor is for the wide sheets */
+@media (max-width:400px){
+  table.kpi-table th{min-width:0;letter-spacing:.06em}
+  table.kpi-table td,table.kpi-table th{padding:6px 5px}
+}
+
+/* =====================================================================
+   PHONES -- a pass over every screen at 390 and 320px. Last in the sheet,
+   so it wins on source order; desktop is untouched (every rule is inside a
+   width query).
+   ===================================================================== */
+@media (max-width:1024px){
+  /* A sheet in card mode is a column of cards, thousands of pixels tall. A
+     later narrow-screen rule capped its wrapper at 340-414px with overflow
+     visible, so the rows spilled out of the card and "+ Add row" sat on top
+     of them. Cards are not a scroll box. */
+  .tablewrap:has(table[data-sheet]),.tablewrap:has(#pfTable),.tablewrap:has(#enqTable){max-height:none;overflow:visible}
+  @media (max-width:639px){.tablewrap:has(table.co-table){max-height:none;overflow:visible}}
+  /* a row that has nothing in it yet folds to its name; tap to fill it in */
+  table[data-sheet] tbody tr.is-blank:not(.open){cursor:pointer;padding-bottom:8px}
+  table[data-sheet] tbody tr.is-blank:not(.open) > td:not(:nth-child(1)):not(:nth-child(2)){display:none}
+  table[data-sheet] tbody tr.is-blank:not(.open)::after{
+    content:attr(data-fill);display:block;grid-column:1 / -1;
+    font-size:11.5px;letter-spacing:.06em;color:var(--accent);padding:4px 0 0}
+  .toolbar #btnAddRow{width:100%;min-height:44px}
+}
+@media (max-width:639px){
+  /* fields: label above value, two to a row; text and choices take the width */
+  table[data-sheet] tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px;row-gap:4px;
+    padding:12px 14px;border-radius:var(--r)}
+  table[data-sheet] tbody td{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px;
+    padding:2px 0;border-bottom:0;min-width:0}
+  table[data-sheet] tbody td::before{flex:none;font-size:9.5px;letter-spacing:.1em;line-height:1.3}
+  table[data-sheet] tbody td:has(> input[type=text]){grid-column:1 / -1}
+  table[data-sheet] tbody td.calc{padding:6px 0 2px;font-size:14px;text-align:left}
+  table[data-sheet] tbody td.num input,table[data-sheet] tbody td .pct-in input{text-align:left}
+  table[data-sheet] tbody td input,table[data-sheet] tbody td select{min-height:40px;font-size:16px}
+  table[data-sheet] tbody td.rowacts{grid-column:1 / -1;flex-direction:row;justify-content:flex-end;gap:6px;padding-top:4px}
+  table[data-sheet] tbody td.rowacts .rowbtn{opacity:.6;min-width:40px;min-height:36px;font-size:16px}
+  table[data-sheet] tbody tr.is-blank:not(.open) td::before{display:none}
+  table[data-sheet] tbody tr.is-blank:not(.open) td input{background:none;border-color:transparent;min-height:30px;padding:2px 0;font-weight:600}
+  /* totals: two to a row as well */
+  table[data-sheet] tfoot tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px;padding:12px 14px;border-radius:var(--r)}
+  table[data-sheet] tfoot td{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-bottom:0;padding:4px 0}
+  table[data-sheet] tfoot td:first-child{grid-column:1 / -1}
+  table[data-sheet] tfoot td:empty{display:none}
+  /* a folded row reads as a title and a line under it */
+  table[data-sheet] tbody tr.is-blank:not(.open) td:nth-child(1) input{font-size:15px;font-weight:600}
+  table[data-sheet] tbody tr.is-blank:not(.open) td:nth-child(2) input{font-size:13px;font-weight:400;color:var(--ink-2)}
+  table[data-sheet] tbody tr.is-blank:not(.open){row-gap:0;padding-top:10px}
+
+  /* the project card: label above the field, the field the full width */
+  .kv{grid-template-columns:1fr;gap:4px;max-width:none}
+  .kv label{margin-top:10px}
+  .kv input,.kv select{width:100%;min-height:42px;font-size:16px}
+
+  /* figures that must not break: the euro sign stays with its number */
+  .enq-kpi b,.co-kpi b,.tile .val{white-space:nowrap}
+  .enq-kpi b{font-size:clamp(17px,5.4vw,24px)}
+  .enq-kpis{grid-template-columns:1fr 1fr}
+  .co-kpis{grid-template-columns:1fr 1fr}
+  .co-kpi b{font-size:clamp(18px,5.6vw,24px)}
+
+  /* a reading table wider than the screen scrolls inside its card */
+  .card:has(> table.kpi-table),.card:has(> .tablewrap > table.kpi-table){overflow-x:auto}
+  /* the portfolio's per-currency total: the empty cells and the label for the
+     weighted margin made a tall blank box */
+  #pfTable tfoot td:empty,#pfTable tfoot td.muted{display:none}
+
+  /* company tables: one card per person / cost / document, labels above */
+  table.co-table,table.co-table tbody,table.co-table tfoot,table.co-table tr,table.co-table td{display:block;width:auto}
+  table.co-table thead{display:none}
+  table.co-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px;row-gap:8px;
+    position:relative;border:1px solid var(--grid);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;background:var(--surface-1)}
+  table.co-table tbody td{display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:0;border:0;min-width:0;text-align:left}
+  table.co-table tbody td::before{content:attr(data-label);font-family:var(--mono);font-size:9.5px;line-height:1.3;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  table.co-table tbody td:first-child{grid-column:1 / -1;padding-right:44px}
+  table.co-table tbody td[colspan]{grid-column:1 / -1;padding:0}
+  table.co-table tbody td[colspan]::before,table.co-table tbody td:last-child::before{content:none}
+  table.co-table tbody tr:has(td[colspan]){display:block;border-style:dashed;background:none}
+  table.co-table tbody td:last-child:not([colspan]){position:absolute;top:8px;right:8px;padding:0}
+  table.co-table tbody td:last-child:empty{display:none}
+  table.co-table td input,table.co-table td select,table.co-table td.num input{width:100%;min-width:0;min-height:40px;font-size:16px;text-align:left}
+  table.co-table tbody td.co-derived{border-left:0;font-size:14px;padding:0;text-align:left}
+  table.co-table .co-del{min-width:40px;min-height:40px;font-size:18px}
+  table.co-table tfoot tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px;row-gap:6px;
+    border:1px solid var(--baseline);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;background:var(--surface-2)}
+  table.co-table tfoot td{display:flex;flex-direction:column;gap:2px;padding:0;border:0;text-align:left}
+  table.co-table tfoot td:empty{display:none}
+  table.co-table tfoot td[colspan]:first-child{grid-column:1 / -1;font-weight:600}
+  table.co-table tfoot td.num:not(:first-child)::before{content:attr(data-label);font-family:var(--mono);font-size:9.5px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
+  table.co-table tfoot tr td,table.co-table tfoot tr.co-sub td,table.co-table tfoot tr.co-total td{border:0;text-align:left;align-items:flex-start}
+  /* a department line reads as name ... amount, one line each */
+  table.co-table tfoot tr.co-sub{background:none;border:0;border-bottom:1px solid var(--grid);border-radius:0;
+    margin:0;padding:9px 2px;grid-template-columns:minmax(0,1fr) auto;align-items:baseline}
+  table.co-table tfoot tr.co-sub td[colspan]:first-child{grid-column:auto;font-weight:500}
+  table.co-table tfoot tr.co-sub td.num::before{content:none}
+  table.co-table tfoot tr.co-total{margin-top:12px}
+  .pf-filters label.co-check{display:flex;flex-direction:row;align-items:center;gap:10px;min-height:44px;font-size:13px}
+  .pf-filters label.co-check input[type=checkbox]{width:20px;height:20px;min-width:0;margin:0;flex:none}
+
+  /* settings: the name on its own line, the field and its unit under it */
+  .set-table,.set-table tbody,.set-table tr{display:block;width:auto}
+  .set-table thead{display:none}
+  .set-table tr{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;align-items:center;
+    padding:10px 0;border-bottom:1px solid var(--grid)}
+  .set-table th[scope=row]{grid-column:1 / -1;width:auto;border:0;padding:0 0 6px}
+  table.set-table td,table.set-table th[scope=row]{border:0;padding:0;font-size:13px;line-height:1.35}
+  table.set-table th[scope=row]{font-size:14px;padding-bottom:6px}
+  table.set-table td .set-val input{width:96px;min-width:0;min-height:40px;font-size:16px}
+
+  /* any field under 16px makes iOS Safari zoom the page on focus */
+  #main input[type=text],#main input[type=search],#main input[type=number],#main input[type=date],
+  #main input[type=email],#main input:not([type]),#main select,#main textarea,
+  dialog input:not([type=checkbox]):not([type=radio]),dialog select,dialog textarea{font-size:16px}
+  /* the enquiry card: its buttons wrap instead of pushing Save off a 320px
+     screen, and they stay at the bottom while the long form scrolls */
+  .enq-actions{flex-wrap:wrap;position:sticky;bottom:-1px;z-index:2;background:var(--surface-1);
+    margin:14px -2px 0;padding:12px 2px calc(4px + env(safe-area-inset-bottom));border-top:1px solid var(--grid)}
+  .enq-actions button{min-height:44px}
+  .enq-actions .primary{flex:1 1 100%;order:9}
+  .notice-bar{font-size:12px;padding:10px 12px;gap:10px}
+  .notice-bar button{min-height:32px}
+  h2.sheet{font-size:15px}
+}
+/* SIGNED IN, the header carries one more button -- the advisor -- and on a
+   390px phone it came to 444px: the whole app scrolled sideways for everyone
+   who logs in, which is everyone who uses it. The check that passed ran
+   signed out. The advisor keeps its words for screen readers and shows "AI";
+   the hidden language <select> stops taking a gap; the languages tighten. */
+@media (max-width:520px){
+  header.app{gap:4px}
+  header.app .ai-btn{font-size:0;letter-spacing:0;padding:6px 7px;min-width:34px;min-height:34px;flex:none}
+  header.app .ai-btn::before{content:"AI";font-size:11px;letter-spacing:.1em;font-weight:600}
+  header.app #langSel.nice-native{position:absolute}
+  header.app .langs button{min-width:27px;padding:6px 3px}
+}
+@media (max-width:400px){
+  header.app .brand img{height:15px}
+  header.app button.icon{width:31px}
+}
+@media (max-width:360px){
+  table[data-sheet] tbody tr,table[data-sheet] tfoot tr{column-gap:8px;padding:10px 12px}
+}
+/* =====================================================================
+   DOCUMENTS -- tiles with the file on them, a Back step, a preview with
+   the details beside it.
+   ===================================================================== */
+.doc-nav{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:0 0 14px}
+.doc-backbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 16px 8px 12px;
+  border:1px solid var(--baseline);border-radius:var(--r,6px);background:var(--surface-1);
+  font-size:12px;letter-spacing:.12em;color:var(--ink-1)}
+.doc-backbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.doc-where{font-size:12px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1 1 160px}
+.doc-where em{font-style:normal;opacity:.5;margin:0 4px}
+.doc-where b{color:var(--ink-1);font-weight:600}
+.doc-seg{margin-left:auto}
+.doc-seg button{padding:6px 12px;min-height:32px;font-size:11px}
+.drop-zone.is-compact{margin-top:14px}
+.drop-zone.is-compact .drop-face{padding:16px 14px}
+.drop-zone.is-compact .drop-main{font-size:13px}
+.doc-search{margin-bottom:12px}
+.doc-none{color:var(--ink-3);font-size:13px;padding:28px 0;text-align:center;border:1px dashed var(--grid);border-radius:var(--r,6px)}
+
+.doc-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:2px 0 8px}
+.doc-file{display:grid;grid-template-rows:auto auto auto auto;align-content:start;gap:3px;text-align:left;
+  padding:0 0 12px;border:1px solid var(--grid);border-radius:var(--r,6px);background:var(--surface-1);
+  overflow:hidden;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;min-width:0;
+  transition:border-color .2s var(--ease,ease),transform .2s var(--ease,ease),box-shadow .2s var(--ease,ease)}
+.doc-file:hover{border-color:var(--accent);background:var(--surface-1);box-shadow:var(--lift,0 6px 18px rgba(0,0,0,.08))}
+.doc-file:active{transform:scale(.985)}
+.doc-file:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.doc-thumb{position:relative;display:grid;place-items:center;aspect-ratio:4 / 3;margin-bottom:8px;
+  background:var(--surface-2);border-bottom:1px solid var(--grid);overflow:hidden}
+.doc-thumb.is-pdf,.doc-thumb.is-none,.doc-thumb.is-text{aspect-ratio:4 / 3}
+.doc-thumb .doc-timg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.doc-thumb.is-pdf .doc-timg{object-position:top center;inset:10px 14% 0;width:72%;height:calc(100% - 10px);
+  box-shadow:0 1px 6px rgba(0,0,0,.18)}
+.doc-thumb.has-img .doc-timg{opacity:1}
+.doc-thumb.has-img .doc-ext{opacity:0}
+.doc-ext{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--ink-2);
+  padding:10px 12px;border:1px solid var(--baseline);border-radius:3px;background:var(--surface-1);
+  min-width:58px;text-align:center}
+.doc-thumb.is-pdf .doc-ext{color:var(--critical)}
+.doc-flag{position:absolute;left:8px;top:8px;z-index:1;font-family:var(--mono);font-size:10.5px;
+  padding:3px 7px;border-radius:3px;background:var(--warning,#b7791f);color:#fff}
+.doc-flag.is-gone{background:var(--critical)}
+.doc-fname{padding:0 12px;font-weight:600;color:var(--ink-1);line-height:1.3;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.doc-fmeta{padding:0 12px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 10px;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.doc-fmeta b{color:var(--ink-1);font-weight:600;white-space:nowrap}
+.doc-fsub{padding:0 12px;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* preview: the file large, the details beside it */
+.dp-panel{grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr) 320px;border-radius:var(--r,6px);overflow:hidden}
+.dp-head{grid-column:1 / -1;gap:12px}
+.dp-back{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:7px 14px 7px 10px;flex:none;
+  border:1px solid var(--baseline);border-radius:var(--r,6px);font-size:11.5px}
+.dp-body{grid-column:1;min-height:0}
+.dp-body.is-pages{display:block;padding:8px;background:var(--surface-2)}
+.dp-page{display:block;width:100%;height:auto;margin:0 auto 8px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.2)}
+.dp-none{display:grid;justify-items:center;gap:14px;padding:30px}
+.dp-none .doc-ext{font-size:18px;padding:16px 20px}
+.dp-side{grid-column:2;grid-row:2;display:flex;flex-direction:column;min-height:0;overflow:auto;
+  border-left:1px solid var(--baseline);background:var(--surface-1)}
+.dp-form{display:grid;gap:12px;padding:16px}
+.dp-side-h{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.dp-field{display:grid;gap:5px}
+.dp-field > span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.dp-field input,.dp-field select{width:100%;min-height:38px}
+.dp-field.num input{text-align:left}
+.dp-field .doc-left{font-family:var(--mono);font-size:11px}
+.dp-field.doc-soon .doc-left{color:var(--warning,#b7791f)}
+.dp-field.doc-gone .doc-left{color:var(--critical)}
+.dp-facts-row{display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:4px;border-top:1px solid var(--grid)}
+.dp-note{margin:0;font-size:11.5px;color:var(--ink-3)}
+.dp-acts{display:grid;gap:8px;padding:0 16px 16px;margin-top:auto}
+.dp-btn{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border-radius:var(--r,6px);
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--grid)}
+a.dp-btn.primary{background:var(--ink-1);border-color:var(--ink-1);color:var(--page);font-weight:600}
+a.dp-btn:not([href]){opacity:.45;pointer-events:none}
+.dp-btn.danger{color:var(--critical)}
+
+@media (max-width:700px){
+  .dp-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;height:100dvh;border-radius:0;border:0}
+  .dp-head{padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top))}
+  .dp-title b{font-size:13.5px}
+  .dp-x{display:none}
+  /* one scrolling column: the file, then its details */
+
+  .dp-panel{overflow:auto}
+  .dp-body{grid-column:1;grid-row:2;height:auto;min-height:58dvh;max-height:none}
+  .dp-body iframe{height:70dvh}
+  .dp-body img{max-height:70dvh}
+  .dp-side{grid-column:1;grid-row:3;border-left:0;border-top:1px solid var(--baseline);overflow:visible}
+  .dp-field input,.dp-field select{min-height:44px;font-size:16px}
+  .dp-acts{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+}
+@media (max-width:639px){
+  .doc-files{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .doc-fname{font-size:12.5px}
+  .doc-seg{margin-left:0}
+  .doc-where{flex-basis:100%;order:3}
+  .doc-backbtn{min-height:44px}
+}
+/* =====================================================================
+   ACCESS -- who may sign in. Roles explained in words, one row per
+   person, a sign-in link instead of a password.
+   ===================================================================== */
+.acc-roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.acc-role{display:grid;gap:6px;align-content:start;padding:12px 14px;border:1px solid var(--grid);border-radius:var(--r,6px);
+  font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+.acc-chip{justify-self:start;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;border:1px solid var(--baseline);color:var(--ink-1);font-weight:600}
+.acc-chip.is-admin{background:var(--ink-1);border-color:var(--ink-1);color:var(--page)}
+.acc-chip.is-manager{background:var(--accent-soft)}
+.acc-err{margin:0 0 14px;padding:10px 12px;border-left:2px solid var(--critical);background:rgba(255,154,154,.10);
+  color:var(--critical);font-size:13px}
+.acc-link{margin:0 0 18px;padding:14px 16px;border:1px solid var(--accent);border-radius:var(--r,6px);background:var(--accent-soft)}
+.acc-link-h{margin:0 0 8px;font-weight:600;color:var(--ink-1)}
+.acc-link-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.acc-link-row input{flex:1 1 240px;min-width:0;font-family:var(--mono);font-size:12px}
+.acc-mail{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-1);text-decoration:underline;
+  text-underline-offset:3px;padding:8px 4px}
+.acc-note{margin:8px 0 0;font-size:12px;color:var(--ink-2)}
+.acc-add{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,.9fr) auto;gap:10px;align-items:end;
+  padding:14px 16px;margin:0 0 18px;border:1px dashed var(--baseline);border-radius:var(--r,6px)}
+.acc-add-h{grid-column:1 / -1;margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.acc-add label,.acc-rl{display:grid;gap:5px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.acc-add input,.acc-add select{width:100%;min-height:38px;font-family:var(--font);letter-spacing:0;text-transform:none}
+.acc-add button{min-height:38px}
+.acc-list{display:grid;border-top:1px solid var(--grid)}
+.acc-row{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(140px,.8fr) minmax(0,1.2fr) 310px;gap:14px;align-items:center;
+  padding:12px 2px;border-bottom:1px solid var(--grid)}
+.acc-row.is-blocked{opacity:.6}
+.acc-who{display:grid;gap:2px;min-width:0}
+.acc-nm{border:1px solid transparent;background:none;padding:4px 6px;margin-left:-6px;font-weight:600;font-size:14px;color:var(--ink-1);width:100%}
+.acc-nm:hover{border-color:var(--grid)}
+.acc-em{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-em i{font-style:normal;color:var(--accent)}
+.acc-ext{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--warning,#b7791f);margin-left:6px;cursor:help}
+.acc-rl > span{display:none}
+.acc-rl select{width:100%;min-height:36px;font-family:var(--font);letter-spacing:0;text-transform:none}
+.acc-st{display:grid;gap:2px;font-size:12px;color:var(--ink-3)}
+.acc-dot{display:inline-flex;align-items:center;gap:7px;font-weight:600;color:var(--ink-1);font-size:12.5px}
+.acc-dot::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good,#2e8b57)}
+.acc-dot.is-pending::before{background:var(--warning,#b7791f)}
+.acc-dot.is-blocked::before{background:var(--critical)}
+.acc-acts{display:flex;gap:6px;justify-content:flex-end;flex-wrap:nowrap}
+.acc-acts button{white-space:nowrap}
+.acc-acts button{min-height:36px}
+.acc-acts button.danger{color:var(--critical)}
+.acc-sb{margin-top:14px}
+@media (max-width:900px){
+  .acc-roles{grid-template-columns:1fr}
+  .acc-add{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .acc-add button{grid-column:1 / -1}
+  .acc-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);row-gap:10px}
+  .acc-who{grid-column:1 / -1}
+  .acc-acts{grid-column:1 / -1;justify-content:flex-start}
+}
+@media (max-width:639px){
+  .acc-add{grid-template-columns:minmax(0,1fr)}
+  .acc-add input,.acc-add select,.acc-rl select{min-height:44px;font-size:16px}
+  .acc-nm{font-size:16px}
+  .acc-rl > span{display:block}
+  .acc-row{grid-template-columns:minmax(0,1fr);padding:14px 2px}
+  .acc-acts button{min-height:44px;flex:1 1 auto}
+  .acc-link-row button,.acc-mail{flex:1 1 auto;text-align:center;min-height:44px}
+}
 </style>
 </head>
 <body>
@@ -1655,6 +2262,7 @@ table.grid td button.nice{padding:4px 6px;font-size:12.5px}
   <div class="brand">
     <img src="__BASE__/assets/brand/logo-lockup.svg" alt="LITPROFIT">
     <small data-i18n="appSub"></small>
+    <small class="ver" title="Version">v1.2</small>
   </div>
   <span class="savetag" id="saveTag" role="status" aria-live="polite"></span>
   <span class="spacer"></span>
@@ -1755,6 +2363,20 @@ table.grid td button.nice{padding:4px 6px;font-size:12.5px}
     <p class="signin-msg" id="siMsg" role="alert"></p>
     <button type="button" class="ghost signin-link" id="siForgot"></button>
   </form>
+  <!-- Reached from a sign-in link an admin sent: the person is already signed
+       in by the link and chooses their own password here. -->
+  <form class="signin-card" id="setpassForm" hidden>
+    <img src="__BASE__/assets/brand/logo-lockup.svg" alt="LITPROFIT" class="signin-mark">
+    <p class="signin-sub" id="spSub"></p>
+    <p class="signin-hello" id="spHello"></p>
+    <input type="email" id="spEmail" autocomplete="username" hidden readonly>
+    <label for="spPass" id="spPassL"></label>
+    <input type="password" id="spPass" autocomplete="new-password" minlength="8" required>
+    <label for="spPass2" id="spPass2L"></label>
+    <input type="password" id="spPass2" autocomplete="new-password" minlength="8" required>
+    <button type="submit" class="primary" id="spGo"></button>
+    <p class="signin-msg" id="spMsg" role="alert"></p>
+  </form>
 </div>
 
 <!-- Two people opened the same job. Never auto-resolved: whichever way it
@@ -1850,6 +2472,21 @@ en: {
     needInk:'Nothing has been drawn yet.',
     confirmDel:'Delete act {n}? This cannot be undone.'},
   actPrint:T_ACT_PRINT,
+  acc:{title:'Access to the calculator',lead:'Who can sign in and what they see. A new person gets a link and chooses their own password - nobody else ever knows it.',
+    roles:{admin:'Admin',manager:'Manager',staff:'Employee'},
+    roleN:{admin:'Everything, plus people, company costs and this screen.',manager:'All projects and enquiries, including revenue, margin and the portfolio.',staff:'Project costs and work acts only. No revenue, margin, portfolio or enquiries.'},
+    add:'Add a person',name:'Name',email:'Email',role:'Role',create:'Create and get the link',
+    linkFor:'Sign-in link for {name}',copy:'Copy',copied:'Copied',mail:'Send by email',
+    linkNote:'The link works once. The person opens it, chooses a password and is signed in. If it has expired, press "New link".',
+    mailSubj:'Access to the LITPROFIT calculator',mailBody:'Hello {name},\n\nhere is your link to the LITPROFIT project calculator. Open it and choose your password:\n\n{link}\n\nAfterwards you sign in at {site} with {email}.',
+    newLink:'New link',block:'Block',unblock:'Unblock',
+    st:{active:'Active',pending:'Invited, not signed in yet',blocked:'Blocked'},
+    last:'Last sign-in',never:'never',you:'you',showBlocked:'Show blocked',
+    confirmBlock:'Block {name}? They lose access immediately (at most an hour on an already open page). Their records stay as they are. You can unblock at any time.',
+    exists:'This email already has an account. Find it in the list and press "New link".',
+    errSelf:'You cannot change your own role or block yourself.',errLast:'This is the last active admin. Make someone else an admin first.',
+    errBadEmail:'Check the email address.',errFn:'The access service did not answer. If this repeats, it has not been deployed yet.',
+    needsCloud:'Access is managed in the online version, signed in as an admin.',ext:'outside address',extN:'Not a litprofit.com address. The same sign-in system also serves another site; blocking here blocks it there too.',loading:'Loading\u2026',saved:'Saved.'},
   doc:{title:'Documents',
     lead:'Invoices, quotes, contracts and certificates, filed against the job they belong to. Nothing here is read automatically \u2014 the amount and the date are the ones you type.',
     drop:'Drop files here, or choose them',
@@ -1867,6 +2504,7 @@ en: {
     dropInto:'Drop files here \u2014 they go into {folder}',
     expiringSoon:'expiring within 90 days',expired:'expired',daysLeft:'{n} days left',
     allFiles:'Everything',openFile:'Open the file',loading:'Opening\u2026',
+    back:'Back',vTiles:'Tiles',vList:'List',hFolder:'Folder',details:'Details',delFile:'Delete file',saveAuto:'Changes save as you make them.',
     noPreview:'No preview for this kind of file. Open it to read it.',
     kind:{invoice_in:'Invoice in',invoice_out:'Invoice out',quote:'Quote',contract:'Contract',
       certificate:'Certificate',report:'Report',photo:'Photo',other:'Other'},
@@ -1965,7 +2603,8 @@ en: {
     winRate:'Won of decided',ofDecided:'of those decided',
     cost:'Cost',sell:'Sell',margin:'Margin',marginPct:'Margin %',
     paid:'Paid',unpaid:'Unpaid',paidDate:'Paid on',invoice:'Invoice no.',
-    kTurnover:'Sold',kCost:'Cost',kMargin:'Margin',kUnpaid:'Unpaid',
+    pay:{title:'Payments',of:'of',none:'No payments yet.',date:'Date',amount:'Amount, €',note:'Note',notePh:'advance, balance…',rest:'Balance',add:'+ Add payment',del:'Remove this payment',confirmDel:'Remove this payment?',needAmount:'Enter a percent or an amount.',baseIs:'Percent is of the order total, {sum} (the larger of the price and what was invoiced).',noBase:'The enquiry has no price yet, so only an amount can be entered.',derived:'Follows the payments below.',partTitle:'Part paid — open the card for the payments'},vSales:'Sales',vRegister:'Register',vFiltered:'The figures below follow the filters set in the register.',sales:{title:'Sales',lead:'Orders with a PO only, within the filters above. Cost and margin are counted where the cost is known.',sold:'Sold',cost:'Cost',margin:'Margin',avg:'Average order',perOrder:'per order',orders:'orders',withCost:'with a cost',fReceived:'Enquiries received',fQuoted:'Quoted to the client',fWon:'Won — PO received',ofReceived:'of received',ofQuoted:'of quoted',ofValue:'of the quoted value',byMonth:'Sales by month: cost and margin',monthNote:'by the month of the PO; % = margin',byClient:'Top clients',bySupplier:'Top manufacturers',more:'more',quality:'How the cost is known',qDoc:'From documents',qEst:'Estimated',qNone:'Not known',qLead:'Share of sales value. Documented = the supplier invoice, order confirmation, proforma or quote in the job folder, or a cost typed in by hand; estimated = the supplier’s median margin this year (marked “įvertinta” in the note).'},kTurnover:'Sold',kSoldNote:'with a PO',kCost:'Cost',kMargin:'Margin',kUnpaid:'Unpaid',invoiced:'Invoiced',folder:'Open the job folder in SharePoint',
+    recTitle:'From the sales folder',recDate:'Date',recKind:'Type',recWhat:'Document',recRef:'No.',recSum:'Amount',
     noCost:'no cost entered',costHint:'What the supplier charges. Leave blank if not known yet — blank is not zero.',
     report:'Register report',open:'Enquiry register',
     reportSub:'Enquiries, margin and what is still unpaid',
@@ -1985,7 +2624,7 @@ en: {
     conflict:'Somebody else saved this enquiry while you had it open. Reload and try again.',
     staffOnly:'The enquiry register is not part of your access.'},
   appSub:'Iberia // Project Profitability Calculator',themeDark:'Dark',themeLight:'Light',
-  tabs:{portfolio:'Portfolio',dashboard:'Dashboard',card:'Project Card',acts:'Work carried out',revenue:'Revenue',labor:'Labor',subs:'Subcontractors',travel:'Travel',materials:'Materials & Tools',logistics:'Logistics & Other',enquiries:'Enquiries',settings:'Settings',people:'People',overheads:'Fixed costs',burn:'Break-even',docs:'Documents',pdocs:'Documents'},
+  tabs:{portfolio:'Portfolio',dashboard:'Dashboard',card:'Project Card',acts:'Work carried out',revenue:'Revenue',labor:'Labor',subs:'Subcontractors',travel:'Travel',materials:'Materials & Tools',logistics:'Logistics & Other',enquiries:'Enquiries',settings:'Settings',people:'People',overheads:'Fixed costs',burn:'Break-even',docs:'Documents',pdocs:'Documents',access:'Access'},
   newProj:'+ New project',dupProj:'Duplicate',delProj:'Delete',csv:'Export CSV',json:'Backup JSON',importJson:'Import',print:'Print report',
   addRow:'+ Add row',total:'Total',yes:'Yes',no:'No',
   confirmDel:'Delete this project? This cannot be undone.',
@@ -1999,7 +2638,7 @@ en: {
     admin:'Admin overhead rate',adminN:'% of direct project cost',
     margin:'Target margin',marginN:'% of total revenue',
     note:'Settings are stored per project — the same way the Excel file keeps them per workbook.'},
-  cols:{category:'Category',description:'Description',planRev:'Plan Revenue',actRev:'Actual Revenue',diff:'Difference',revenue:'Revenue',status:'Status',invoice:'Invoice No.',paid:'Paid?',
+  cols:{category:'Category',description:'Description',planRev:'Plan Revenue',actRev:'Actual Revenue',diff:'Difference',revenue:'Revenue',status:'Status',invoice:'Invoice No.',paid:'Paid?',paidPct:'Paid, %',
     employee:'Employee',role:'Role',days:'Days',hours:'Hours',grossRate:'Gross Rate / h',grossSalary:'Gross Salary',burdenPct:'Employer Burden %',empCost:'Employer Cost',travelDays:'Travel Days',allowance:'Daily Allowance',planTotal:'Plan Total',actTotal:'Actual Total',
     company:'Company / Person',scope:'Scope',rate:'Rate / h',travel:'Travel',accom:'Accommodation',materials:'Materials',other:'Other',
     type:'Type',qty:'Qty',unitCost:'Unit Cost',supplier:'Supplier / Note',
@@ -2154,7 +2793,7 @@ en: {
     sev:{watch:'watch', act:'act', urgent:'urgent'}
   },
   cloud:{
-    signInSub:'Iberia // Project Profitability Calculator',
+    signInSub:'Iberia // Project Profitability Calculator',linkExpired:'This sign-in link has expired or was already used. Ask your administrator for a new one.',setTitle:'Choose a password',setHello:'Hello, {name}. Choose the password you will sign in with. Your login is {email}.',newPass:'New password (8+ characters)',newPass2:'The same password again',savePass:'Save and sign in',passShort:'At least 8 characters.',passMismatch:'The two passwords differ.',
     importAdds:'Add {n} project(s) from this backup to the shared database? Existing projects are kept — nothing is replaced.',
     importPartial:'Only {n} of {total} projects could be uploaded. Check the connection and import the file again; the ones already added will appear twice, so delete the duplicates.',
     email:'Email',password:'Password',signIn:'Sign in',signingIn:'Signing in…',
@@ -2230,6 +2869,21 @@ lt: {
     needName:'Pirma įveskite atstovo vardą.',
     needInk:'Dar nieko nenupiešta.',
     confirmDel:'Ištrinti aktą {n}? Atkurti nebus galima.'},
+  acc:{title:'Prieiga prie skaičiuoklės',lead:'Kas gali prisijungti ir ką mato. Naujas žmogus gauna nuorodą ir pats susikuria slaptažodį – niekas kitas jo nežino.',
+    roles:{admin:'Administratorius',manager:'Vadovas',staff:'Darbuotojas'},
+    roleN:{admin:'Viskas, taip pat žmonės, įmonės išlaidos ir šis ekranas.',manager:'Visi projektai ir užklausos, įskaitant pajamas, maržą ir portfelį.',staff:'Tik projektų išlaidos ir darbų aktai. Be pajamų, maržos, portfelio ir užklausų.'},
+    add:'Pridėti žmogų',name:'Vardas',email:'El. paštas',role:'Rolė',create:'Sukurti ir gauti nuorodą',
+    linkFor:'Prisijungimo nuoroda: {name}',copy:'Kopijuoti',copied:'Nukopijuota',mail:'Siųsti el. paštu',
+    linkNote:'Nuoroda veikia vieną kartą. Žmogus ją atidaro, susikuria slaptažodį ir yra prijungiamas. Jei nebegalioja – „Nauja nuoroda“.',
+    mailSubj:'Prieiga prie LITPROFIT skaičiuoklės',mailBody:'Sveiki, {name},\n\nčia jūsų nuoroda į LITPROFIT projektų skaičiuoklę. Atidarykite ją ir susikurkite slaptažodį:\n\n{link}\n\nVėliau jungsitės adresu {site} su {email}.',
+    newLink:'Nauja nuoroda',block:'Blokuoti',unblock:'Atblokuoti',
+    st:{active:'Aktyvus',pending:'Pakviestas, dar neprisijungė',blocked:'Užblokuotas'},
+    last:'Paskutinis prisijungimas',never:'niekada',you:'jūs',showBlocked:'Rodyti užblokuotus',
+    confirmBlock:'Blokuoti {name}? Prieiga nutrūks iš karto (jau atidarytame puslapyje – ne vėliau kaip po valandos). Jo įrašai lieka. Atblokuoti galima bet kada.',
+    exists:'Šiam el. paštui paskyra jau yra. Raskite ją sąraše ir spauskite „Nauja nuoroda“.',
+    errSelf:'Negalite keisti savo rolės ar blokuoti savęs.',errLast:'Tai paskutinis aktyvus administratorius. Pirmiausia paskirkite kitą.',
+    errBadEmail:'Patikrinkite el. pašto adresą.',errFn:'Prieigos paslauga neatsakė. Jei kartojasi – ji dar neįdiegta.',
+    needsCloud:'Prieiga valdoma internetinėje versijoje, prisijungus administratoriumi.',ext:'išorinis adresas',extN:'Ne litprofit.com adresas. Ta pati prisijungimo sistema aptarnauja ir kitą svetainę; užblokavus čia, užblokuojama ir ten.',loading:'Įkeliama\u2026',saved:'Išsaugota.'},
   doc:{title:'Dokumentai',
     lead:'Sąskaitos, pasiūlymai, sutartys ir sertifikatai, priskirti darbui, kuriam priklauso. Niekas neskaitoma automatiškai \u2014 sumą ir datą įvedate jūs.',
     drop:'Nutempkite failus čia arba pasirinkite',
@@ -2247,6 +2901,7 @@ lt: {
     dropInto:'Nutempkite failus \u2014 jie pateks į „{folder}“',
     expiringSoon:'baigia galioti per 90 dienų',expired:'nebegalioja',daysLeft:'liko {n} d.',
     allFiles:'Viskas',openFile:'Atidaryti failą',loading:'Atidaroma\u2026',
+    back:'Atgal',vTiles:'Plytelės',vList:'Sąrašas',hFolder:'Aplankas',details:'Duomenys',delFile:'Ištrinti failą',saveAuto:'Pakeitimai išsaugomi iš karto.',
     noPreview:'Šio tipo failo peržiūros nėra. Atidarykite jį, kad perskaitytumėte.',
     kind:{invoice_in:'Gauta sąskaita',invoice_out:'Išrašyta sąskaita',quote:'Pasiūlymas',contract:'Sutartis',
       certificate:'Sertifikatas',report:'Ataskaita',photo:'Nuotrauka',other:'Kita'},
@@ -2345,7 +3000,8 @@ lt: {
     winRate:'Laimėta iš nuspręstų',ofDecided:'iš nuspręstų',
     cost:'Savikaina',sell:'Pardavimas',margin:'Marža',marginPct:'Marža %',
     paid:'Apmokėta',unpaid:'Neapmokėta',paidDate:'Apmokėjimo data',invoice:'Sąskaitos nr.',
-    kTurnover:'Parduota',kCost:'Savikaina',kMargin:'Marža',kUnpaid:'Neapmokėta',
+    pay:{title:'Apmokėjimai',of:'iš',none:'Apmokėjimų dar nėra.',date:'Data',amount:'Suma, €',note:'Pastaba',notePh:'avansas, likutis…',rest:'Likutis',add:'+ Pridėti apmokėjimą',del:'Pašalinti šį apmokėjimą',confirmDel:'Pašalinti šį apmokėjimą?',needAmount:'Įveskite procentą arba sumą.',baseIs:'Procentas skaičiuojamas nuo užsakymo sumos {sum} (didesnė iš kainos ir išrašytos sumos).',noBase:'Užklausa dar neturi kainos, todėl galima įvesti tik sumą.',derived:'Nustatoma pagal apmokėjimus žemiau.',partTitle:'Apmokėta iš dalies — apmokėjimai kortelėje'},vSales:'Pardavimai',vRegister:'Registras',vFiltered:'Žemiau esantys skaičiai atitinka registre nustatytus filtrus.',sales:{title:'Pardavimai',lead:'Tik užsakymai su PO, pagal viršuje nustatytus filtrus. Savikaina ir marža skaičiuojamos ten, kur savikaina žinoma.',sold:'Parduota',cost:'Savikaina',margin:'Marža',avg:'Vidutinis užsakymas',perOrder:'vienam užsakymui',orders:'užsakymai',withCost:'su savikaina',fReceived:'Gautos užklausos',fQuoted:'Pasiūlyta klientui',fWon:'Laimėta — gautas PO',ofReceived:'gautų',ofQuoted:'pasiūlytų',ofValue:'pasiūlytos vertės',byMonth:'Pardavimai per mėnesį: savikaina ir marža',monthNote:'pagal PO mėnesį; % = marža',byClient:'Didžiausi klientai',bySupplier:'Didžiausi gamintojai',more:'kiti',quality:'Iš kur žinoma savikaina',qDoc:'Iš dokumentų',qEst:'Įvertinta',qNone:'Nežinoma',qLead:'Pardavimų vertės dalis. Iš dokumentų = tiekėjo sąskaita, užsakymo patvirtinimas, proforma ar pasiūlymas užsakymo aplanke arba ranka įvesta savikaina; įvertinta = tiekėjo metų vidutinė marža (pastaboje pažymėta „įvertinta“).'},kTurnover:'Parduota',kSoldNote:'gautas PO',kCost:'Savikaina',kMargin:'Marža',kUnpaid:'Neapmokėta',invoiced:'Išstatyta',folder:'Atidaryti užsakymo aplanką SharePoint',
+    recTitle:'Iš pardavimų aplanko',recDate:'Data',recKind:'Tipas',recWhat:'Dokumentas',recRef:'Nr.',recSum:'Suma',
     noCost:'savikaina neįvesta',costHint:'Kiek ima tiekėjas. Palikite tuščią, jei dar nežinoma — tuščia nėra nulis.',
     report:'Registro ataskaita',open:'Užklausų registras',
     reportSub:'Užklausos, marža ir kas dar neapmokėta',
@@ -2365,7 +3021,7 @@ lt: {
     conflict:'Kitas naudotojas išsaugojo šią užklausą, kol ji buvo atidaryta. Perkraukite ir bandykite dar kartą.',
     staffOnly:'Užklausų registras nepriklauso jūsų prieigai.'},
   appSub:'Iberija // Projektų pelningumo skaičiuoklė',themeDark:'Tamsi',themeLight:'Šviesi',
-  tabs:{portfolio:'Portfelis',dashboard:'Suvestinė',card:'Projekto kortelė',acts:'Atlikti darbai',revenue:'Pajamos',labor:'Darbo sąnaudos',subs:'Subrangovai',travel:'Kelionės',materials:'Medžiagos ir įrankiai',logistics:'Logistika ir kita',enquiries:'Užklausos',settings:'Nustatymai',people:'Žmonės',overheads:'Pastovios išlaidos',burn:'Nenuostolingumas',docs:'Dokumentai',pdocs:'Dokumentai'},
+  tabs:{portfolio:'Portfelis',dashboard:'Suvestinė',card:'Projekto kortelė',acts:'Atlikti darbai',revenue:'Pajamos',labor:'Darbo sąnaudos',subs:'Subrangovai',travel:'Kelionės',materials:'Medžiagos ir įrankiai',logistics:'Logistika ir kita',enquiries:'Užklausos',settings:'Nustatymai',people:'Žmonės',overheads:'Pastovios išlaidos',burn:'Nenuostolingumas',docs:'Dokumentai',pdocs:'Dokumentai',access:'Prieiga'},
   newProj:'+ Naujas projektas',dupProj:'Kopijuoti',delProj:'Ištrinti',csv:'Eksportuoti CSV',json:'Atsarginė kopija',importJson:'Importuoti',print:'Spausdinti ataskaitą',
   addRow:'+ Pridėti eilutę',total:'Iš viso',yes:'Taip',no:'Ne',
   confirmDel:'Ištrinti šį projektą? Veiksmo atšaukti negalima.',
@@ -2379,7 +3035,7 @@ lt: {
     admin:'Administracinių išlaidų tarifas',adminN:'% nuo tiesioginių sąnaudų',
     margin:'Tikslinė marža',marginN:'% nuo visų pajamų',
     note:'Nustatymai saugomi kiekvienam projektui atskirai — kaip Excel faile.'},
-  cols:{category:'Kategorija',description:'Aprašymas',planRev:'Planuojamos pajamos',actRev:'Faktinės pajamos',diff:'Skirtumas',revenue:'Pajamos',status:'Būsena',invoice:'Sąskaitos Nr.',paid:'Apmokėta?',
+  cols:{category:'Kategorija',description:'Aprašymas',planRev:'Planuojamos pajamos',actRev:'Faktinės pajamos',diff:'Skirtumas',revenue:'Pajamos',status:'Būsena',invoice:'Sąskaitos Nr.',paid:'Apmokėta?',paidPct:'Apmokėta, %',
     employee:'Darbuotojas',role:'Pareigos',days:'Dienos',hours:'Valandos',grossRate:'Bruto įkainis / val.',grossSalary:'Bruto atlyginimas',burdenPct:'Darbdavio mokesčiai %',empCost:'Darbdavio kaina',travelDays:'Kelionės dienos',allowance:'Dienpinigiai',planTotal:'Planas iš viso',actTotal:'Faktas iš viso',
     company:'Įmonė / asmuo',scope:'Darbų apimtis',rate:'Įkainis / val.',travel:'Kelionė',accom:'Apgyvendinimas',materials:'Medžiagos',other:'Kita',
     type:'Tipas',qty:'Kiekis',unitCost:'Vieneto kaina',supplier:'Tiekėjas / pastaba',
@@ -2534,7 +3190,7 @@ lt: {
     sev:{watch:'stebėti', act:'veikti', urgent:'skubu'}
   },
   cloud:{
-    signInSub:'Iberija // Projektų pelningumo skaičiuoklė',
+    signInSub:'Iberija // Projektų pelningumo skaičiuoklė',linkExpired:'Ši prisijungimo nuoroda nebegalioja arba jau panaudota. Paprašykite administratoriaus naujos.',setTitle:'Susikurkite slaptažodį',setHello:'Sveiki, {name}. Susikurkite slaptažodį, kuriuo jungsitės. Jūsų prisijungimas – {email}.',newPass:'Naujas slaptažodis (8+ simboliai)',newPass2:'Tas pats slaptažodis dar kartą',savePass:'Išsaugoti ir prisijungti',passShort:'Bent 8 simboliai.',passMismatch:'Slaptažodžiai nesutampa.',
     importAdds:'Įkelti {n} projektą (-us) iš šios kopijos į bendrą duomenų bazę? Esami projektai išliks — niekas nebus pakeista.',
     importPartial:'Pavyko įkelti tik {n} iš {total} projektų. Patikrinkite ryšį ir importuokite failą dar kartą; jau įkelti projektai kartosis, tad dublikatus ištrinkite.',
     email:'El. paštas',password:'Slaptažodis',signIn:'Prisijungti',signingIn:'Jungiamasi…',
@@ -2610,6 +3266,21 @@ ru: {
     needName:'Сначала введите имя представителя.',
     needInk:'Пока ничего не нарисовано.',
     confirmDel:'Удалить акт {n}? Отменить нельзя.'},
+  acc:{title:'Доступ к калькулятору',lead:'Кто может входить и что видит. Новый человек получает ссылку и сам придумывает пароль — его не знает никто, кроме него.',
+    roles:{admin:'Админ',manager:'Менеджер',staff:'Сотрудник'},
+    roleN:{admin:'Всё, плюс люди, расходы компании и этот экран.',manager:'Все проекты и запросы, включая выручку, маржу и портфель.',staff:'Только затраты по проектам и акты работ. Без выручки, маржи, портфеля и запросов.'},
+    add:'Добавить человека',name:'Имя',email:'Эл. почта',role:'Роль',create:'Создать и получить ссылку',
+    linkFor:'Ссылка для входа: {name}',copy:'Копировать',copied:'Скопировано',mail:'Отправить письмом',
+    linkNote:'Ссылка одноразовая. Человек открывает её, придумывает пароль и сразу входит. Если она истекла — «Новая ссылка».',
+    mailSubj:'Доступ к калькулятору LITPROFIT',mailBody:'Здравствуйте, {name}!\n\nВот ваша ссылка на калькулятор проектов LITPROFIT. Откройте её и придумайте пароль:\n\n{link}\n\nДальше входите на {site} с адресом {email}.',
+    newLink:'Новая ссылка',block:'Заблокировать',unblock:'Разблокировать',
+    st:{active:'Активен',pending:'Приглашён, ещё не входил',blocked:'Заблокирован'},
+    last:'Последний вход',never:'не входил',you:'вы',showBlocked:'Показать заблокированных',
+    confirmBlock:'Заблокировать {name}? Доступ пропадёт сразу (на уже открытой странице — не позже чем через час). Его записи останутся как есть. Разблокировать можно в любой момент.',
+    exists:'На эту почту уже есть аккаунт. Найдите его в списке и нажмите «Новая ссылка».',
+    errSelf:'Нельзя менять свою роль или блокировать себя.',errLast:'Это последний активный админ. Сначала назначьте админом кого-то ещё.',
+    errBadEmail:'Проверьте адрес почты.',errFn:'Сервис доступа не ответил. Если повторяется — он ещё не установлен.',
+    needsCloud:'Доступом управляют в онлайн-версии, войдя как админ.',ext:'внешний адрес',extN:'Адрес не на litprofit.com. Та же система входа обслуживает и другой сайт: блокировка здесь заблокирует и там.',loading:'Загрузка\u2026',saved:'Сохранено.'},
   doc:{title:'Документы',
     lead:'Счета, предложения, договоры и сертификаты, привязанные к работе, к которой относятся. Ничего не распознаётся автоматически \u2014 сумму и дату вводите вы.',
     drop:'Перетащите файлы сюда или выберите',
@@ -2621,12 +3292,13 @@ ru: {
     dInvoiced:'Дата счёта',dSent:'Отправлено',dSigned:'Подписан',dIssued:'Выдан',
     dTaken:'Снято',dDated:'Дата',
     pSupplier:'Поставщик',pClient:'Клиент',pIssuer:'Кем выдан',pParty:'Вторая сторона',
-    folderLead:'Только те колонки, которые у документа этого типа действительно есть. Смените папку в строке — она переедет.',
+    folderLead:'Нажмите на файл, чтобы посмотреть его и изменить данные.',
     searchAll:'по всем папкам',searchJob:'по файлам этой работы',
     projLead:'Всё, что относится к этой работе \u2014 предложения, счета, фотографии, сертификаты. Всё, что сюда кладут, к ней и привязывается.',
     dropInto:'Перетащите файлы \u2014 они попадут в «{folder}»',
     expiringSoon:'заканчивается в ближайшие 90 дней',expired:'истёк',daysLeft:'осталось {n} дн.',
     allFiles:'Всё',openFile:'Открыть файл',loading:'Открывается\u2026',
+    back:'Назад',vTiles:'Плитки',vList:'Список',hFolder:'Папка',details:'Данные',delFile:'Удалить файл',saveAuto:'Изменения сохраняются сразу.',
     noPreview:'Для такого типа файла предпросмотра нет. Откройте его, чтобы прочитать.',
     kind:{invoice_in:'Входящий счёт',invoice_out:'Исходящий счёт',quote:'Предложение',contract:'Договор',
       certificate:'Сертификат',report:'Отчёт',photo:'Фото',other:'Прочее'},
@@ -2725,7 +3397,8 @@ ru: {
     winRate:'Выиграно из решённых',ofDecided:'из решённых',
     cost:'Себестоимость',sell:'Продажа',margin:'Заработок',marginPct:'Наценка %',
     paid:'Оплачено',unpaid:'Не оплачено',paidDate:'Дата оплаты',invoice:'Счёт №',
-    kTurnover:'Продано',kCost:'Себестоимость',kMargin:'Заработок',kUnpaid:'Не оплачено',
+    pay:{title:'Оплаты',of:'из',none:'Оплат пока нет.',date:'Дата',amount:'Сумма, €',note:'Примечание',notePh:'аванс, остаток…',rest:'Остаток',add:'+ Добавить оплату',del:'Удалить эту оплату',confirmDel:'Удалить эту оплату?',needAmount:'Введите процент или сумму.',baseIs:'Процент считается от суммы заказа {sum} (большее из цены и выставленного).',noBase:'У запроса ещё нет цены, поэтому можно ввести только сумму.',derived:'Считается по оплатам ниже.',partTitle:'Оплачено частично — оплаты в карточке'},vSales:'Продажи',vRegister:'Реестр',vFiltered:'Цифры ниже учитывают фильтры, заданные в реестре.',sales:{title:'Продажи',lead:'Только заказы с PO, в пределах фильтров выше. Себестоимость и заработок считаются там, где себестоимость известна.',sold:'Продано',cost:'Себестоимость',margin:'Заработок',avg:'Средний заказ',perOrder:'на заказ',orders:'заказов',withCost:'с себестоимостью',fReceived:'Получено запросов',fQuoted:'Предложено клиенту',fWon:'Выиграно — получен PO',ofReceived:'от полученных',ofQuoted:'от предложенных',ofValue:'от суммы предложений',byMonth:'Продажи по месяцам: себестоимость и заработок',monthNote:'по месяцу PO; % — маржа',byClient:'Крупнейшие клиенты',bySupplier:'Крупнейшие производители',more:'ещё',quality:'Откуда известна себестоимость',qDoc:'По документам',qEst:'Оценка',qNone:'Неизвестна',qLead:'Доля от суммы продаж. По документам — счёт поставщика, подтверждение заказа, проформа или предложение в папке заказа, либо себестоимость, введённая вручную; оценка — средняя маржа поставщика за год (в примечании пометка «įvertinta»).'},kTurnover:'Продано',kSoldNote:'получен заказ (PO)',kCost:'Себестоимость',kMargin:'Заработок',kUnpaid:'Не оплачено',invoiced:'Выставлено',folder:'Открыть папку заказа в SharePoint',
+    recTitle:'Из папки продаж',recDate:'Дата',recKind:'Тип',recWhat:'Документ',recRef:'№',recSum:'Сумма',
     noCost:'себестоимость не внесена',costHint:'Сколько берёт поставщик. Оставьте пустым, если ещё не известно — пусто это не ноль.',
     report:'Отчёт по реестру',open:'Реестр запросов',
     reportSub:'Запросы, заработок и что ещё не оплачено',
@@ -2745,7 +3418,7 @@ ru: {
     conflict:'Кто-то сохранил этот запрос, пока он был открыт. Обновите страницу и повторите.',
     staffOnly:'Реестр запросов не входит в ваш доступ.'},
   appSub:'Иберия // Калькулятор рентабельности проектов',themeDark:'Тёмная',themeLight:'Светлая',
-  tabs:{portfolio:'Портфель',dashboard:'Сводка',card:'Карточка проекта',acts:'Выполненные работы',revenue:'Доходы',labor:'Персонал',subs:'Субподрядчики',travel:'Командировки',materials:'Материалы и инструменты',logistics:'Логистика и прочее',enquiries:'Запросы',settings:'Настройки',people:'Люди',overheads:'Постоянные расходы',burn:'Безубыточность',docs:'Документы',pdocs:'Документы'},
+  tabs:{portfolio:'Портфель',dashboard:'Сводка',card:'Карточка проекта',acts:'Выполненные работы',revenue:'Доходы',labor:'Персонал',subs:'Субподрядчики',travel:'Командировки',materials:'Материалы и инструменты',logistics:'Логистика и прочее',enquiries:'Запросы',settings:'Настройки',people:'Люди',overheads:'Постоянные расходы',burn:'Безубыточность',docs:'Документы',pdocs:'Документы',access:'Доступ'},
   newProj:'+ Новый проект',dupProj:'Дублировать',delProj:'Удалить',csv:'Экспорт CSV',json:'Резервная копия',importJson:'Импорт',print:'Печать отчёта',
   addRow:'+ Добавить строку',total:'Итого',yes:'Да',no:'Нет',
   confirmDel:'Удалить этот проект? Действие необратимо.',
@@ -2759,7 +3432,7 @@ ru: {
     admin:'Административные накладные',adminN:'% от прямых затрат',
     margin:'Целевая маржа',marginN:'% от общей выручки',
     note:'Настройки хранятся для каждого проекта отдельно — как в файле Excel.'},
-  cols:{category:'Категория',description:'Описание',planRev:'План доходов',actRev:'Факт доходов',diff:'Разница',revenue:'Доход',status:'Статус',invoice:'№ счёта',paid:'Оплачено?',
+  cols:{category:'Категория',description:'Описание',planRev:'План доходов',actRev:'Факт доходов',diff:'Разница',revenue:'Доход',status:'Статус',invoice:'№ счёта',paid:'Оплачено?',paidPct:'Оплачено, %',
     employee:'Сотрудник',role:'Должность',days:'Дни',hours:'Часы',grossRate:'Ставка брутто / ч',grossSalary:'Зарплата брутто',burdenPct:'Налоги работодателя %',empCost:'Затраты работодателя',travelDays:'Дни в командировке',allowance:'Суточные',planTotal:'План итого',actTotal:'Факт итого',
     company:'Компания / лицо',scope:'Объём работ',rate:'Ставка / ч',travel:'Проезд',accom:'Проживание',materials:'Материалы',other:'Прочее',
     type:'Тип',qty:'Кол-во',unitCost:'Цена за ед.',supplier:'Поставщик / примечание',
@@ -2914,7 +3587,7 @@ ru: {
     sev:{watch:'следить', act:'делать', urgent:'срочно'}
   },
   cloud:{
-    signInSub:'Иберия // Калькулятор рентабельности проектов',
+    signInSub:'Иберия // Калькулятор рентабельности проектов',linkExpired:'Ссылка для входа устарела или уже использована. Попросите у администратора новую.',setTitle:'Придумайте пароль',setHello:'Здравствуйте, {name}. Придумайте пароль, с которым будете входить. Ваш логин — {email}.',newPass:'Новый пароль (от 8 символов)',newPass2:'Тот же пароль ещё раз',savePass:'Сохранить и войти',passShort:'Не меньше 8 символов.',passMismatch:'Пароли не совпадают.',
     importAdds:'Добавить {n} проект(ов) из этой копии в общую базу данных? Существующие проекты сохранятся — ничего не будет заменено.',
     importPartial:'Удалось загрузить только {n} из {total} проектов. Проверьте соединение и импортируйте файл снова; уже загруженные появятся дважды — удалите дубликаты.',
     email:'Эл. почта',password:'Пароль',signIn:'Войти',signingIn:'Вход…',
@@ -3266,6 +3939,44 @@ const CLOUD = (function(){
       await auth('recover', { email: email });
     },
 
+    /* A sign-in link (invite or password reset) lands here with the session
+       in the address: #access_token=...&refresh_token=...&type=invite. Take
+       it, ask the auth server who it belongs to, and keep it -- the person is
+       signed in, and the next thing they see is "choose your password". */
+    async adoptLink(params){
+      const at = params.get('access_token');
+      if(!at) return null;
+      let r;
+      try {
+        r = await fetch(API + '/auth/v1/user', { headers: { apikey: KEY, Authorization: 'Bearer ' + at } });
+      } catch(err){ throw offline(); }
+      if(!r.ok) throw new Error('link');
+      const user = await r.json();
+      keep({ access_token: at, refresh_token: params.get('refresh_token'),
+             expires_in: Number(params.get('expires_in')) || 3600, user });
+      return user;
+    },
+    async setPassword(password){
+      if(!session || !session.access_token) throw new Error('link');
+      let r;
+      try {
+        r = await fetch(API + '/auth/v1/user', {
+          method: 'PUT',
+          headers: { apikey: KEY, 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+          body: JSON.stringify({ password })
+        });
+      } catch(err){ throw offline(); }
+      let j = {};
+      try { j = await r.json(); } catch(e){}
+      if(!r.ok) throw new Error(j.msg || j.error_description || j.error || ('HTTP ' + r.status));
+      return true;
+    },
+    /* Accounts: everything goes through the `users` function, which checks
+       on the server that the caller is an admin. */
+    async users(action, payload){
+      return fn('users', Object.assign({ action }, payload || {}));
+    },
+
     /* people, so a row can say who last touched it.
 
        Was called people() -- and so was the payroll list further down this
@@ -3424,6 +4135,34 @@ const CLOUD = (function(){
       if(!res.ok) throw new Error('upload failed ' + res.status);
       return path;
     },
+    /* Payments in parts (migrate-enquiry-payments.sql). Plain table writes:
+       row level security decides who may, and a trigger keeps the enquiry's
+       paid / paid_ex_vat / paid_date in step with them. */
+    async payments(enquiryId){
+      return await rest('enquiry_payments?select=*&enquiry_id=eq.' + encodeURIComponent(enquiryId) +
+                        '&order=paid_on.asc,created_at.asc') || [];
+    },
+    async paymentAdd(row){
+      return firstRow(await rest('enquiry_payments', { method: 'POST', body: JSON.stringify(row),
+        headers: { Prefer: 'return=representation' } }));
+    },
+    async paymentDelete(id){
+      await rest('enquiry_payments?id=eq.' + encodeURIComponent(id), { method: 'DELETE' });
+    },
+    async enquiryOne(id){
+      const rows = await rest('enquiries_v?select=*&id=eq.' + encodeURIComponent(id));
+      return rows && rows[0] || null;
+    },
+    /* What the sales folder says about an enquiry (migrate-enquiry-records.sql) */
+    async records(enquiryId){
+      return await rest('enquiry_records?select=*&enquiry_id=eq.' + encodeURIComponent(enquiryId) +
+                        '&order=doc_date.asc.nullslast,id.asc') || [];
+    },
+    async recordsImport(rows){
+      return await rest('rpc/import_enquiry_records', {
+        method: 'POST', body: JSON.stringify({ p_rows: rows })
+      });
+    },
     async docInsert(row){
       return firstRow(await rest('rpc/create_document', {
         method: 'POST', body: JSON.stringify({ p_row: row })
@@ -3468,6 +4207,22 @@ const CLOUD = (function(){
        link that works forever is a link that leaks forever. Sixty seconds is
        long enough to start a download and short enough to be useless if it is
        pasted anywhere. */
+    /* Many at once, for thumbnails: one request for a folder of forty files
+       instead of forty. Returns { path: url }; a path the server refused is
+       simply absent. */
+    async docLinks(paths, seconds){
+      const res = await fetch(API + '/storage/v1/object/sign/' + BUCKET, {
+        method: 'POST',
+        headers: Object.assign(authHeaders(), { 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ expiresIn: seconds || 600, paths })
+      });
+      if(!res.ok) return {};
+      const out = {};
+      (await res.json() || []).forEach(x => {
+        if(x && x.signedURL && !x.error) out[x.path] = API + '/storage/v1' + x.signedURL;
+      });
+      return out;
+    },
     async docLink(path, seconds){
       const res = await fetch(API + '/storage/v1/object/sign/' + BUCKET + '/' + encodeURI(path), {
         method: 'POST',
@@ -3884,7 +4639,7 @@ function newProject(lang, seq){
     id: uid(),
     settings: defaultSettings(),
     card: { projectId:'PRJ-'+num, client:'', site:'', pm:'', start:'', end:'', contract:null, advance:null, terms:45 },
-    revenue: DEF_ORDER.revenue.map(k=>({k,cat:null,desc:null,plan:null,actual:null,status:D.revenue[k][2],invoice:'',paid:false})),
+    revenue: DEF_ORDER.revenue.map(k=>({k,cat:null,desc:null,plan:null,actual:null,status:D.revenue[k][2],invoice:'',paid:false,paidPct:null})),
     labor: [1,2,3].map(()=>({name:'',role:'',days:null,hours:null,rate:null,travelDays:null,country:'',allowance:null,actual:null})),
     subs: [1,2,3].map(()=>({name:'',scope:'',hours:null,rate:null,travel:null,accom:null,materials:null,other:null,actual:null})),
     travel: DEF_ORDER.travel.map(k=>({k,type:null,desc:null,qty:null,unit:null,actual:null,supplier:''})),
@@ -3961,6 +4716,12 @@ function computeDash(p){
     target:N(s.targetMargin), onTarget: marginActual >= N(s.targetMargin) };       // H7 =IF(H5>=H4,...)
 }
 
+/* how much of a revenue line has been paid, 0..1 */
+function paidShare(r){
+  const v = r.paidPct != null && r.paidPct !== '' ? Number(r.paidPct) : (r.paid ? 100 : 0);
+  return Math.min(1, Math.max(0, (isNaN(v) ? 0 : v) / 100));
+}
+
 /* ================= extra metrics =================
    computeDash() is a faithful copy of the workbook's Dashboard sheet and stays
    that way -- anything the spreadsheet did not calculate goes here instead, so
@@ -3968,8 +4729,11 @@ function computeDash(p){
 function computeExtra(p){
   const sum = (arr, fn) => arr.reduce((a, r) => a + fn(r), 0);
   const d = computeDash(p);
-  const invoiced = sum(p.revenue, r => (r.status === 'invoiced' || r.paid) ? N(r.actual) : 0);
-  const paid     = sum(p.revenue, r => r.paid ? N(r.actual) : 0);
+  /* The revenue sheet's one figure is stored in `plan` (see its column note).
+     These two read `actual`, which the sheet no longer writes, so Invoiced
+     and Paid on the dashboard sat at 0 whatever was entered. */
+  const invoiced = sum(p.revenue, r => (r.status === 'invoiced' || paidShare(r) > 0) ? N(r.plan) : 0);
+  const paid     = sum(p.revenue, r => N(r.plan) * paidShare(r));
   const hours    = sum(p.labor, r => N(r.hours));
   const crew     = p.labor.filter(r => String(r.name || '').trim() || N(r.hours)).length;
   const rebill   = sum(p.materials, r => N(r.rebillAmt)) + sum(p.logistics, r => N(r.rebill));
@@ -4180,6 +4944,9 @@ function chartByClient(rows, pal, opt){
 const LOCALES = {en:'en-GB', lt:'lt-LT', ru:'ru-RU'};
 function fmt(n, dec=2){
   if(n===null||n===undefined||isNaN(n)) return '';
+  /* 0 - 0 is -0 in JavaScript, and Intl prints it as "-0": an empty project's
+     waterfall read -0 under every bar. Anything that rounds to zero is zero. */
+  if(Math.abs(n) < 0.5 * Math.pow(10, -dec)) n = 0;
   return new Intl.NumberFormat(LOCALES[state.lang]||'en-GB',{minimumFractionDigits:0,maximumFractionDigits:dec}).format(n);
 }
 
@@ -4238,7 +5005,9 @@ function sheetConfigsAll(){
       {k:'plan',t:'num',l:c.revenue,sum:true},
       {k:'status',t:'sel',l:c.status,opts:'status'},
       {k:'invoice',t:'text',l:c.invoice,w:'9%'},
-      {k:'paid',t:'sel',l:c.paid,opts:'bool'}
+      /* A percent, not yes/no: yards pay in parts. Stored as paidPct; a line
+         saved before this with paid:true reads as 100 % (F.paidShare). */
+      {k:'paidPct',t:'pct',l:c.paidPct}
     ]},
     labor: { key:'labor', cols:[
       {k:'name',t:'text',l:c.employee,w:'12%',ac:1},
@@ -4305,7 +5074,7 @@ function sheetConfigsAll(){
 }
 function emptyRow(key){
   return {
-    revenue:{cat:'',desc:'',plan:null,actual:null,status:'pending',invoice:'',paid:false},
+    revenue:{cat:'',desc:'',plan:null,actual:null,status:'pending',invoice:'',paid:false,paidPct:null},
     labor:{name:'',role:'',days:null,hours:null,rate:null,travelDays:null,country:'',allowance:null,actual:null},
     subs:{name:'',scope:'',hours:null,rate:null,travel:null,accom:null,materials:null,other:null,actual:null},
     travel:{type:'',desc:'',qty:null,unit:null,actual:null,supplier:''},
@@ -4500,6 +5269,9 @@ const MANAGER_TABS = ['card','pdocs','revenue','labor','subs','travel','material
    and this is the company itself: what it costs to open the doors. Its own
    tab strip rather than an eleventh project tab, because none of it is
    project-scoped and it must be readable on an account with no projects. */
+/* Iberia: no 'access' tab. That screen edits the shared accounts' LITHUANIAN
+   role through the `users` function; from here it would make or unmake
+   Lithuanian admins. Iberian access is iberia.members (README). */
 const COMPANY_TABS = ['people','overheads','burn','docs'];
 
 function tabList(){
@@ -4634,6 +5406,7 @@ function renderChrome(){
   if(off) state.tab = tabs[0];
   renderSections();
   $('#tabs').innerHTML = tabs.map(k=>`<button data-tab="${k}" class="${state.tab===k?'active':''}">${t.tabs[k]}</button>`).join('');
+  fitTabs();
   /* Ten sheets, and on a 390px screen three of them fit. Nothing ever scrolled
      the strip, so opening Materials left the strip sitting at Portfolio and
      the sheet you were actually on was off-screen -- on a phone there was no
@@ -5007,6 +5780,12 @@ window.addEventListener('scroll', e => {
 }, true);
 
 function render(){
+  renderInner();
+  markBlankRows();
+  labelCoTables();
+  if(state.tab === 'docs' || state.tab === 'pdocs') docThumbs();
+}
+function renderInner(){
   renderChrome();
   const m = $('#main');
   /* The register is company-wide, not project-scoped, so it is dispatched
@@ -5027,7 +5806,8 @@ function render(){
      before the same guard for the same reason. */
   if(COMPANY_TABS.indexOf(state.tab) !== -1){
     m.innerHTML = viewCompany(state.tab);
-    m.dataset.view = state.tab === 'burn' ? 'page' : 'sheet';
+    if(state.tab === 'access') wireAccess();
+    m.dataset.view = (state.tab === 'burn' || state.tab === 'access') ? 'page' : 'sheet';
     wireCompany();
     paintPulse(); measureChrome(); enhanceSelects();
     return;
@@ -5072,7 +5852,7 @@ function viewSheet(key){
     bool: [{v:'0',l:t.no},{v:'1',l:t.yes}]
   };
   let head = cfg.cols.map(col=>
-    `<th class="${col.t==='num'||col.t==='calc'?'num':''}"${col.w?` style="width:${col.w}"`:''}>${esc(col.l)}</th>`
+    `<th class="${col.t==='num'||col.t==='calc'||col.t==='pct'?'num':''}"${col.w?` style="width:${col.w}"`:''}>${esc(col.l)}</th>`
   ).join('') + '<th></th>';
   let body = rows.map((r,i)=>{
     /* Every cell carries its own column name. On a phone the heading row is
@@ -5083,6 +5863,12 @@ function viewSheet(key){
       const L = ` data-label="${esc(col.l)}"`;
       if(col.t==='text') return `<td${L}><input type="text"${ro}${col.ac?` list="dl-${key}-${col.k}"`:''} data-r="${i}" data-k="${col.k}" value="${esc(cellVal(key, r, col.k))}"></td>`;
       if(col.t==='num') return `<td class="num"${L}><input type="number"${ro} step="any" data-r="${i}" data-k="${col.k}" value="${r[col.k]??''}"${col.ph?` placeholder="${esc(String(col.ph()))}"`:''}></td>`;
+      if(col.t==='pct'){
+        const pv = r[col.k] != null && r[col.k] !== '' ? r[col.k] : (r.paid ? 100 : '');
+        const share = pv === '' ? 0 : Math.min(100, Math.max(0, Number(pv)));
+        const tone = pv === '' || share === 0 ? 'none' : share >= 100 ? 'full' : 'part';
+        return `<td class="num pct-cell"${L}><span class="pct-in ${tone}"><input type="number"${ro} min="0" max="100" step="1" inputmode="decimal" data-r="${i}" data-k="${col.k}" value="${pv}" placeholder="0"><i>%</i></span></td>`;
+      }
       if(col.t==='sel'){
         const cur = col.opts==='bool' ? (r[col.k]?'1':'0') : r[col.k];
         return `<td${L}><select${ro} data-r="${i}" data-k="${col.k}" data-opts="${col.opts}">${opts[col.opts].map(o=>`<option value="${o.v}"${o.v===cur?' selected':''}>${esc(o.l)}</option>`).join('')}</select></td>`;
@@ -5517,7 +6303,7 @@ function enqSorted(rows){
 /* One pass, so the KPI cards, the table foot and the report can never
    disagree about what is in scope. */
 function enqTotals(rows){
-  let sell = 0, cost = 0, margin = 0, costed = 0, sellCosted = 0, unpaid = 0, days = 0;
+  let sell = 0, cost = 0, margin = 0, costed = 0, sellCosted = 0, unpaid = 0, days = 0, invoiced = 0;
   rows.forEach(r => {
     sell += Number(r.price_ex_vat) || 0;
     days += r.days_unquoted || 0;
@@ -5534,9 +6320,15 @@ function enqTotals(rows){
     }
     /* Only a sale that has actually been sold can be outstanding. An enquiry
        that was rejected is not money anybody is waiting for. */
-    if(!r.paid && r.status === 'Gautas PO') unpaid += Number(r.price_ex_vat) || 0;
+    /* What is owed is what was INVOICED, where the SharePoint list says so:
+       an advance is invoiced at half the price (SK26-100, SK26-103), and
+       counting the whole price as outstanding doubles the debt. */
+    if(r.invoiced_ex_vat != null) invoiced += Number(r.invoiced_ex_vat) || 0;
+    if(!r.paid && r.status === 'Gautas PO')
+      unpaid += Math.max(0, (Number(r.invoiced_ex_vat != null ? r.invoiced_ex_vat : r.price_ex_vat) || 0)
+                            - (Number(r.paid_ex_vat) || 0));
   });
-  return { sell, cost, margin, costed, sellCosted, unpaid, days,
+  return { sell, cost, margin, costed, sellCosted, unpaid, days, invoiced,
            pct: sellCosted ? margin / sellCosted : null,
            /* what share of the register can answer the margin question at all */
            coverage: rows.length ? costed / rows.length : 0 };
@@ -5603,9 +6395,12 @@ function enqBars(items, opt){
    different question and the one the two price columns exist to answer. */
 function enqMonthMoney(rows){
   const by = new Map();
+  /* sold means a PO: this summed every quote, rejected ones too, as "sold" */
   rows.forEach(r => {
-    if(!r.enquiry_date) return;
-    const k = r.enquiry_date.slice(0, 7);
+    if(r.status !== 'Gautas PO') return;
+    const d = r.po_date || r.enquiry_date;
+    if(!d) return;
+    const k = d.slice(0, 7);
     const o = by.get(k) || { sell: 0, margin: 0 };
     o.sell += Number(r.price_ex_vat) || 0;
     if(r.margin_eur != null) o.margin += Number(r.margin_eur);
@@ -5668,6 +6463,11 @@ function viewEnquiries(){
   const rows = enqSorted(enqRows());
 
   const T = enqTotals(rows);
+  /* Sold, cost and margin are about SALES: rows with a PO. Summed over the
+     whole register they added every rejected quote to "sold" -- 3.29 M
+     against 0.66 M actually sold -- and the margin with them. The table's
+     own footer still totals every row on screen. */
+  const W = enqTotals(rows.filter(r => r.status === 'Gautas PO'));
   const kpi = (label, n, tone, note) =>
     `<div class="enq-kpi${tone ? ' ' + tone : ''}"><b>${n}</b><span>${esc(label)}</span>${
       note ? `<i>${esc(note)}</i>` : ''}</div>`;
@@ -5708,7 +6508,10 @@ function viewEnquiries(){
       : '';
     return `<tr data-enq="${esc(r.id)}" tabindex="-1" style="cursor:pointer"${
       who ? ` title="${esc(e.lastChanged)}: ${esc(who)}"` : ''}>
-      <td class="pf-id"><b>${esc(r.number)}</b></td>
+      <td class="pf-id"><b>${esc(r.number)}</b>${
+        /^https:\/\/[a-z0-9-]+\.sharepoint\.com\//i.test(r.folder_url || '')
+          ? ` <a class="enq-folder" href="${esc(r.folder_url)}" target="_blank" rel="noopener"
+               title="${esc(e.folder)}" aria-label="${esc(e.folder)}">&#8599;</a>` : ''}</td>
       <td data-label="${esc(e.client)}">${esc(r.client) || '—'}</td>
       <td data-label="${esc(e.description)}">${esc(r.description) || '—'}</td>
       <td class="muted" data-label="${esc(e.date)}">${
@@ -5725,18 +6528,21 @@ function viewEnquiries(){
       <td class="num enq-edit" data-edit="cost" data-label="${esc(e.cost)}"
           title="${esc(e.clickToEdit)}">${money(r.cost_ex_vat)}</td>
       <td class="num" data-label="${esc(e.sell)}">${fmt(Number(r.price_ex_vat) || 0)}</td>
+      <td class="num" data-label="${esc(e.invoiced)}">${money(r.invoiced_ex_vat)}</td>
       <td class="num calc ${r.margin_eur == null ? '' : (r.margin_eur >= 0 ? 'pos' : 'neg')}"
           data-label="${esc(e.margin)}">${money(r.margin_eur)}</td>
       <td class="num" data-label="${esc(e.marginPct)}">${
         r.margin_pct == null ? '<span class="muted">&mdash;</span>' : pct(Number(r.margin_pct))}</td>
       <td data-label="${esc(e.delivery)}">${flag(r.delivered, e.delivered, e.undelivered)}</td>
       <td class="enq-edit" data-edit="paid" data-label="${esc(e.paid)}"
-          title="${esc(e.clickToEdit)}">${flag(r.paid, e.paid, e.unpaid)}</td>
+          title="${esc(e.clickToEdit)}">${!r.paid && Number(r.paid_ex_vat) > 0 && enqPayBase(r)
+            ? `<span class="enq-flag wip" title="${esc(e.pay.partTitle)}">${pct(Number(r.paid_ex_vat) / enqPayBase(r))}</span>`
+            : flag(r.paid, e.paid, e.unpaid)}</td>
     </tr>`; }).join('')
     /* sixteen columns, not twelve -- the empty-state row has been short since
        the money columns were added, so the message sat under two thirds of a
        table and the rest was blank */
-    : `<tr><td colspan="16" style="padding:26px;text-align:center" class="muted">${esc(e.none)}</td></tr>`;
+    : `<tr><td colspan="17" style="padding:26px;text-align:center" class="muted">${esc(e.none)}</td></tr>`;
 
   const quick = (k, label) =>
     `<button class="enq-chip${enqState().quick === k ? ' on' : ''}" data-quick="${k}">${esc(label)}</button>`;
@@ -5749,10 +6555,21 @@ function viewEnquiries(){
   const years = [...new Set((state.enquiries || [])
     .map(r => (r.enquiry_date || '').slice(0, 4)).filter(Boolean))].sort().reverse();
 
-  return `${noticeBar()}<div class="card">
-    <h2 class="sheet">${esc(e.title)} <span class="muted" style="font-weight:400">// ${
-      t.showing} ${rows.length} ${t.of} ${all}</span></h2>
-    <p class="hint" style="margin:-8px 0 14px">${esc(e.lead)}</p>
+  const view = enqState().view === 'register' ? 'register' : 'sales';
+  const filtered = rows.length !== all;
+  return `${noticeBar()}<div class="enq-head">
+    <div class="enq-head-t">
+      <h2 class="sheet">${esc(e.title)} <span class="muted" style="font-weight:400">// ${
+        t.showing} ${rows.length} ${t.of} ${all}</span></h2>
+      <p class="hint">${esc(e.lead)}</p>
+    </div>
+    <div class="enq-seg" role="tablist" aria-label="${esc(e.title)}">
+      <button role="tab" data-enqview="sales" aria-selected="${view === 'sales'}" class="${view === 'sales' ? 'on' : ''}">${esc(e.vSales)}</button>
+      <button role="tab" data-enqview="register" aria-selected="${view === 'register'}" class="${view === 'register' ? 'on' : ''}">${esc(e.vRegister)}</button>
+    </div>
+  </div>
+  ${filtered && view === 'sales' ? `<p class="enq-filtered">${esc(e.vFiltered)} <button class="ghost" id="enqClear2">${esc(t.clearF)}</button></p>` : ''}
+  <div class="card enq-summary">
 
     <div class="enq-kpis">
       ${kpi(e.kReceived, rows.length, '')}
@@ -5761,11 +6578,11 @@ function viewEnquiries(){
       ${kpi(e.kRejected, count('Atmesta užklausa'), 'bad')}
     </div>
     <div class="enq-kpis enq-kpis--money">
-      ${kpi(e.kTurnover, fmt(T.sell, 0), '')}
-      ${kpi(e.kCost, T.costed ? fmt(T.cost, 0) : '—', '')}
-      ${kpi(e.kMargin, T.costed ? fmt(T.margin, 0) : '—', T.margin >= 0 ? 'ok' : 'bad',
-            T.costed ? (T.pct == null ? '' : pct(T.pct)) : e.noCost)}
-      ${kpi(e.kUnpaid, fmt(T.unpaid, 0), T.unpaid > 0 ? 'wip' : 'ok')}
+      ${kpi(e.kTurnover, fmt(W.sell, 0) + ' €', 'lead', e.kSoldNote)}
+      ${kpi(e.kCost, W.costed ? fmt(W.cost, 0) + ' €' : '—', '')}
+      ${kpi(e.kMargin, W.costed ? fmt(W.margin, 0) + ' €' : '—', W.margin >= 0 ? 'ok' : 'bad',
+            W.costed ? (W.pct == null ? '' : pct(W.pct)) : e.noCost)}
+      ${kpi(e.kUnpaid, fmt(T.unpaid, 0) + ' €', T.unpaid > 0 ? 'wip' : 'ok')}
     </div>
     ${(() => {
       /* Win rate over DECIDED enquiries. Counting the ones still in progress
@@ -5774,7 +6591,8 @@ function viewEnquiries(){
       return decided ? `<p class="enq-rate"><b>${pct(won / decided)}</b> ${esc(e.winRate)}
         <span class="muted">// ${won} / ${decided} ${esc(e.ofDecided)}</span></p>` : '';
     })()}
-
+  </div>
+  ${view === 'sales' ? enqSales(rows, t) + enqAnalysis(rows, t) : `<div class="card enq-reg">
     <div class="pf-filters enq-filters">
       <label>${esc(e.search)}<input type="search" id="enqQ" value="${esc(enqState().q)}"
         placeholder="${esc(e.searchPh)}"></label>
@@ -5820,6 +6638,7 @@ function viewEnquiries(){
         <th title="${esc(e.quoted)}">${esc(e.hQuoted)}</th>
         ${th('days', e.hDays, 1, e.daysUnquoted)}${th('status', e.status)}
         ${th('poDate', e.hPo, 0, e.poDate)}${th('cost', e.cost, 1)}${th('price', e.sell, 1)}
+        <th class="num">${esc(e.invoiced)}</th>
         ${th('margin', e.margin, 1)}${th('marginPct', e.marginPct, 1)}
         <th title="${esc(e.delivery)}">${esc(e.hDelivery)}</th><th>${esc(e.paid)}</th>
       </tr></thead>
@@ -5829,6 +6648,7 @@ function viewEnquiries(){
         <td class="num">${T.days}</td><td></td><td></td>
         <td class="num">${T.costed ? fmt(T.cost) : '&mdash;'}</td>
         <td class="num">${fmt(T.sell)}</td>
+        <td class="num">${T.invoiced ? fmt(T.invoiced) : '&mdash;'}</td>
         <td class="num">${T.costed ? fmt(T.margin) : '&mdash;'}</td>
         <td class="num">${T.pct == null || !T.costed ? '&mdash;' : pct(T.pct)}</td>
         <td></td><td></td>
@@ -5852,9 +6672,186 @@ function viewEnquiries(){
       {title: e.byMonthMoney, empty: e.none, a: e.sell, b: e.margin})}</div>
     <div class="card">${enqBars(enqAgeing(rows, t).map(b => ({l: b.l, v: Math.round(b.v)})),
       {title: e.ageingBuckets, empty: e.none})}</div>
-  </div>
+  </div>`}`;
+}
 
-  ${enqAnalysis(rows, t)}`;
+
+/* ================= sales, as a picture =================
+   Everything here is the rows with a PO, inside whatever filter is set. The
+   register above it is every enquiry; this is what was actually sold, what it
+   cost and what it left, and how much of the cost is documented rather than
+   estimated -- shown, so nobody presents an estimate as a fact. */
+function enqSalesKind(r){
+  if(r.cost_ex_vat == null) return 'none';
+  const n = r.note || '';
+  return /Savikaina: įvert/.test(n) ? 'est' : 'doc';
+}
+function enqSales(rows, t){
+  const e = t.enq, s = e.sales, L = LOCALES[state.lang];
+  const won = rows.filter(r => r.status === 'Gautas PO');
+  if(!won.length) return '';
+  const num = v => Number(v) || 0;
+  const eur = v => fmt(Math.round(v), 0) + ' €';
+  const sold = won.reduce((a, r) => a + num(r.price_ex_vat), 0);
+  const costed = won.filter(r => r.cost_ex_vat != null);
+  const cost = costed.reduce((a, r) => a + num(r.cost_ex_vat), 0);
+  const base = costed.reduce((a, r) => a + num(r.price_ex_vat), 0);
+  const marg = base - cost;
+
+  /* funnel: received -> quoted -> won, by count and by value */
+  const quoted = rows.filter(r => r.quoted_to_client || num(r.price_ex_vat) > 0);
+  const qVal = quoted.reduce((a, r) => a + num(r.price_ex_vat), 0);
+  const step = (label, n, v, sub, share) => `<div class="sl-step"><b>${n}</b><span>${esc(label)}</span>${
+    share != null ? `<u class="sl-share"><s style="width:${Math.max(2, share * 100).toFixed(1)}%"></s></u>` : ''}${
+    v != null ? `<em>${eur(v)}</em>` : ''}${sub ? `<i>${esc(sub)}</i>` : ''}</div>`;
+  const funnel = `<div class="sl-funnel">
+    ${step(s.fReceived, rows.length, null, '', 1)}
+    <span class="sl-arrow" aria-hidden="true">→</span>
+    ${step(s.fQuoted, quoted.length, qVal, rows.length ? pct(quoted.length / rows.length) + ' ' + s.ofReceived : '', rows.length ? quoted.length / rows.length : 0)}
+    <span class="sl-arrow" aria-hidden="true">→</span>
+    ${step(s.fWon, won.length, sold, quoted.length ? pct(won.length / quoted.length) + ' ' + s.ofQuoted + ' · ' + (qVal ? pct(sold / qVal) + ' ' + s.ofValue : '') : '', rows.length ? won.length / rows.length : 0)}
+    <span class="sl-arrow" aria-hidden="true">·</span>
+    ${step(s.avg, eur(sold / won.length), null, base ? s.margin + ' ' + pct(marg / base) : '')}
+  </div>`;
+
+  /* months: cost + margin stacked = sold; margin % under each month */
+  const mm = new Map();
+  won.forEach(r => {
+    const d = r.po_date || r.enquiry_date; if(!d) return;
+    const k = d.slice(0, 7), o = mm.get(k) || { sold: 0, cost: 0, base: 0 };
+    o.sold += num(r.price_ex_vat);
+    if(r.cost_ex_vat != null){ o.cost += num(r.cost_ex_vat); o.base += num(r.price_ex_vat); }
+    mm.set(k, o);
+  });
+  const months = [...mm.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const W = 980, H = 260, pl = 46, pb = 42, pt = 24;
+  const top = Math.max(1, ...months.map(([, o]) => o.sold));
+  /* a round step -- 10k, 20k, 25k, 50k -- and the top of the scale on a step */
+  const stepK = [1e3, 2e3, 2.5e3, 5e3, 1e4, 2e4, 2.5e4, 5e4, 1e5, 2e5, 2.5e5, 5e5].find(v => top / v <= 4) || 1e6;
+  const mx = Math.ceil(top / stepK) * stepK;
+  const gw = (W - pl - 8) / Math.max(1, months.length);
+  const grid = Array.from({ length: Math.round(mx / stepK) + 1 }, (_, i) => i * stepK).map(v => {
+    const y = H - pb - v / mx * (H - pb - pt);
+    return `<line x1="${pl}" x2="${W - 8}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--grid)" stroke-dasharray="${v ? '2 4' : ''}"/>
+      <text x="${pl - 8}" y="${(y + 3.5).toFixed(1)}" text-anchor="end" class="sl-a">${v ? fmt(v / 1000, 0) + 'k' : '0'}</text>`;
+  }).join('');
+  const monthName = k => new Date(k + '-01T00:00:00').toLocaleDateString(L, { month: 'short' });
+  const bars = months.map(([k, o], i) => {
+    const x = pl + i * gw + gw * 0.18, w = gw * 0.64, sc = (H - pb - pt) / mx;
+    const hS = o.sold * sc, hC = o.cost * sc, y = H - pb - hS;
+    const m = o.base ? (o.base - o.cost) / o.base : null;
+    return `<g><title>${esc(monthName(k))}: ${eur(o.sold)} · ${esc(s.cost)} ${eur(o.cost)} · ${esc(s.margin)} ${eur(o.base - o.cost)}</title>
+      <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1, hS - hC).toFixed(1)}" fill="var(--series-1)" rx="1.5"/>
+      <rect x="${x.toFixed(1)}" y="${(H - pb - hC).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(0, hC).toFixed(1)}" fill="var(--sl-cost)"/>
+      <text x="${(x + w / 2).toFixed(1)}" y="${(y - 6).toFixed(1)}" text-anchor="middle" class="sl-v">${fmt(Math.round(o.sold / 1000), 0)}k</text>
+      <text x="${(x + w / 2).toFixed(1)}" y="${H - pb + 15}" text-anchor="middle" class="sl-l">${esc(monthName(k))}</text>
+      <text x="${(x + w / 2).toFixed(1)}" y="${H - pb + 30}" text-anchor="middle" class="sl-p">${m == null ? '' : Math.round(m * 100) + '%'}</text></g>`;
+  }).join('');
+  const monthsSvg = `<figure class="chart sl-chart"><figcaption>${esc(s.byMonth)}</figcaption>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(s.byMonth)}">${grid}${bars}</svg>
+    <div class="legend sl-legend"><span><i style="background:var(--sl-cost)"></i>${esc(s.cost)}</span>
+      <span><i style="background:var(--series-1)"></i>${esc(s.margin)}</span>
+      <span class="muted">${esc(s.monthNote)}</span></div></figure>`;
+
+  /* horizontal bars: who buys, whose parts */
+  const hbars = (title, key, keep) => {
+    const by = new Map();
+    const fold = key === 'supplier' ? null : enqFolder(won.map(r => r.client));
+    won.forEach(r => {
+      const k = (key === 'supplier' ? enqMakerKey(r.supplier) : fold(r.client)) || '—';
+      const o = by.get(k) || { sold: 0, cost: 0, base: 0, n: 0 };
+      o.sold += num(r.price_ex_vat); o.n++;
+      if(r.cost_ex_vat != null){ o.cost += num(r.cost_ex_vat); o.base += num(r.price_ex_vat); }
+      by.set(k, o);
+    });
+    const all = [...by.entries()].sort((a, b) => b[1].sold - a[1].sold);
+    const top = all.slice(0, keep), max = Math.max(1, ...top.map(([, o]) => o.sold));
+    return `<figure class="chart"><figcaption>${esc(title)}</figcaption><div class="sl-hb">${
+      top.map(([k, o]) => `<div class="sl-hr">
+        <span class="sl-hn" title="${esc(k)}">${esc(k)}</span>
+        <span class="sl-ht"><i style="width:${(o.sold / max * 100).toFixed(1)}%"></i></span>
+        <b>${eur(o.sold)}</b><em>${o.base ? Math.round((o.base - o.cost) / o.base * 100) + '%' : '—'}</em></div>`).join('')}
+      ${all.length > keep ? `<p class="muted sl-more">+${all.length - keep} ${esc(s.more)} · ${
+        eur(all.slice(keep).reduce((a, [, o]) => a + o.sold, 0))}</p>` : ''}</div></figure>`;
+  };
+
+  /* how much of the cost is documented */
+  const share = { doc: 0, est: 0, none: 0 };
+  won.forEach(r => { share[enqSalesKind(r)] += num(r.price_ex_vat); });
+  const tot = Math.max(1, sold);
+  const seg = (k, cls) => share[k] ? `<i class="${cls}" style="width:${(share[k] / tot * 100).toFixed(1)}%"></i>` : '';
+  const quality = `<figure class="chart"><figcaption>${esc(s.quality)}</figcaption>
+    <div class="sl-q">${seg('doc', 'doc')}${seg('est', 'est')}${seg('none', 'none')}</div>
+    <div class="sl-qk">
+      <span><i class="doc"></i>${esc(s.qDoc)} <b>${pct(share.doc / tot)}</b></span>
+      <span><i class="est"></i>${esc(s.qEst)} <b>${pct(share.est / tot)}</b></span>
+      ${share.none ? `<span><i class="none"></i>${esc(s.qNone)} <b>${pct(share.none / tot)}</b></span>` : ''}
+    </div><p class="hint an-lead">${esc(s.qLead)}</p></figure>`;
+
+  return `<section class="sl" aria-label="${esc(s.title)}">
+    <h3 class="an-h">${esc(s.title)}</h3>
+    <p class="hint an-lead">${esc(s.lead)}</p>
+    <div class="card">${funnel}</div>
+    <div class="card">${monthsSvg}</div>
+    <div class="enq-charts">
+      <div class="card">${hbars(s.byClient, 'client', 8)}</div>
+      <div class="card">${hbars(s.bySupplier, 'supplier', 8)}</div>
+    </div>
+    <div class="card">${quality}</div>
+  </section>`;
+}
+/* One company, one bar, however the register spelled it: legal forms, quotes,
+   digits and case go, and names are compared by their first word. Two first
+   words that differ by one letter, or where one starts the other, are the same
+   company. No name is written into this code -- the repository is public. */
+const ENQ_LEGAL = /^(sia|uab|ou|oü|mb|ltd|llc|gmbh|co|as|ab|sl|s\.l|inc|limited|company|fzco|ag|bv|srl|spa|europe)$/i;
+function enqWords(name){
+  return String(name || '').replace(/["„“”'(),.\/]/g, ' ').split(/\s+/)
+    .filter(w => w && !ENQ_LEGAL.test(w) && !/^\d+$/.test(w));
+}
+function enqFirst(name){
+  const w = enqWords(name)[0] || '';
+  return w.toLowerCase().replace(/\d+$/, '').replace(/[^a-z0-9ąčęėįšųūžäöüõ]/g, '');
+}
+function enqNear(a, b){
+  if(a === b) return true;
+  if(a.length >= 4 && b.length >= 4 && (a.indexOf(b) === 0 || b.indexOf(a) === 0)) return true;
+  if(Math.min(a.length, b.length) < 5 || Math.abs(a.length - b.length) > 1) return false;
+  let i = 0, j = 0, d = 0;                       // one insertion, deletion or swap
+  while(i < a.length && j < b.length){
+    if(a[i] === b[j]){ i++; j++; continue; }
+    if(++d > 1) return false;
+    if(a.length > b.length) i++; else if(b.length > a.length) j++; else { i++; j++; }
+  }
+  return d + (a.length - i) + (b.length - j) <= 1;
+}
+/* Built per render from the rows on screen: key -> the label most rows use. */
+function enqFolder(names){
+  const groups = [];
+  names.forEach(n => {
+    const k = enqFirst(n); if(!k) return;
+    let g = groups.find(x => x.keys.some(y => enqNear(y, k)));
+    if(!g){ g = { keys: [], labels: new Map() }; groups.push(g); }
+    if(g.keys.indexOf(k) < 0) g.keys.push(k);
+    const label = enqWords(n).join(' ');
+    const nice = label === label.toUpperCase() && label.length > 4
+      ? label.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase()) : label;
+    g.labels.set(nice, (g.labels.get(nice) || 0) + 1);
+  });
+  return n => {
+    const k = enqFirst(n);
+    const g = k && groups.find(x => x.keys.some(y => enqNear(y, k)));
+    if(!g) return '—';
+    /* the shortest of the most used spellings reads best on a bar */
+    return [...g.labels.entries()].sort((a, b) => b[1] - a[1] || a[0].length - b[0].length)[0][0];
+  };
+}
+/* A manufacturer per bar; "X + Y" stays a combination, each part folded. */
+function enqMakerKey(s){
+  const parts = String(s || '').split(/\s*(?:\+|,|\/\/|&| and )\s*/).map(p => enqWords(p)[0]).filter(w => w && w.length > 1);   /* "S.L." is not a maker */
+  if(!parts.length) return '—';
+  const nice = w => w.length <= 3 ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1).toLowerCase();
+  return [...new Set(parts.map(nice))].join(' + ');
 }
 
 /* The analysis block. Kept out of the render above because that function is
@@ -6073,8 +7070,14 @@ function wireEnquiries(){
   on('enqOwner',      'change', ev => set('owner', ev.target.value));
   on('enqYear',       'change', ev => set('year', ev.target.value));
   on('enqClear', 'click', () => {
-    state.enq = null; persist(); render();
+    const v = enqState().view; state.enq = null; enqState().view = v; persist(); render();
   });
+  on('enqClear2', 'click', () => {
+    const v = enqState().view; state.enq = null; enqState().view = v; persist(); render();
+  });
+  document.querySelectorAll('[data-enqview]').forEach(b => b.addEventListener('click', () => {
+    enqState().view = b.dataset.enqview; persist(); render();
+  }));
   on('enqAdd', 'click', () => enqEdit(null));
   on('enqCsv', 'click', () => enqCsv());
   on('enqPdf', 'click', () => printEnquiryReport());
@@ -6103,7 +7106,7 @@ function wireEnquiries(){
     table.querySelectorAll('tr[data-enq]').forEach(tr_ => tr_.addEventListener('click', ev => {
       /* the two editable cells handle themselves; without this the row's own
          handler opens the dialog on top of the cell you just clicked */
-      if(ev.target.closest('.enq-edit')) return;
+      if(ev.target.closest('.enq-edit, .enq-folder')) return;
       const row = (state.enquiries || []).find(r => r.id === tr_.dataset.enq);
       if(row) enqEdit(row);
     }));
@@ -6112,7 +7115,9 @@ function wireEnquiries(){
       ev.stopPropagation();
       const row = (state.enquiries || []).find(r => r.id === td.closest('tr').dataset.enq);
       if(!row) return;
-      if(td.dataset.edit === 'paid') enqPatch(row, { paid: !row.paid });
+      /* a part-paid enquiry is settled by its payments, in the card */
+      if(td.dataset.edit === 'paid' && !row.paid && Number(row.paid_ex_vat) > 0) enqEdit(row);
+      else if(td.dataset.edit === 'paid') enqPatch(row, { paid: !row.paid });
       else enqCostCell(td, row);
     }));
   }
@@ -6166,6 +7171,8 @@ function enqEdit(row){
       ${r.updated_at ? `<p class="enq-meta">${esc(e.lastChanged)}:
         ${esc(new Date(r.updated_at).toLocaleString(LOCALES[state.lang]))}${
         PEOPLE[r.updated_by] ? ' &mdash; ' + esc(PEOPLE[r.updated_by]) : ''}</p>` : ''}
+      <div class="enq-pays" id="enqPays"></div>
+      <div class="enq-records" id="enqRecords"></div>
       <div class="enq-actions">
         ${isNew ? '' : `<button type="button" value="del" class="ghost danger">${esc(e.del)}</button>`}
         <span class="spacer"></span>
@@ -6174,6 +7181,8 @@ function enqEdit(row){
       </div>
     </form>`;
   document.body.appendChild(dlg);
+  if(!isNew) enqRecordsInto(dlg.querySelector('#enqRecords'), r.id);
+  if(!isNew && CLOUD.on) enqPaymentsInto(dlg.querySelector('#enqPays'), r, dlg.querySelector('form'));
 
   const form = dlg.querySelector('form');
   /* Where the keyboard was before this opened. Without it focus lands on
@@ -6900,10 +7909,162 @@ function coBurnLocal(){
 }
 function coBurn(){ return state.burn || coBurnLocal(); }
 
+/* ---- access: who may sign in, and as what ----
+   Everything here goes through the `users` edge function, which checks on
+   the server that the caller is an admin; this screen only draws what it is
+   given. A new person gets a link, never a password from someone else. */
+const ACC = { list: null, me: null, busy: false, err: '', link: null, showBlocked: false };
+
+async function accLoad(force){
+  if(!CLOUD.on || ACC.busy) return;
+  if(ACC.list && !force) return;
+  ACC.busy = true; ACC.err = '';
+  try {
+    const r = await CLOUD.users('list');
+    ACC.list = r.users || []; ACC.me = r.me;
+  } catch(e){ ACC.err = accErr(e); if(!ACC.list) ACC.list = []; }
+  ACC.busy = false;
+  if(state.tab === 'access') render();
+}
+function accErr(e){
+  const a = tr().acc, m = (e && e.message) || '';
+  if(m === 'exists') return a.exists;
+  if(m === 'self') return a.errSelf;
+  if(m === 'last admin') return a.errLast;
+  if(m === 'bad email') return a.errBadEmail;
+  if(e && (e.status === 404 || e.offline || /fetch|HTTP 5/i.test(m))) return a.errFn;
+  return m || a.errFn;
+}
+function accSite(){ return location.origin + location.pathname; }
+
+function accView(){
+  const t = tr(), a = t.acc;
+  if(!CLOUD.on) return `<div class="card"><h2 class="sheet">${esc(a.title)}</h2><p class="muted">${esc(a.needsCloud)}</p></div>`;
+  if(!ACC.list){ accLoad(); return `<div class="card"><h2 class="sheet">${esc(a.title)}</h2><p class="muted">${esc(a.loading)}</p></div>`; }
+  const roleOpts = sel => ['staff','manager','admin'].map(r =>
+    `<option value="${r}"${r === sel ? ' selected' : ''}>${esc(a.roles[r])}</option>`).join('');
+  const rows = ACC.list.slice()
+    .filter(u => ACC.showBlocked || !u.blocked)
+    .sort((x, y) => (x.blocked - y.blocked) || (x.name || x.email).localeCompare(y.name || y.email));
+  const nBlocked = ACC.list.filter(u => u.blocked).length;
+  const date = v => v ? new Date(v).toLocaleString(state.lang === 'en' ? 'en-GB' : state.lang,
+    { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : a.never;
+  const L = ACC.link;
+  const mail = L ? 'mailto:' + encodeURIComponent(L.email) + '?subject=' + encodeURIComponent(a.mailSubj)
+    + '&body=' + encodeURIComponent(a.mailBody.replace('{name}', L.name).replace('{link}', L.url)
+      .replace('{site}', accSite()).replace('{email}', L.email)) : '';
+  return `<div class="card acc">
+    <h2 class="sheet">${esc(a.title)}</h2>
+    <p class="hint" style="margin:-8px 0 16px">${esc(a.lead)}</p>
+
+    <div class="acc-roles">${['admin','manager','staff'].map(r =>
+      `<div class="acc-role"><b class="acc-chip is-${r}">${esc(a.roles[r])}</b><span>${esc(a.roleN[r])}</span></div>`).join('')}</div>
+
+    ${ACC.err ? `<p class="acc-err" role="alert">${esc(ACC.err)}</p>` : ''}
+
+    ${L ? `<div class="acc-link" role="status">
+      <p class="acc-link-h">${esc(a.linkFor.replace('{name}', L.name))}</p>
+      <div class="acc-link-row"><input id="accLinkUrl" readonly value="${esc(L.url)}" aria-label="${esc(a.linkFor.replace('{name}', L.name))}">
+        <button type="button" class="primary" id="accCopy">${esc(a.copy)}</button>
+        <a class="acc-mail" href="${esc(mail)}">${esc(a.mail)}</a></div>
+      <p class="acc-note">${esc(a.linkNote)}</p>
+    </div>` : ''}
+
+    <form class="acc-add" id="accAdd" autocomplete="off">
+      <p class="acc-add-h">${esc(a.add)}</p>
+      <label>${esc(a.name)}<input id="accName" required maxlength="120"></label>
+      <label>${esc(a.email)}<input id="accEmail" type="email" required inputmode="email" autocapitalize="off"></label>
+      <label>${esc(a.role)}<select id="accRole">${roleOpts('staff')}</select></label>
+      <button type="submit" class="primary" id="accCreate">${esc(a.create)}</button>
+    </form>
+
+    <div class="acc-list">${rows.map(u => {
+      const me = u.id === ACC.me;
+      const st = u.blocked ? 'blocked' : (u.pending ? 'pending' : 'active');
+      return `<div class="acc-row${u.blocked ? ' is-blocked' : ''}" data-uid="${esc(u.id)}">
+        <div class="acc-who">
+          <input class="acc-nm" data-acc-name value="${esc(u.name || '')}" aria-label="${esc(a.name)}" ${u.blocked ? 'disabled' : ''}>
+          <span class="acc-em">${esc(u.email)}${me ? ` <i>· ${esc(a.you)}</i>` : ''}${
+            /@litprofit\.com$/i.test(u.email || '') ? '' : ` <b class="acc-ext" title="${esc(a.extN)}">${esc(a.ext)}</b>`}</span>
+        </div>
+        <label class="acc-rl"><span>${esc(a.role)}</span><select data-acc-role ${me || u.blocked ? 'disabled' : ''}>${roleOpts(u.role)}</select></label>
+        <div class="acc-st"><b class="acc-dot is-${st}">${esc(a.st[st])}</b><span>${esc(a.last)}: ${esc(date(u.last_sign_in_at))}</span></div>
+        <div class="acc-acts">
+          ${u.blocked ? '' : `<button type="button" class="ghost" data-acc-link>${esc(a.newLink)}</button>`}
+          ${me ? '' : `<button type="button" class="ghost${u.blocked ? '' : ' danger'}" data-acc-${u.blocked ? 'unblock' : 'block'}>${esc(u.blocked ? a.unblock : a.block)}</button>`}
+        </div>
+      </div>`;
+    }).join('')}</div>
+    ${nBlocked ? `<label class="co-check acc-sb"><input type="checkbox" id="accShowBlocked"${ACC.showBlocked ? ' checked' : ''}> ${esc(a.showBlocked)} (${nBlocked})</label>` : ''}
+  </div>`;
+}
+
+async function accDo(action, payload, okMsg){
+  ACC.err = '';
+  try {
+    const r = await CLOUD.users(action, Object.assign({ redirect: accSite() }, payload));
+    if(okMsg) toast(okMsg, 'ok');
+    return r;
+  } catch(e){ ACC.err = accErr(e); render(); return null; }
+}
+function wireAccess(){
+  const main = $('#main');
+  if(!main || main.dataset.accWired) return;
+  main.dataset.accWired = '1';
+  main.addEventListener('submit', async ev => {
+    if(ev.target.id !== 'accAdd') return;
+    ev.preventDefault();
+    const name = $('#accName').value.trim(), email = $('#accEmail').value.trim(), role = $('#accRole').value;
+    const btn = $('#accCreate'); if(btn) btn.disabled = true;
+    const r = await accDo('create', { name, email, role });
+    if(btn) btn.disabled = false;
+    if(r && r.link){ ACC.link = { url: r.link, name: name || email, email }; await accLoad(true); render(); }
+  });
+  main.addEventListener('change', async ev => {
+    if(state.tab !== 'access') return;
+    if(ev.target.id === 'accShowBlocked'){ ACC.showBlocked = ev.target.checked; render(); return; }
+    const row = ev.target.closest && ev.target.closest('[data-uid]');
+    if(!row) return;
+    const id = row.getAttribute('data-uid');
+    if(ev.target.matches('[data-acc-role]')){
+      const r = await accDo('role', { id, role: ev.target.value }, tr().acc.saved);
+      await accLoad(true);
+      if(!r) render();
+    } else if(ev.target.matches('[data-acc-name]')){
+      const r = await accDo('name', { id, name: ev.target.value }, tr().acc.saved);
+      if(r){ const u = ACC.list.find(x => x.id === id); if(u) u.name = ev.target.value.trim(); }
+    }
+  });
+  main.addEventListener('click', async ev => {
+    if(state.tab !== 'access') return;
+    if(ev.target.id === 'accCopy'){
+      const inp = $('#accLinkUrl');
+      try { await navigator.clipboard.writeText(inp.value); }
+      catch(e){ inp.select(); try { document.execCommand('copy'); } catch(_){} }
+      ev.target.textContent = tr().acc.copied;
+      return;
+    }
+    const row = ev.target.closest && ev.target.closest('[data-uid]');
+    if(!row) return;
+    const id = row.getAttribute('data-uid');
+    const u = (ACC.list || []).find(x => x.id === id); if(!u) return;
+    if(ev.target.closest('[data-acc-link]')){
+      const r = await accDo('link', { id });
+      if(r && r.link){ ACC.link = { url: r.link, name: u.name || u.email, email: u.email }; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    } else if(ev.target.closest('[data-acc-block]')){
+      if(!confirm(tr().acc.confirmBlock.replace('{name}', u.name || u.email))) return;
+      if(await accDo('block', { id }, tr().acc.saved)) await accLoad(true);
+    } else if(ev.target.closest('[data-acc-unblock]')){
+      if(await accDo('unblock', { id }, tr().acc.saved)) await accLoad(true);
+    }
+  });
+}
+
 function viewCompany(tab){
   if(tab === 'people')    return coPeopleView();
   if(tab === 'overheads') return coOverheadsView();
   if(tab === 'docs')      return coDocsView();
+  if(tab === 'access')    return accView();
   return coBurnView();
 }
 
@@ -7061,6 +8222,12 @@ function docFolderGrid(t){
 
 /* ---- one row, with only the columns its folder declares ---- */
 function docCell(r, field, t){
+  const x = docInput(r, field, t);
+  return `<td class="${x.cls}">${x.html}</td>`;
+}
+/* The field itself, without its cell: the list puts it in a <td>, the preview
+   puts it under a label. One definition, so the two cannot drift. */
+function docInput(r, field, t){
   const d = t.doc;
   const projList = state.projects || [];
   const enqList = (state.enquiries || []).slice(0, 300);
@@ -7071,22 +8238,160 @@ function docCell(r, field, t){
   if(field === 'doc_date' || field === 'valid_until'){
     const v = r[field] || '';
     const late = field === 'valid_until' && r.days_left != null && r.days_left <= 90;
-    return `<td class="${late ? (r.days_left < 0 ? 'doc-gone' : 'doc-soon') : ''}">
-      <input data-df="${field}" type="date" value="${esc(v)}">
+    return { cls: late ? (r.days_left < 0 ? 'doc-gone' : 'doc-soon') : '', html:
+      `<input data-df="${field}" type="date" value="${esc(v)}">
       ${late ? `<span class="doc-left">${r.days_left < 0
-          ? esc(d.expired) : d.daysLeft.replace('{n}', r.days_left)}</span>` : ''}</td>`;
+          ? esc(d.expired) : d.daysLeft.replace('{n}', r.days_left)}</span>` : ''}` };
   }
   if(field === 'amount')
-    return `<td class="num"><input data-df="amount" type="number" step="0.01"
-      value="${r.amount == null ? '' : r.amount}"></td>`;
+    return { cls: 'num', html: `<input data-df="amount" type="number" step="0.01" inputmode="decimal"
+      value="${r.amount == null ? '' : r.amount}">` };
   if(field === 'project_id')
-    return `<td><select data-df="project_id">${opts(projList, r.project_id,
-      x => x.id, x => (x.card ? x.card.projectId : x.id))}</select></td>`;
+    return { cls: '', html: `<select data-df="project_id">${opts(projList, r.project_id,
+      x => x.id, x => (x.card ? x.card.projectId : x.id))}</select>` };
   if(field === 'enquiry_id')
-    return `<td><select data-df="enquiry_id">${opts(enqList, r.enquiry_id,
-      x => x.id, x => x.number + (x.client ? ' \u2014 ' + x.client : ''))}</select></td>`;
-  return `<td><input data-df="${field}" value="${esc(r[field] || '')}"></td>`;
+    return { cls: '', html: `<select data-df="enquiry_id">${opts(enqList, r.enquiry_id,
+      x => x.id, x => x.number + (x.client ? ' \u2014 ' + x.client : ''))}</select>` };
+  return { cls: '', html: `<input data-df="${field}" value="${esc(r[field] || '')}">` };
 }
+
+/* ---- tiles: what the file IS, before anything else ----
+   A list of file names says "IMG_4412.jpg" and "Scan 2026-03-12.pdf"; nobody
+   can tell which is the signed act. A tile shows the photograph or the first
+   page, the name under it and the two facts that tell files of one folder
+   apart (date and amount). Tap opens the large preview, where the details are
+   edited -- the list view keeps the inline fields for bulk work. */
+function docExt(rec){
+  const m = /\.([a-z0-9]{1,5})$/i.exec(rec.filename || '');
+  return m ? m[1].toUpperCase() : 'FILE';
+}
+function docTiles(rows, t, showKind){
+  const d = t.doc;
+  if(!rows.length) return `<p class="doc-none">${esc(d.none)}</p>`;
+  return `<div class="doc-files">${rows.map(r => {
+    const pk = docPreviewKind(r);
+    const near = r.days_left != null && r.days_left <= 90;
+    const date = r.doc_date || (r.created_at || '').slice(0, 10);
+    const amt = r.amount != null && r.amount !== '' ? price(r.amount) : '';
+    const sub = showKind ? d.kind[r.kind] : (r.counterparty || r.ref || r.project_ref || r.enquiry_ref || '');
+    return `<button type="button" class="doc-file" data-doc-open="${esc(r.id)}">
+      <span class="doc-thumb is-${pk}" data-thumb="${pk}" data-path="${esc(r.path || '')}">
+        <span class="doc-ext">${esc(docExt(r))}</span>
+        ${near ? `<span class="doc-flag${r.days_left < 0 ? ' is-gone' : ''}">${esc(r.days_left < 0
+          ? d.expired : d.daysLeft.replace('{n}', r.days_left))}</span>` : ''}
+      </span>
+      <span class="doc-fname">${esc(r.filename)}</span>
+      <span class="doc-fmeta">${esc(date)}${amt ? `<b>${esc(amt)}</b>` : ''}</span>
+      ${sub ? `<span class="doc-fsub">${esc(sub)}</span>` : ''}
+    </button>`;
+  }).join('')}</div>`;
+}
+
+/* Thumbnails. Signed for ten minutes in one request per screen (the storage
+   API signs a list), drawn once and kept for the session: render() rebuilds
+   the screen on every keystroke, and re-downloading forty photographs for each
+   one is how a phone runs out of data. A PDF's first page is drawn by pdf.js,
+   served from this site -- no third party sees which documents are opened. */
+const THUMBS = new Map();      /* path -> { url, at } or { img } */
+let PDFJS = null;
+function pdfjsLoad(){
+  if(PDFJS) return PDFJS;
+  PDFJS = new Promise((ok, no) => {
+    const sc = document.createElement('script');
+    sc.src = '__BASE__/assets/vendor/pdfjs-3.11.174/pdf.min.js';
+    sc.onload = () => {
+      const lib = window.pdfjsLib;
+      if(!lib){ no(new Error('pdfjs')); return; }
+      lib.GlobalWorkerOptions.workerSrc = '__BASE__/assets/vendor/pdfjs-3.11.174/pdf.worker.min.js';
+      ok(lib);
+    };
+    sc.onerror = () => { PDFJS = null; no(new Error('pdfjs')); };
+    document.head.appendChild(sc);
+  });
+  return PDFJS;
+}
+async function pdfThumb(url, width){
+  const lib = await pdfjsLoad();
+  const doc = await lib.getDocument({ url, disableAutoFetch: true, disableStream: true }).promise;
+  try {
+    const page = await doc.getPage(1);
+    const v1 = page.getViewport({ scale: 1 });
+    const scale = Math.min(3, (width * Math.min(2, window.devicePixelRatio || 1)) / v1.width);
+    const vp = page.getViewport({ scale });
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    await page.render({ canvasContext: ctx, viewport: vp }).promise;
+    return cv.toDataURL('image/jpeg', 0.82);
+  } finally { doc.destroy(); }
+}
+function thumbPaint(el, src){
+  if(!el || el.querySelector('img.doc-timg')) return;
+  const img = new Image();
+  img.className = 'doc-timg'; img.alt = ''; img.decoding = 'async';
+  img.onload = () => el.classList.add('has-img');
+  img.onerror = () => { THUMBS.delete(el.getAttribute('data-path')); };
+  img.src = src;
+  el.prepend(img);
+}
+let THUMB_IO = null;
+async function docThumbs(){
+  const els = [...document.querySelectorAll('.doc-thumb[data-thumb="image"],.doc-thumb[data-thumb="pdf"]')];
+  if(!els.length || !CLOUD.on) return;
+  /* what is already drawn goes straight back on */
+  const now = Date.now(), todo = [];
+  els.forEach(el => {
+    const path = el.getAttribute('data-path'), c = THUMBS.get(path);
+    if(c && c.img) thumbPaint(el, c.img);
+    else if(c && c.url && now - c.at < 8 * 60e3) { if(el.getAttribute('data-thumb') === 'image') thumbPaint(el, c.url); else todo.push(el); }
+    else todo.push(el);
+  });
+  if(!todo.length) return;
+  const need = [...new Set(todo.map(el => el.getAttribute('data-path')))]
+    .filter(p => { const c = THUMBS.get(p); return !(c && c.url && now - c.at < 8 * 60e3); });
+  if(need.length){
+    try {
+      const links = await CLOUD.docLinks(need, 600);
+      need.forEach(p => { if(links[p]) THUMBS.set(p, { url: links[p], at: Date.now() }); });
+    } catch(e){ return; }
+  }
+  if(THUMB_IO) THUMB_IO.disconnect();
+  THUMB_IO = new IntersectionObserver(entries => entries.forEach(async en => {
+    if(!en.isIntersecting) return;
+    THUMB_IO.unobserve(en.target);
+    const el = en.target, path = el.getAttribute('data-path'), c = THUMBS.get(path);
+    if(!c || !c.url) return;
+    if(el.getAttribute('data-thumb') === 'image'){ thumbPaint(el, c.url); return; }
+    if(c.busy) return;
+    c.busy = true;
+    try {
+      const img = await pdfThumb(c.url, el.clientWidth || 220);
+      THUMBS.set(path, { img });
+      document.querySelectorAll('.doc-thumb[data-path="' + CSS.escape(path) + '"]').forEach(x => thumbPaint(x, img));
+    } catch(e){ c.busy = false; }
+  }), { rootMargin: '200px 0px' });
+  todo.forEach(el => THUMB_IO.observe(el));
+}
+
+/* The phone's back gesture and the browser's Back button step out of the
+   preview, then out of the folder -- the way they do in every other app --
+   instead of leaving the calculator. Each step in pushes one history entry. */
+function docPush(tag){ try { history.pushState({ lpDoc: tag }, ''); } catch(e){} }
+function docStepBack(){
+  if(DOC_PREVIEW){ docPreviewClose(); return true; }
+  if(state.tab !== 'docs' && state.tab !== 'pdocs') return false;
+  const f = docState();
+  if(!f.kind && !(f.q || '').trim()) return false;
+  if((f.q || '').trim()) f.q = ''; else f.kind = '';
+  persist(); render();
+  return true;
+}
+function docBack(){
+  if(history.state && history.state.lpDoc) history.back();   /* popstate does the step */
+  else docStepBack();
+}
+window.addEventListener('popstate', () => { docStepBack(); });
 
 function coDocsView(){
   const t = tr(), d = t.doc, f = docState();
@@ -7100,12 +8405,25 @@ function coDocsView(){
      invoices folder is full of photographs. */
   const dropKind = f.kind || 'other';
 
-  const head = inFolder
-    ? `<p class="doc-crumb"><button type="button" class="doc-back" data-folder="">${
-        esc(d.allFiles)}</button> <span>/</span> <b>${esc(d.kind[f.kind])}</b></p>`
+  /* A STEP BACK, said in words. The only way out of a folder was a small
+     underlined "Everything" in a breadcrumb, which nobody reads as a button;
+     on a phone people reached for the browser's back instead and left the
+     app. Now there is a real Back button, and the phone's own back gesture
+     does the same thing (see docPush). */
+  const listView = state.docView === 'list';
+  const head = (inFolder || searching)
+    ? `<div class="doc-nav">
+        <button type="button" class="doc-backbtn" data-doc-back>\u2190 ${esc(d.back)}</button>
+        ${inFolder ? '' : `<span class="doc-where">${esc(d.search)}: <b>\u201c${esc(f.q.trim())}\u201d</b></span>`}
+        <span class="enq-seg doc-seg" role="tablist">
+          <button type="button" role="tab" data-doc-view="tiles" class="${listView ? '' : 'on'}" aria-selected="${!listView}">${esc(d.vTiles)}</button>
+          <button type="button" role="tab" data-doc-view="list" class="${listView ? 'on' : ''}" aria-selected="${listView}">${esc(d.vList)}</button>
+        </span>
+      </div>`
     : '';
 
-  const table = (inFolder || searching) ? (() => {
+  const table = (inFolder || searching) && !listView ? docTiles(rows, t, searching && !inFolder)
+              : (inFolder || searching) ? (() => {
     /* When searching across folders the rows are of mixed kinds, so the
        columns fall back to the common ones and each row says which folder it
        is in. Inside a folder they are that folder's own. */
@@ -7135,15 +8453,7 @@ function coDocsView(){
   const pid = docScope();
   const mine = docScoped();
 
-  return `${noticeBar()}<div class="card">
-    <h2 class="sheet">${esc(d.title)}${pid
-      ? ` <span class="muted" style="font-weight:400">// ${esc(proj().card.projectId || '')}</span>`
-      : ''}${inFolder ? ' // ' + esc(d.kind[f.kind]) : ''}</h2>
-    <p class="hint" style="margin:-8px 0 14px">${esc(
-      inFolder ? d.folderLead : (pid ? d.projLead : d.lead))}</p>
-    ${head}
-
-    <label class="drop-zone" data-doc-drop data-drop-kind="${dropKind}">
+  const drop = `<label class="drop-zone${inFolder || searching ? ' is-compact' : ''}" data-doc-drop data-drop-kind="${dropKind}">
       <input type="file" id="docFile" multiple class="drop-input"
              accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.csv,.txt">
       <span class="drop-face">
@@ -7152,27 +8462,45 @@ function coDocsView(){
         <span class="drop-hint">${esc(d.dropHint)}</span>
       </span>
     </label>
-    <p class="doc-status" id="docStatus" role="status" aria-live="polite"></p>
-
-    <div class="pf-filters co-bar">
+    <p class="doc-status" id="docStatus" role="status" aria-live="polite"></p>`;
+  const search = `<div class="pf-filters co-bar doc-search">
       <label>${esc(d.search)}<input type="search" id="docQ" value="${esc(f.q)}"
         placeholder="${esc(pid ? d.searchJob : d.searchAll)}"></label>
       ${/* TWO NUMBERS THAT ARE NOT THE SAME THING.
              Standing in Certificates on a job with six files it read "2 / 6",
              and the only sensible way to read that is two certificates out of
-             six certificates -- so four of them look missing. They are not:
-             the six are the job's whole store and the two are this folder.
-             Reported as "why 2/6, delete those four", where the four were the
-             signed contract, the offer and two invoices.
-             A fraction now appears only when SEARCHING, where both numbers do
-             mean the same thing -- matches, out of the files searched -- and
-             it is spelled out in words. A folder just says how many are in
-             it. */ ''}
+             six certificates -- so four of them look missing. A fraction
+             appears only when SEARCHING, where both numbers mean the same
+             thing, and it is spelled out in words. A folder just says how
+             many are in it. */ ''}
       ${searching
         ? `<span class="muted">${esc(t.showing)} ${rows.length} ${esc(t.of)} ${mine.length}</span>`
         : (inFolder ? `<span class="muted">${rows.length}</span>` : '')}
-    </div>
+    </div>`;
+  const title = `<h2 class="sheet">${esc(d.title)}${pid
+      ? ` <span class="muted" style="font-weight:400">// ${esc(proj().card.projectId || '')}</span>`
+      : ''}${inFolder ? ' // ' + esc(d.kind[f.kind]) : ''}</h2>`;
 
+  /* Inside a folder the files come first: the way out, the search, the files
+     themselves, and only then the box to add more. They used to sit under
+     the upload box, the import and the search -- on a phone, two screens
+     down, so a folder looked empty until you scrolled. */
+  if(inFolder || searching) return `${noticeBar()}<div class="card">
+    ${title}
+    ${head}
+    ${search}
+    ${table}
+    ${drop}
+    <p class="hint co-foot">${esc(d.foot)}</p>
+  </div>`;
+
+  return `${noticeBar()}<div class="card">
+    ${title}
+    <p class="hint" style="margin:-8px 0 14px">${esc(pid ? d.projLead : d.lead)}</p>
+    ${drop}
+    ${!pid && CLOUD.on ? `<p class="imp-entry"><button id="docImportFolder" class="ghost">${
+      esc(impT().open)}</button> <span class="muted">${esc(impT().openHint)}</span></p>` : ''}
+    ${search}
     ${table}
     <p class="hint co-foot">${esc(d.foot)}</p>
   </div>`;
@@ -9262,8 +10590,12 @@ function wireCompany(){
                   start_date: new Date().toISOString().slice(0, 10) };
     await coCreate('person', row);
   });
-  on('docQ', 'input', e => { docState().q = e.target.value; persist(); render(); });
+  on('docQ', 'input', e => {
+    if(!(docState().q || '').trim() && e.target.value.trim()) docPush('search');
+    docState().q = e.target.value; persist(); render();
+  });
   on('docFile', 'change', e => docUpload(e.target.files));
+  on('docImportFolder', 'click', impOpen);
 
   /* Drag and drop on top of a real <label> around a real file input, the same
      way the careers form does it: the picker opens natively on the first
@@ -9325,10 +10657,16 @@ function wireCompany(){
      the rest. */
   document.addEventListener('click', ev => {
     if(!DOC_PREVIEW) return;
-    if(ev.target.closest('[data-dp-close]')) docPreviewClose();
+    if(ev.target.closest('[data-dp-close]')){ docBack(); return; }
+    if(ev.target.closest('[data-dp-del]')){ docDelete(DOC_PREVIEW.id); return; }
   });
   document.addEventListener('keydown', ev => {
-    if(DOC_PREVIEW && ev.key === 'Escape'){ ev.preventDefault(); docPreviewClose(); }
+    if(DOC_PREVIEW && ev.key === 'Escape'){ ev.preventDefault(); docBack(); }
+  });
+  /* the details in the preview save the way the list's fields do */
+  document.addEventListener('change', ev => {
+    const form = ev.target.closest && ev.target.closest('#docPreview [data-doc]');
+    if(form && ev.target.matches('[data-df]')) docFieldChanged(form, { fromPreview: true, repaint: ev.target.getAttribute('data-df') === 'kind' });
   });
 
   main.addEventListener('change', ev => {
@@ -9350,10 +10688,15 @@ function wireCompany(){
       const k = folder.getAttribute('data-folder');
       /* Clicking the folder you are in goes back to all of them, so the same
          control is the way out. */
+      const into = docState().kind !== k && k;
       docState().kind = (docState().kind === k) ? '' : k;
-      persist(); render();
+      if(into) docPush('folder');
+      persist(); render(); window.scrollTo(0, 0);
       return;
     }
+    if(ev.target.closest('[data-doc-back]')){ docBack(); return; }
+    const dv = ev.target.closest('[data-doc-view]');
+    if(dv){ state.docView = dv.getAttribute('data-doc-view'); persist(); render(); return; }
     const open = ev.target.closest('[data-doc-open]');
     if(open){ ev.preventDefault(); docPreview(open.getAttribute('data-doc-open')); return; }
     /* data-co-del, not data-del. The sheet engine already emits
@@ -9369,25 +10712,8 @@ function wireCompany(){
     if(!row) return;
     const kind = del.getAttribute('data-co-del');
     const id = row.getAttribute('data-' + kind);
-    if(kind === 'doc'){
-      const rec = (state.documents || []).find(x => x.id === id);
-      if(!rec) return;
-      if(!confirm(tr().doc.confirmDel.replace('{name}', rec.filename))) return;
-      /* The object first, then the row -- the mirror of the upload order, and
-         for the mirror reason: a row pointing at a file that is gone is worse
-         than a file nobody references. */
-      try { if(CLOUD.on) await CLOUD.docDelete(id, rec.path); }
-      catch(e){
-        /* "Could not save" for a refusal sent somebody back to try again, and
-           again. A permission is not a failure to retry, it is an answer. */
-        const denied = /42501|not permitted|permission/i.test((e && e.message) || '');
-        toast(denied ? tr().doc.noDelete : tr().co.saveFailed, 'bad');
-        return;
-      }
-      state.documents = (state.documents || []).filter(x => x.id !== id);
-      persist(); render();
-      return;
-    }
+    if(kind === 'doc'){ docDelete(id); return; }
+
     const label = (row.querySelector('[data-f="name"]') || {}).value || '';
     if(!confirm(tr().co.confirmDel.replace('{name}', label))) return;
     await coDelete(kind, id);
@@ -9472,6 +10798,272 @@ async function docUpload(files){
   persist(); render();
 }
 
+
+/* ---------- importing what a sales folder says ----------
+   "Pardavimai 2026" is a folder per enquiry -- quotes, invoices, payment
+   orders, e-mails, photographs -- nine thousand files, 4.6 GB. The register
+   needs the information in them, not the files: the folder is read on the
+   office computer into a manifest (tools/sales-manifest/) -- which enquiry
+   each document belongs to, its type, date, number, amount, the other party,
+   an e-mail's subject -- and this sends that, a few MB, into
+   enquiry_records. No file is uploaded.
+
+   The manifest holds client data, so it never enters this repository or this
+   page; it is picked from the disk. It runs under the signed-in person's own
+   session, and can be run again: a record already there is left alone. */
+const IMP_TXT = {
+  en: { open:'Import sales folder information', openHint:'The type, date, number and amount of every document in a year of enquiry folders. The files themselves stay on the disk.',
+        title:'Import sales folder information', lead:'Pick the manifest made from the sales folder. Only the information is imported — no file is uploaded.',
+        manifest:'Manifest (manifest.json)', start:'Start', stop:'Stop', close:'Close',
+        ready:'{n} documents for {e} enquiries.', newEnq:'{n} enquiries are not in the register and will be created.',
+        done:'Done. New records {up}, already there {skip}, failed {fail}.', prog:'{i} of {t} — new {up}, already there {skip}',
+        stopped:'Stopped. Start again to continue.', failList:'Failed:', creating:'Creating {n} enquiries…' },
+  lt: { open:'Importuoti pardavimų aplanko informaciją', openHint:'Kiekvieno metų užklausų aplankų dokumento tipas, data, numeris ir suma. Patys failai lieka diske.',
+        title:'Pardavimų aplanko informacijos importas', lead:'Pasirinkite iš pardavimų aplanko sudarytą aprašą. Importuojama tik informacija — failai neįkeliami.',
+        manifest:'Aprašas (manifest.json)', start:'Pradėti', stop:'Sustabdyti', close:'Uždaryti',
+        ready:'{n} dokumentų {e} užklausoms.', newEnq:'{n} užklausų nėra registre — jos bus sukurtos.',
+        done:'Baigta. Naujų įrašų {up}, jau buvo {skip}, nepavyko {fail}.', prog:'{i} iš {t} — nauji {up}, jau buvo {skip}',
+        stopped:'Sustabdyta. Paleiskite dar kartą — tęs toliau.', failList:'Nepavyko:', creating:'Kuriamos {n} užklausos…' },
+  ru: { open:'Импортировать информацию из папки продаж', openHint:'Тип, дата, номер и сумма каждого документа из папок запросов за год. Сами файлы остаются на диске.',
+        title:'Импорт информации из папки продаж', lead:'Выберите опись, составленную по папке продаж. Импортируется только информация — файлы не загружаются.',
+        manifest:'Опись (manifest.json)', start:'Начать', stop:'Остановить', close:'Закрыть',
+        ready:'{n} документов по {e} запросам.', newEnq:'{n} запросов нет в реестре — они будут созданы.',
+        done:'Готово. Новых записей {up}, уже были {skip}, ошибок {fail}.', prog:'{i} из {t} — новых {up}, уже были {skip}',
+        stopped:'Остановлено. Запустите снова — продолжит.', failList:'Ошибки:', creating:'Создаю {n} запросов…' }
+};
+function impT(){ return IMP_TXT[state.lang] || IMP_TXT.en; }
+function impFmt(s, o){ return s.replace(/\{(\w+)\}/g, (m, k) => (k in o ? o[k] : m)); }
+
+var IMP = { box: null, manifest: null, running: false, stop: false };
+
+function impOpen(){
+  const t = impT();
+  if(!IMP.box){
+    IMP.box = document.createElement('div');
+    IMP.box.className = 'imp-overlay';
+    IMP.box.setAttribute('role', 'dialog');
+    IMP.box.setAttribute('aria-modal', 'true');
+    document.body.appendChild(IMP.box);
+  }
+  IMP.box.innerHTML = `<div class="imp-panel card">
+    <h2 class="sheet">${esc(t.title)}</h2>
+    <p class="hint">${esc(t.lead)}</p>
+    <label class="imp-step">${esc(t.manifest)}<input type="file" id="impManifest" accept=".json,application/json"></label>
+    <p class="imp-sum" id="impSum"></p>
+    <div class="imp-bar"><span id="impBarFill"></span></div>
+    <p class="imp-prog" id="impProg" role="status" aria-live="polite"></p>
+    <div class="imp-log" id="impLog"></div>
+    <div class="imp-actions">
+      <button id="impStart" class="primary" disabled>${esc(t.start)}</button>
+      <button id="impStop" class="ghost" disabled>${esc(t.stop)}</button>
+      <button id="impClose" class="ghost">${esc(t.close)}</button>
+    </div></div>`;
+  IMP.box.hidden = false;
+  IMP.manifest = null;
+  const $i = id => IMP.box.querySelector('#' + id);
+  $i('impManifest').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0];
+    if(!f) return;
+    try { IMP.manifest = JSON.parse(await f.text()); } catch(err){ IMP.manifest = null; }
+    impSummary();
+  });
+  $i('impStart').addEventListener('click', impRun);
+  $i('impStop').addEventListener('click', () => { IMP.stop = true; });
+  $i('impClose').addEventListener('click', () => { if(!IMP.running) IMP.box.hidden = true; });
+}
+
+function impSummary(){
+  const t = impT(), m = IMP.manifest, out = [];
+  if(m && Array.isArray(m.entries)){
+    out.push(impFmt(t.ready, { n: m.entries.length, e: Object.keys(m.enquiries || {}).length }));
+    const known = new Set((state.enquiries || []).map(r => (r.number || '').trim()));
+    const missing = Object.keys(m.enquiries || {}).filter(k => !known.has(k));
+    if(missing.length) out.push(impFmt(t.newEnq, { n: missing.length }));
+  }
+  IMP.box.querySelector('#impSum').textContent = out.join(' ');
+  IMP.box.querySelector('#impStart').disabled = !(m && Array.isArray(m.entries) && !IMP.running);
+}
+
+/* The manifest's entry as a record: an e-mail is titled by its subject, a
+   file by its name; the path on the disk is kept so the file can be found. */
+function impRecord(e, enquiryId){
+  const name = e.rel.split('/').pop();
+  const note = e.note || '';
+  const mail = /^(.*?\. )?Laiškas: /.test(note);
+  const title = mail ? note.replace(/^(.*?\. )?Laiškas: /, '').split(' — priedai: ')[0] : name;
+  const detail = [mail ? 'Failas: ' + name : (e.label || ''),
+                  mail && note.indexOf(' — priedai: ') > 0 ? 'Priedai: ' + note.split(' — priedai: ')[1] : '']
+                 .filter(Boolean).join(' · ');
+  return { enquiry_id: enquiryId, sha256: e.sha256, kind: e.kind || 'other',
+           doc_date: e.doc_date || '', ref: e.ref || '', amount: e.amount == null ? '' : String(e.amount),
+           counterparty: e.counterparty || '', title: title, detail: detail, source: e.rel,
+           copies: String(1 + (e.copies ? e.copies.length : 0)) };
+}
+
+async function impRun(){
+  const t = impT(), m = IMP.manifest, box = IMP.box;
+  if(!m || IMP.running) return;
+  IMP.running = true; IMP.stop = false;
+  box.querySelector('#impStart').disabled = true;
+  box.querySelector('#impStop').disabled = false;
+  const prog = box.querySelector('#impProg'), bar = box.querySelector('#impBarFill'), log = box.querySelector('#impLog');
+  const c = { up: 0, skip: 0, fail: 0 }, fails = [];
+
+  /* the enquiry each document belongs to; the ones the register does not
+     have yet are created first, so nothing is left hanging off nothing */
+  const byNum = {};
+  (state.enquiries || []).forEach(r => { const k = (r.number || '').trim(); if(!byNum[k]) byNum[k] = r.id; });
+  const toCreate = Object.entries(m.enquiries || {}).filter(([k]) => !byNum[k]);
+  if(toCreate.length){
+    prog.textContent = impFmt(t.creating, { n: toCreate.length });
+    for(const [num, info] of toCreate){
+      try {
+        const row = await CLOUD.enquiryInsert(Object.assign({ number: num }, info.create || {}));
+        if(row){ byNum[num] = row.id; state.enquiries = [row].concat(state.enquiries || []); }
+      } catch(e){ fails.push(num + ': ' + (e.message || e)); c.fail++; }
+    }
+  }
+
+  const list = m.entries, BATCH = 250;
+  let i = 0;
+  for(; i < list.length && !IMP.stop; i += BATCH){
+    const part = list.slice(i, i + BATCH).filter(e => byNum[e.enquiry]).map(e => impRecord(e, byNum[e.enquiry]));
+    try {
+      const n = Number(await CLOUD.recordsImport(part)) || 0;
+      c.up += n; c.skip += part.length - n;
+    } catch(err){ c.fail += part.length; fails.push((i + 1) + '–' + (i + part.length) + ': ' + (err.message || err)); }
+    prog.textContent = impFmt(t.prog, { i: Math.min(i + BATCH, list.length), t: list.length, up: c.up, skip: c.skip });
+    bar.style.width = (Math.min(i + BATCH, list.length) / list.length * 100).toFixed(1) + '%';
+  }
+  log.innerHTML = fails.length ? `<p><b>${esc(t.failList)}</b></p><ul>${
+    fails.slice(0, 100).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  prog.textContent = IMP.stop ? t.stopped : impFmt(t.done, c);
+  IMP.running = false;
+  box.querySelector('#impStop').disabled = true;
+  box.querySelector('#impStart').disabled = false;
+  CLOUD.enquiries().then(l => { state.enquiries = l; render(); }).catch(() => {});
+}
+
+
+/* ---------- payments in parts ----------
+   A share of the order is typed as a percent or as an amount and the other
+   is worked out: the order total is the larger of the price and what has
+   been invoiced (an advance invoice is half the order, not all of it). Once
+   an enquiry has payments, "paid" and its date follow them -- the database
+   enforces that, and the form shows it rather than offering a tick that
+   would be overruled. */
+function enqPayBase(r){ return Math.max(Number(r.invoiced_ex_vat) || 0, Number(r.price_ex_vat) || 0); }
+async function enqPaymentsInto(box, r, form){
+  if(!box) return;
+  const e = tr().enq, p = e.pay, L = LOCALES[state.lang];
+  let list = [];
+  const today = () => new Date().toISOString().slice(0, 10);
+  const lockPaid = () => {
+    if(!form || !list.length) return;
+    form.paid.checked = !!r.paid;
+    form.paid.onclick = ev => ev.preventDefault();
+    form.paid.closest('label').classList.add('enq-derived');
+    form.paid.closest('label').title = p.derived;
+    form.paid_date.value = r.paid_date || '';
+    form.paid_date.readOnly = true;
+    form.paid_date.title = p.derived;
+  };
+  const sync = async () => {
+    try {
+      list = await CLOUD.payments(r.id);
+      const fresh = await CLOUD.enquiryOne(r.id);
+      if(fresh){
+        /* the card saves with r.rev: a payment bumps it, and a stale rev
+           would make the next save report somebody else's edit */
+        Object.assign(r, fresh);
+        state.enquiries = (state.enquiries || []).map(x => x.id === fresh.id ? fresh : x);
+      }
+    } catch(err){ toast(err.message); }
+    draw(); lockPaid(); render();
+  };
+  const draw = () => {
+    const b = enqPayBase(r), sum = list.reduce((a, x) => a + (Number(x.amount) || 0), 0);
+    const share = b ? sum / b : 0, rest = Math.max(0, b - sum);
+    box.innerHTML = `<div class="pay-h"><h3>${esc(p.title)}</h3>
+        <span class="pay-tot">${fmt(sum)} € ${esc(p.of)} ${fmt(b)} € · <b class="${share >= 0.9999 ? 'pos' : sum ? 'wip' : ''}">${b ? pct(share) : '—'}</b></span></div>
+      <div class="pay-bar" role="img" aria-label="${b ? pct(share) : ''}"><i style="width:${Math.min(100, share * 100).toFixed(1)}%"></i></div>
+      ${list.length ? `<table class="pay-list"><tbody>${list.map(x => `<tr>
+          <td class="muted">${x.paid_on ? new Date(x.paid_on).toLocaleDateString(L) : '—'}</td>
+          <td class="num">${x.pct == null ? '' : fmt(Number(x.pct), 1) + ' %'}</td>
+          <td class="num"><b>${fmt(Number(x.amount))} €</b></td>
+          <td class="pay-note">${esc(x.note || '')}</td>
+          <td><button type="button" class="ghost pay-del" data-pay-del="${esc(x.id)}" title="${esc(p.del)}" aria-label="${esc(p.del)}">×</button></td>
+        </tr>`).join('')}</tbody></table>` : `<p class="hint pay-none">${esc(p.none)}</p>`}
+      <div class="pay-add">
+        <label>${esc(p.date)}<input type="date" id="payDate" value="${today()}"></label>
+        <label>%<input type="number" id="payPct" step="0.01" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>${esc(p.amount)}<input type="number" id="payAmt" step="0.01" min="0" inputmode="decimal" placeholder="0.00"></label>
+        <label class="pay-wide">${esc(p.note)}<input id="payNote" placeholder="${esc(p.notePh)}"></label>
+        <div class="pay-quick">${[30, 50, 70, 100].map(v =>
+          `<button type="button" class="ghost" data-pay-q="${v}">${v}%</button>`).join('')}${
+          rest > 0 && sum > 0 ? `<button type="button" class="ghost" data-pay-q="rest">${esc(p.rest)} ${fmt(rest)} €</button>` : ''}</div>
+        <button type="button" class="primary" id="payAdd">${esc(p.add)}</button>
+      </div>
+      <p class="hint pay-base">${esc(b ? p.baseIs.replace('{sum}', fmt(b) + ' €') : p.noBase)}</p>`;
+    const $b = sel => box.querySelector(sel);
+    const pctIn = $b('#payPct'), amtIn = $b('#payAmt');
+    pctIn.addEventListener('input', () => { amtIn.value = b && pctIn.value !== '' ? (b * Number(pctIn.value) / 100).toFixed(2) : ''; });
+    amtIn.addEventListener('input', () => { pctIn.value = b && amtIn.value !== '' ? (Number(amtIn.value) / b * 100).toFixed(2) : ''; });
+    box.querySelectorAll('[data-pay-q]').forEach(btn => btn.addEventListener('click', () => {
+      const q = btn.dataset.payQ;
+      const amount = q === 'rest' ? rest : b * Number(q) / 100;
+      amtIn.value = amount.toFixed(2);
+      pctIn.value = b ? (amount / b * 100).toFixed(2) : '';
+    }));
+    const add = async () => {
+      const amount = Number(amtIn.value);
+      if(!(amount > 0)){ amtIn.focus(); toast(p.needAmount); return; }
+      $b('#payAdd').disabled = true;
+      try {
+        await CLOUD.paymentAdd({ enquiry_id: r.id, paid_on: $b('#payDate').value || today(),
+          pct: pctIn.value === '' ? null : Number(pctIn.value), amount: amount,
+          note: $b('#payNote').value.trim() || null });
+        await sync();
+      } catch(err){ toast(err.message); $b('#payAdd').disabled = false; }
+    };
+    $b('#payAdd').addEventListener('click', add);
+    /* Enter in here adds the payment; it must not submit the card around it */
+    box.querySelectorAll('.pay-add input').forEach(i => i.addEventListener('keydown', ev => {
+      if(ev.key === 'Enter'){ ev.preventDefault(); add(); }
+    }));
+    box.querySelectorAll('[data-pay-del]').forEach(btn => btn.addEventListener('click', async () => {
+      if(!confirm(p.confirmDel)) return;
+      try { await CLOUD.paymentDelete(btn.dataset.payDel); await sync(); } catch(err){ toast(err.message); }
+    }));
+  };
+  try { list = await CLOUD.payments(r.id); } catch(err){ list = []; }
+  if(!box.isConnected) return;
+  draw(); lockPaid();
+}
+
+/* The enquiry card lists what its folder holds. Fetched when the card opens:
+   8,700 rows do not belong in the register's own load. */
+async function enqRecordsInto(el, enquiryId){
+  if(!el || !enquiryId || !CLOUD.on) return;
+  const e = tr().enq, kinds = (tr().doc || {}).kind || {};
+  let rows = [];
+  try { rows = await CLOUD.records(enquiryId); } catch(err){ return; }
+  if(!rows.length) return;
+  const L = LOCALES[state.lang];
+  el.innerHTML = `<details class="enq-rec" open><summary>${esc(e.recTitle)} <span class="muted">// ${rows.length}</span></summary>
+    <div class="tablewrap"><table class="grid enq-rec-table"><thead><tr>
+      <th>${esc(e.recDate)}</th><th>${esc(e.recKind)}</th><th>${esc(e.recWhat)}</th>
+      <th>${esc(e.recRef)}</th><th class="num">${esc(e.recSum)}</th></tr></thead><tbody>${
+      rows.map(r => `<tr title="${esc(r.source || '')}">
+        <td class="muted">${r.doc_date ? new Date(r.doc_date).toLocaleDateString(L) : '—'}</td>
+        <td>${esc(kinds[r.kind] || r.kind)}</td>
+        <td>${esc(r.title || '')}${r.counterparty ? ` <span class="muted">· ${esc(r.counterparty)}</span>` : ''}${
+          r.detail ? `<div class="enq-rec-detail">${esc(r.detail)}</div>` : ''}</td>
+        <td>${esc(r.ref || '')}</td>
+        <td class="num">${r.amount == null ? '' : fmt(Number(r.amount))}</td></tr>`).join('')}
+    </tbody></table></div></details>`;
+}
+
 /* What the browser can actually render. Everything else gets the metadata and
    a way out to the file itself, rather than an empty frame that looks broken:
    a Word document in an <iframe> is a download prompt or a blank box
@@ -9485,12 +11077,14 @@ function docPreviewKind(rec){
   return 'none';
 }
 
-var DOC_PREVIEW = null;   /* the record on screen, so Escape knows what to close */
+var DOC_PREVIEW = null;
+var DOC_PREVIEW_URL = null;   /* its signed link, once the server has given one */   /* the record on screen, so Escape knows what to close */
 
 function docPreviewClose(){
   const el = $('#docPreview');
   if(el) el.remove();
   DOC_PREVIEW = null;
+  DOC_PREVIEW_URL = null;
   document.body.classList.remove('has-overlay');
 }
 
@@ -9500,10 +11094,8 @@ async function docPreview(id){
   if(!rec) return;
   if(!CLOUD.on){ docSay(d.needsCloud, 'bad'); return; }
 
-  docPreviewClose();
+  if(DOC_PREVIEW) docPreviewClose(); else docPush('preview');
   const kind = docPreviewKind(rec);
-  const fact = (label, value) => value
-    ? `<div class="dp-fact"><span>${esc(label)}</span><b>${esc(value)}</b></div>` : '';
 
   const el = document.createElement('div');
   el.id = 'docPreview';
@@ -9515,46 +11107,25 @@ async function docPreview(id){
     <div class="dp-scrim" data-dp-close></div>
     <div class="dp-panel">
       <div class="dp-head">
+        <button type="button" class="dp-back" data-dp-close>← ${esc(d.back)}</button>
         <div class="dp-title">
           <b>${esc(rec.filename)}</b>
-          <span>${esc(d.kind[rec.kind] || rec.kind)} \u00b7 ${humanSize(rec.size_bytes)}</span>
+          <span>${esc(d.kind[rec.kind] || rec.kind)} · ${humanSize(rec.size_bytes)}</span>
         </div>
-        <a class="dp-out" href="#" data-dp-out>${esc(d.openFile)}</a>
-        <button type="button" class="dp-x" data-dp-close aria-label="${esc(t.close || 'Close')}">\u00d7</button>
+        <button type="button" class="dp-x" data-dp-close aria-label="${esc(t.close || 'Close')}">×</button>
       </div>
       <div class="dp-body" data-dp-body>
         <p class="dp-loading">${esc(d.loading)}</p>
       </div>
-      <div class="dp-facts">
-        ${docSchema(rec.kind).fields.map(x => {
-          /* The countdown belongs ON the expiry line, not under a second one
-             with the same heading. Two facts labelled "Valid until", one a
-             date and one a number of days, read as two different fields. */
-          if(x === 'valid_until'){
-            if(!rec.valid_until) return '';
-            const near = rec.days_left != null && rec.days_left <= 90;
-            const tone = !near ? '' : (rec.days_left < 0 ? ' is-gone' : ' is-soon');
-            const tail = !near ? '' : ' \u00b7 ' + (rec.days_left < 0
-              ? d.expired : d.daysLeft.replace('{n}', rec.days_left));
-            return `<div class="dp-fact${tone}"><span>${esc(docLabel(rec.kind, x, d))}</span>` +
-                   `<b>${esc(rec.valid_until + tail)}</b></div>`;
-          }
-          const v = x === 'amount'     ? (rec.amount == null ? '' : price(rec.amount))
-                  : x === 'project_id' ? rec.project_ref
-                  : x === 'enquiry_id' ? rec.enquiry_ref
-                  : rec[x];
-          return fact(docLabel(rec.kind, x, d), v);
-        }).join('')}
-        ${fact(d.hWho, rec.uploaded_by)}
-        ${fact(d.hFiled, (rec.created_at || '').slice(0, 10))}
-      </div>
+      <div class="dp-side" data-dp-side></div>
     </div>`;
   document.body.appendChild(el);
   document.body.classList.add('has-overlay');
   DOC_PREVIEW = rec;
+  docPreviewFacts();
 
-  const close = el.querySelector('.dp-x');
-  if(close) close.focus();
+  const back = el.querySelector('.dp-back');
+  if(back) back.focus();
 
   /* Five minutes, not sixty seconds: a preview is looked at rather than
      clicked, and a PDF whose link expires mid-scroll reloads the frame into
@@ -9562,21 +11133,85 @@ async function docPreview(id){
   let url = null;
   try { url = await CLOUD.docLink(rec.path, 300); } catch(e){}
   const body = el.querySelector('[data-dp-body]');
-  const out = el.querySelector('[data-dp-out]');
-  if(!body) return;
+  if(!body || DOC_PREVIEW !== rec) return;
   if(!url){ body.innerHTML = `<p class="dp-loading is-error">${esc(d.linkFailed)}</p>`; return; }
-  if(out) out.setAttribute('href', url);
+  DOC_PREVIEW_URL = url;
+  el.querySelectorAll('[data-dp-out]').forEach(a => a.setAttribute('href', url));
 
   if(kind === 'image'){
     body.innerHTML = `<img src="${esc(url)}" alt="${esc(rec.filename)}">`;
+  } else if(kind === 'pdf' && matchMedia('(max-width:700px), (hover:none)').matches){
+    /* A PDF in a frame on a phone shows the first page as a picture you
+       cannot scroll (iOS) or a download button (Android). Draw the pages
+       instead, one under another, the way a phone reads a document. */
+    body.classList.add('is-pages');
+    body.innerHTML = `<p class="dp-loading">${esc(d.loading)}</p>`;
+    try {
+      const lib = await pdfjsLoad();
+      const pdf = await lib.getDocument({ url }).promise;
+      body.innerHTML = '';
+      const w = Math.max(280, body.clientWidth - 16);
+      for(let n = 1; n <= Math.min(pdf.numPages, 30); n++){
+        if(DOC_PREVIEW !== rec) break;
+        const page = await pdf.getPage(n);
+        const v1 = page.getViewport({ scale: 1 });
+        const vp = page.getViewport({ scale: (w * Math.min(2, window.devicePixelRatio || 1)) / v1.width });
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+        cv.className = 'dp-page';
+        body.appendChild(cv);
+        await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+      }
+      pdf.destroy();
+    } catch(e){
+      body.classList.remove('is-pages');
+      body.innerHTML = `<iframe src="${esc(url)}" title="${esc(rec.filename)}"></iframe>`;
+    }
   } else if(kind === 'pdf' || kind === 'text'){
     /* An <iframe>, not <object>: object falls back to its own content on
        failure and shows nothing at all, while a frame at least shows the
        browser's own message. */
     body.innerHTML = `<iframe src="${esc(url)}" title="${esc(rec.filename)}"></iframe>`;
   } else {
-    body.innerHTML = `<p class="dp-loading">${esc(d.noPreview)}</p>`;
+    body.innerHTML = `<div class="dp-none"><span class="doc-ext">${esc(docExt(rec))}</span>
+      <p class="dp-loading">${esc(d.noPreview)}</p>
+      <a class="primary dp-btn" href="${esc(url)}" target="_blank" rel="noopener" data-dp-out>${esc(d.openFile)}</a></div>`;
   }
+}
+
+/* The details beside the file: the same fields as the list, labelled, and
+   saved on change. The folder is one of them, so a misfiled scan is moved
+   from here. Rebuilt when the folder changes, because the folder decides
+   which fields there are. */
+function docPreviewFacts(){
+  const side = document.querySelector('#docPreview [data-dp-side]');
+  const rec = DOC_PREVIEW;
+  if(!side || !rec) return;
+  const t = tr(), d = t.doc;
+  const field = (label, x) => `<label class="dp-field ${x.cls}"><span>${esc(label)}</span>${x.html}</label>`;
+  const staticFact = (label, value) => value
+    ? `<div class="dp-fact"><span>${esc(label)}</span><b>${esc(value)}</b></div>` : '';
+  const editable = canMoney() || canPayroll();
+  side.innerHTML = `
+    <div class="dp-form" data-doc="${esc(rec.id)}">
+      <p class="dp-side-h">${esc(d.details)}</p>
+      ${editable ? field(d.hFolder, { cls: '', html: `<select data-df="kind">${DOC_KINDS.map(k =>
+          `<option value="${k}"${rec.kind === k ? ' selected' : ''}>${esc(d.kind[k])}</option>`).join('')}</select>` })
+        : staticFact(d.hFolder, d.kind[rec.kind])}
+      ${docSchema(rec.kind).fields.map(x => editable
+          ? field(docLabel(rec.kind, x, d), docInput(rec, x, t))
+          : staticFact(docLabel(rec.kind, x, d), x === 'amount' ? (rec.amount == null ? '' : price(rec.amount))
+              : x === 'project_id' ? rec.project_ref : x === 'enquiry_id' ? rec.enquiry_ref : rec[x])).join('')}
+      <div class="dp-facts-row">
+        ${staticFact(d.hWho, rec.uploaded_by)}
+        ${staticFact(d.hFiled, (rec.created_at || '').slice(0, 10))}
+      </div>
+      ${editable ? `<p class="dp-note">${esc(d.saveAuto)}</p>` : ''}
+    </div>
+    <div class="dp-acts">
+      <a class="dp-btn primary"${DOC_PREVIEW_URL ? ` href="${esc(DOC_PREVIEW_URL)}"` : ''} target="_blank" rel="noopener" data-dp-out>${esc(d.openFile)}</a>
+      ${docCanDelete(rec) ? `<button type="button" class="ghost danger dp-btn" data-dp-del>${esc(d.delFile)}</button>` : ''}
+    </div>`;
 }
 
 /* Kept as the way OUT of the app to the file itself; the preview is what a
@@ -9591,21 +11226,59 @@ async function docOpen(path){
   } catch(e){ docSay(d.linkFailed, 'bad'); }
 }
 
-async function docFieldChanged(rowEl){
+async function docDelete(id){
+  const rec = (state.documents || []).find(x => x.id === id);
+  if(!rec) return;
+  if(!confirm(tr().doc.confirmDel.replace('{name}', rec.filename))) return;
+  /* The object first, then the row -- the mirror of the upload order, and
+     for the mirror reason: a row pointing at a file that is gone is worse
+     than a file nobody references. */
+  try { if(CLOUD.on) await CLOUD.docDelete(id, rec.path); }
+  catch(e){
+    /* "Could not save" for a refusal sent somebody back to try again, and
+       again. A permission is not a failure to retry, it is an answer. */
+    const denied = /42501|not permitted|permission/i.test((e && e.message) || '');
+    toast(denied ? tr().doc.noDelete : tr().co.saveFailed, 'bad');
+    return;
+  }
+  state.documents = (state.documents || []).filter(x => x.id !== id);
+  persist(); render();
+  if(DOC_PREVIEW && DOC_PREVIEW.id === id) docBack();
+}
+
+async function docFieldChanged(rowEl, opts){
+  opts = opts || {};
   const id = rowEl.getAttribute('data-doc');
   const cur = (state.documents || []).find(x => x.id === id);
   if(!cur) return;
+  /* EVERY field, not only the ones on screen. save_document writes each
+     column from the row it is given, so a field this folder does not show
+     (the note on an invoice, the reference on a photograph) went in as
+     missing and came back NULL -- an edit to the amount silently erased the
+     note. Start from what the record holds; the screen overrides it. */
   const patch = {};
+  ['kind','doc_date','ref','amount','counterparty','valid_until','note','project_id','enquiry_id']
+    .forEach(k => { patch[k] = cur[k] == null ? '' : String(cur[k]); });
   rowEl.querySelectorAll('[data-df]').forEach(el => {
     patch[el.getAttribute('data-df')] = el.value;
   });
-  if(!CLOUD.on){ Object.assign(cur, patch); persist(); return; }
+  /* The list is NOT redrawn after its own edits: that would take the cursor
+     out of the next field mid-Tab. The preview's edits redraw the screen
+     behind it, so the tile shows the new date or the new folder. */
+  const after = () => {
+    if(!opts.fromPreview) return;
+    render();
+    if(opts.repaint && DOC_PREVIEW && DOC_PREVIEW.id === id) docPreviewFacts();
+  };
+  if(!CLOUD.on){ Object.assign(cur, patch); persist(); after(); return; }
   try {
     const saved = await CLOUD.docSave(id, cur.rev, patch);
     if(!saved){ toast(tr().co.conflict, 'bad'); return; }
     state.documents = (state.documents || []).map(x => x.id === id ? saved : x);
+    if(DOC_PREVIEW && DOC_PREVIEW.id === id) DOC_PREVIEW = saved;
     persist();
     toast(tr().co.saved, 'ok');
+    after();
   } catch(e){ toast(tr().co.saveFailed, 'bad'); }
 }
 
@@ -9768,6 +11441,107 @@ function gridKeys(e){
   const r = +el.dataset.r, k = el.dataset.k;
   const next = tb.querySelector(`[data-r="${r + dir}"][data-k="${k}"]`);
   if(next){ next.focus(); if(next.select) next.select(); }
+}
+
+/* ---------- blank rows fold on a phone ----------
+   The sheets start with pre-named lines (Flights, Hotel, Freight ...), and on
+   a phone each is a card of a dozen empty fields: Logistics ran to 5,700px of
+   nothing. A row with no figure in it folds to its name until it is tapped.
+   Desktop ignores the class -- the rule is inside the card-mode query. */
+const FILL_TXT = { en: 'Fill in ▾', lt: 'Užpildyti ▾', ru: 'Заполнить ▾' };
+/* The company tables (people, fixed costs, documents) have no labels on their
+   cells, so on a phone a stacked row was a column of bare inputs. Each cell
+   takes its column name from the header, counting colspans so the totals row
+   lines up too. */
+function labelCoTables(){
+  document.querySelectorAll('table.co-table').forEach(tb => {
+    const heads = [...tb.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    tb.querySelectorAll('tbody tr, tfoot tr').forEach(tr => {
+      let i = 0;
+      [...tr.children].forEach(td => {
+        const span = Number(td.getAttribute('colspan')) || 1;
+        if(span === 1 && !td.hasAttribute('data-label')) td.dataset.label = heads[i] || '';
+        i += span;
+      });
+    });
+  });
+}
+function markBlankRows(){
+  document.querySelectorAll('table[data-sheet] tbody tr').forEach(tr => {
+    /* what a person typed decides it: a calculated column can be a constant
+       (the employer's tax rate shows 35 % on an empty Labor line) */
+    const nums = [...tr.querySelectorAll('input[type=number]')];
+    const blank = nums.length && nums.every(i => i.value === '' || Number(i.value) === 0);
+    tr.classList.toggle('is-blank', !!blank);
+    tr.dataset.fill = FILL_TXT[state.lang] || FILL_TXT.en;
+  });
+}
+document.addEventListener('click', ev => {
+  const tr = ev.target.closest && ev.target.closest('table[data-sheet] tbody tr.is-blank:not(.open)');
+  if(!tr) return;
+  tr.classList.add('open');
+  if(!ev.target.matches('input,select')){
+    const f = tr.querySelector('input[type=number],select'); if(f) f.focus();
+  }
+});
+
+/* ---------- the tab strip never scrolls ----------
+   Twelve sheets do not fit beside the project picker, and a strip that
+   scrolls sideways hides where you are and what else there is. As many tabs
+   as fit are shown; the rest go under "More", and the tab you are on is
+   always among the visible ones. Re-fitted when the strip changes width. */
+const TAB_MORE = { en: 'More', lt: 'Daugiau', ru: 'Ещё' };
+function fitTabs(){
+  const nav = $('#tabs');
+  if(!nav) return;
+  const old = nav.querySelector('.tab-more');
+  if(old) old.remove();
+  const btns = [...nav.querySelectorAll(':scope > button[data-tab]')];
+  btns.forEach(b => { b.hidden = false; });
+  nav.classList.remove('fit');
+  if(nav.scrollWidth <= nav.clientWidth + 1) return;
+
+  nav.classList.add('fit');
+  const wrap = document.createElement('span');
+  wrap.className = 'tab-more';
+  wrap.innerHTML = `<button type="button" class="tab-more-btn" aria-haspopup="true" aria-expanded="false">${
+    esc(TAB_MORE[state.lang] || TAB_MORE.en)} <span class="tab-more-n"></span><svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+    <div class="tab-menu" role="menu" hidden></div>`;
+  nav.appendChild(wrap);
+  const room = nav.clientWidth;
+  const used = () => btns.filter(b => !b.hidden).reduce((a, b) => a + b.offsetWidth, 0) + wrap.offsetWidth;
+  /* drop from the end, never the active one */
+  for(let i = btns.length - 1; i >= 0 && used() > room; i--){
+    if(!btns[i].classList.contains('active')) btns[i].hidden = true;
+  }
+  const hidden = btns.filter(b => b.hidden);
+  if(!hidden.length){ wrap.remove(); nav.classList.remove('fit'); return; }
+  wrap.querySelector('.tab-more-n').textContent = hidden.length;
+  const menu = wrap.querySelector('.tab-menu');
+  menu.innerHTML = hidden.map(b => `<button type="button" role="menuitem" data-tab="${b.dataset.tab}">${b.innerHTML}</button>`).join('');
+  const toggle = wrap.querySelector('.tab-more-btn');
+  const close = () => { menu.hidden = true; toggle.setAttribute('aria-expanded', 'false'); };
+  toggle.addEventListener('click', ev => {
+    ev.stopPropagation();
+    const open = menu.hidden;
+    menu.hidden = !open; toggle.setAttribute('aria-expanded', String(open));
+    if(open){ const f = menu.querySelector('button'); if(f) f.focus(); }
+  });
+  menu.addEventListener('keydown', ev => { if(ev.key === 'Escape'){ close(); toggle.focus(); } });
+}
+/* one listener for the page: a click anywhere but the menu closes it */
+document.addEventListener('click', ev => {
+  const wrap = document.querySelector('#tabs .tab-more');
+  if(!wrap || wrap.contains(ev.target)) return;
+  const menu = wrap.querySelector('.tab-menu');
+  if(menu && !menu.hidden){ menu.hidden = true; wrap.querySelector('.tab-more-btn').setAttribute('aria-expanded', 'false'); }
+}, true);
+if(window.ResizeObserver){
+  let fitPending = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(fitPending);
+    fitPending = requestAnimationFrame(fitTabs);
+  }).observe(document.getElementById('tabs'));
 }
 
 /* ================= events ================= */
@@ -10398,6 +12172,13 @@ $('#main').addEventListener('input', e=>{
   /* a dropdown changes in one move, so it is its own step */
   pushUndo(el.tagName==='SELECT' ? null : 'cell:' + proj().id + ':' + key + ':' + i + ':' + k);
   if(el.tagName==='SELECT') row[k] = el.dataset.opts==='bool' ? el.value==='1' : el.value;
+  else if(el.type==='number' && k === 'paidPct'){
+    const v = el.value === '' ? null : Math.min(100, Math.max(0, +el.value));
+    row[k] = v;
+    row.paid = v != null && v >= 100;
+    const box = el.closest('.pct-in');
+    if(box) box.className = 'pct-in ' + (v == null || v === 0 ? 'none' : v >= 100 ? 'full' : 'part');
+  }
   else if(el.type==='number') row[k] = el.value==='' ? null : +el.value;
   else row[k] = el.value;
   touch(); recalcSheet(key, tb); paintPulse(); markDirty();
@@ -10505,6 +12286,7 @@ function exportCsv(){
         if(col.t==='calc'){ const v = col.f(r,p.settings); return col.fmt ? q(col.fmt(v)) : num(v); }
         if(col.t==='sel') return q(col.opts==='bool' ? (r[col.k]?t.yes:t.no) : (t.statuses[r[col.k]]||r[col.k]));
         if(col.t==='num') return num(col.eff ? col.eff(r) : r[col.k]);
+        if(col.t==='pct') return num(Math.round(paidShare(r) * 100));
         return q(cellVal(key, r, col.k));
       }).join(';'));
     });
@@ -10703,6 +12485,7 @@ function printProjectReport(){
         if(col.t==='sel') return `<td>${esc(col.opts==='bool'?(r[col.k]?t.yes:t.no):(t.statuses[r[col.k]]||''))}</td>`;
         if(col.t==='num'){ const v = col.eff ? col.eff(r) : r[col.k];
           return `<td class="num">${v===null||v===undefined?'':m(v)}</td>`; }
+        if(col.t==='pct') return `<td class="num">${Math.round(paidShare(r) * 100)} %</td>`;
         return `<td>${esc(cellVal(key, r, col.k))}</td>`;
       }).join('')+'</tr>';
     });
@@ -10884,6 +12667,8 @@ function printEnquiryReport(){
   const t = tr(), e = t.enq, L = LOCALES[state.lang], dash = '&mdash;';
   const rows = enqSorted(enqRows());
   const T = enqTotals(rows);
+  const W = enqTotals(rows.filter(r => r.status === 'Gautas PO'));   /* sales only, as on screen */
+  const won = rows.filter(r => r.status === 'Gautas PO').length;
   const f = enqState();
   const m = v => v == null ? dash : fmt(v);
   const d = v => v ? new Date(v).toLocaleDateString(L) : dash;
@@ -10940,12 +12725,11 @@ function printEnquiryReport(){
     ${scope.length ? `<p class="rp-scope">${scope.join(' &nbsp;&middot;&nbsp; ')}</p>` : ''}
 
     <div class="rp-kpis">
-      ${kpi(e.kTurnover, fmt(T.sell), rows.length + ' ' + esc(e.kReceived.toLowerCase()))}
-      ${kpi(e.kCost, T.costed ? fmt(T.cost) : dash,
-            T.costed < rows.length
-              ? `${T.costed}/${rows.length} ${esc(e.cost.toLowerCase())}` : '&nbsp;')}
-      ${kpi(e.kMargin, T.costed ? fmt(T.margin) : dash,
-            T.pct == null ? esc(e.noCost) : pct(T.pct))}
+      ${kpi(e.kTurnover, fmt(W.sell), won + ' ' + esc(e.kSoldNote))}
+      ${kpi(e.kCost, W.costed ? fmt(W.cost) : dash,
+            W.costed < won ? `${W.costed}/${won} ${esc(e.cost.toLowerCase())}` : '&nbsp;')}
+      ${kpi(e.kMargin, W.costed ? fmt(W.margin) : dash,
+            W.pct == null ? esc(e.noCost) : pct(W.pct))}
       ${kpi(e.kUnpaid, fmt(T.unpaid), esc(e.kPO))}
     </div>
 
@@ -11408,7 +13192,56 @@ applyTheme();
 render();
 paintSaveState();
 /* With no database configured this never runs and nothing above changes. */
-if(CLOUD.on) bootCloud();
+/* A sign-in link from an admin (invite or password reset) arrives with the
+   session in the address. Take it, wipe it from the address bar -- a token
+   in the history is a token anyone at this computer can reuse -- and ask
+   for a password before anything else. */
+async function startCloud(){
+  const h = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+  const kind = h.get('type');
+  const clean = () => { try { history.replaceState(null, '', location.pathname + location.search); } catch(e){} };
+  if(h.get('error') || h.get('error_code')){ clean(); showSignIn(tr().cloud.linkExpired); return; }
+  if(h.get('access_token') && /^(invite|recovery|magiclink|signup)$/.test(kind || '')){
+    clean();
+    try { showSetPassword(await CLOUD.adoptLink(h)); }
+    catch(e){ showSignIn(tr().cloud.linkExpired); }
+    return;
+  }
+  bootCloud();
+}
+function showSetPassword(user){
+  const t = tr().cloud;
+  const name = (user && user.user_metadata && user.user_metadata.name) || (user && user.email || '').split('@')[0];
+  $('#signinForm').hidden = true;
+  $('#setpassForm').hidden = false;
+  $('#spSub').textContent = t.setTitle;
+  $('#spHello').textContent = t.setHello.replace('{name}', name).replace('{email}', (user && user.email) || '');
+  $('#spEmail').value = (user && user.email) || '';
+  $('#spPassL').textContent = t.newPass;
+  $('#spPass2L').textContent = t.newPass2;
+  $('#spGo').textContent = t.savePass;
+  $('#spMsg').textContent = '';
+  $('#signin').hidden = false;
+  setTimeout(() => { const f = $('#spPass'); if(f) f.focus(); }, 40);
+}
+$('#setpassForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const t = tr().cloud, msg = $('#spMsg'), btn = $('#spGo');
+  const a = $('#spPass').value, b = $('#spPass2').value;
+  if(a.length < 8){ msg.textContent = t.passShort; return; }
+  if(a !== b){ msg.textContent = t.passMismatch; return; }
+  btn.disabled = true; msg.textContent = '';
+  try {
+    await CLOUD.setPassword(a);
+    $('#spPass').value = ''; $('#spPass2').value = '';
+    $('#setpassForm').hidden = true; $('#signinForm').hidden = false;
+    $('#signin').hidden = true;
+    await bootCloud();
+  } catch(err){
+    msg.textContent = /link|401|jwt|expired/i.test(err.message) ? t.linkExpired : err.message;
+  } finally { btn.disabled = false; }
+});
+if(CLOUD.on) startCloud();
 </script>
 </body>
 </html>
